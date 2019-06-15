@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:animated_floatactionbuttons/animated_floatactionbuttons.dart';
 
 void main() => runApp(MyApp());
 
@@ -74,6 +75,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 tooltip: 'Increment',
                 // Will be changed to add contact group or one-time usage
                 child: Icon(Icons.add),
+                backgroundColor: Colors.pink,
             ),
         );
     }
