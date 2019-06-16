@@ -40,6 +40,26 @@ class _MyHomePageState extends State<MyHomePage> {
         });
     }
 
+    Widget float1() {
+        return Container(
+            child: FloatingActionButton(
+                onPressed: _incrementCounter,
+                tooltip: "One-time usage button",
+                child: Icon(Icons.add),
+            ),
+        );
+    }
+
+    Widget float2() {
+        return Container(
+            child: FloatingActionButton(
+                onPressed: _incrementCounter,
+                tooltip: "Create contact group button",
+                child: Icon(Icons.assignment_ind)
+            )
+        );
+    }
+
     @override
     Widget build(BuildContext context) {
         // This method is rerun every time setState is called, for instance as done
@@ -69,13 +89,15 @@ class _MyHomePageState extends State<MyHomePage> {
                     ],
                 ),
             ),
-            floatingActionButton: FloatingActionButton(
-                onPressed: _incrementCounter,
-                // Call the relevant method
-                tooltip: 'Increment',
-                // Will be changed to add contact group or one-time usage
-                child: Icon(Icons.add),
-                backgroundColor: Colors.pink,
+            floatingActionButton: AnimatedFloatingActionButton(
+                fabButtons: <Widget>[
+                    float1(),
+                    float2(),
+                ],
+                colorStartAnimation: Colors.blue,
+                colorEndAnimation: Colors.red,
+                // AnimatedIconData defines the start and end icons for the toggle animation
+                animatedIconData: AnimatedIcons.menu_close,
             ),
         );
     }
