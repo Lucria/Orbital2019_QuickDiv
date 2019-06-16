@@ -2,14 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:animated_floatactionbuttons/animated_floatactionbuttons.dart';
 
 class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
-
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
-
-  final String title;
+//  This constructor declares 2 optional named parameters, optional named because of {}
+//  First is of name key with type Key
+//  Second is of name title with the type of the field this.title and automatically initializes this.title
+//  with the passed value
+//  : starts the initializer list. Initializer list allows some to execute some expressions before the call is
+//  forwarded to the constructor of the super class
+//  MyHomePage({Key key, this.title}) : super(key: key);
+//   This class is the configuration for the state. It holds the values (in this
+//   case the title) provided by the parent (in this case the App widget) and
+//   used by the build method of the State. Fields in a Widget subclass are
+//   always marked "final".
+//
+//  final String title;
 
   @override
   _MyHomePageState createState() => _MyHomePageState();
@@ -25,7 +30,7 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
-  Widget float1() {
+  Widget oneTimeButton() {
     return Container(
       child: FloatingActionButton(
         onPressed: _incrementCounter,
@@ -35,7 +40,7 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
-  Widget float2() {
+  Widget createContactButton() {
     return Container(
         child: FloatingActionButton(
             onPressed: _incrementCounter,
@@ -50,9 +55,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
     return Scaffold(
       appBar: AppBar(
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
+          title: Text("QuickDiv v1.0"),
       ),
       body: Center(
         child: Column(
@@ -71,8 +74,8 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       floatingActionButton: AnimatedFloatingActionButton(
         fabButtons: <Widget>[
-          float1(),
-          float2(),
+            oneTimeButton(),
+            createContactButton(),
         ],
         colorStartAnimation: Colors.blue,
         colorEndAnimation: Colors.red,

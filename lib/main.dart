@@ -11,8 +11,7 @@ class MyApp extends StatelessWidget {
             theme: ThemeData(
                 primaryColor: Colors.pink[200],
             ),
-            home: MyHomePage(
-                title: 'QuickDiv v1.0'), // Setting the title at the top
+            home: MyHomePage(),
         );
     }
 }
