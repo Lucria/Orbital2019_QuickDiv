@@ -117,8 +117,9 @@ class _MyHomePageState extends State<MyHomePage> {
           oneTimeButton(),
           createContactButton(),
         ],
-        colorStartAnimation: Color(0xFFFFFF), // Not working?
-        colorEndAnimation: Color(0xFFFFFFFF),
+          colorStartAnimation: Colors.white,
+          // Not working?
+          colorEndAnimation: Colors.red,
         // AnimatedIconData defines the start and end icons for the toggle animation
         animatedIconData: AnimatedIcons.menu_close,
       ),

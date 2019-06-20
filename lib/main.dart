@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import './splash_page.dart';
-import './home_page.dart';
+import 'main_page/home_page.dart';
 
 import 'package:flutter/rendering.dart'; // to be delete - for debuging the widget lazyout.
 void main() {
@@ -33,7 +33,7 @@ class _MyAppState extends State<MyApp> {
           debugShowCheckedModeBanner: false, //remove debug LOL
       routes: {
         '/': (BuildContext context) => SplashScreen(),
-        '/home': (BuildContext context) => HomePage(),
+        '/home': (BuildContext context) => MyHomePage(),
       },
     );
   }
