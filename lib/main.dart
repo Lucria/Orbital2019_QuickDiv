@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import './splashPage.dart';
-import './homePage.dart';
+import './splash_page.dart';
+import './home_page.dart';
 
 import 'package:flutter/rendering.dart'; // to be delete - for debuging the widget lazyout.
 void main() {
