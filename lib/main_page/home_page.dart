@@ -34,9 +34,10 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget oneTimeButton() {
     return Container(
       child: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: "One-time usage button",
-        child: Icon(Icons.add),
+          heroTag: "oneTime",
+          onPressed: _incrementCounter,
+          tooltip: "One-time usage button",
+          child: Icon(Icons.add),
       ),
     );
   }
@@ -44,6 +45,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget createContactButton() {
     return Container(
         child: FloatingActionButton(
+            heroTag: "createContact",
             onPressed: _incrementCounter,
             tooltip: "Create contact group button",
             child: Icon(Icons.assignment_ind)));
@@ -117,8 +119,7 @@ class _MyHomePageState extends State<MyHomePage> {
           oneTimeButton(),
           createContactButton(),
         ],
-          colorStartAnimation: Colors.white,
-          // Not working?
+          colorStartAnimation: Colors.blue,
           colorEndAnimation: Colors.red,
         // AnimatedIconData defines the start and end icons for the toggle animation
         animatedIconData: AnimatedIcons.menu_close,
