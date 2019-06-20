@@ -53,7 +53,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   Widget emptyContactSection() {
     return Container(
-        padding: const EdgeInsets.all(32),
+        padding: const EdgeInsets.all(12),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
@@ -63,7 +63,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 "Contacts added will appear here!",
                 textAlign: TextAlign.center,
                 style: TextStyle(
-                  fontSize: 28,
+                    fontSize: 26,
                   fontWeight: FontWeight.bold,
                   color: Colors.black87,
                 ),
