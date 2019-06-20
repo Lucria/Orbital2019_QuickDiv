@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'main_page/animated_add_button.dart';
+import 'main_page/home_page.dart';
 
 void main() => runApp(MyApp());
 

@@ -28,6 +28,7 @@ class _MyHomePageState extends State<MyHomePage> {
     setState(() {
       _counter++;
     });
+    print(_counter);
   }
 
   Widget oneTimeButton() {
@@ -48,6 +49,36 @@ class _MyHomePageState extends State<MyHomePage> {
             child: Icon(Icons.assignment_ind)));
   }
 
+  Widget emptyContactSection() {
+    return Container(
+        padding: const EdgeInsets.all(32),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            Container(
+              padding: const EdgeInsets.only(bottom: 8),
+              child: Text(
+                "Contacts added will appear here!",
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 28,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black87,
+                ),
+              ),
+            ),
+            Text(
+              "Press the button below to get started!",
+              style: TextStyle(
+                fontStyle: FontStyle.italic,
+                fontSize: 18,
+                color: Colors.black87,
+              ),
+            )
+          ],
+        ));
+  }
+
   @override
   Widget build(BuildContext context) {
     // This method is rerun every time setState is called, for instance as done
@@ -55,30 +86,39 @@ class _MyHomePageState extends State<MyHomePage> {
 
     return Scaffold(
       appBar: AppBar(
-          title: Text("QuickDiv v1.0"),
+        title: Text("QuickDiv v1.0"),
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              // This code portion defines text style of _counter
-              style: Theme.of(context).textTheme.display1,
-            ),
-          ],
+      body: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topRight,
+            end: Alignment.bottomLeft,
+            stops: [0.1, 0.3, 0.5, 0.7, 0.9],
+            colors: [
+              Colors.indigo[300],
+              Colors.indigo[100],
+              Colors.pink[50],
+              Colors.pink[100],
+              Colors.pink[300],
+            ],
+          ),
+        ),
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              emptyContactSection(),
+            ],
+          ),
         ),
       ),
       floatingActionButton: AnimatedFloatingActionButton(
         fabButtons: <Widget>[
-            oneTimeButton(),
-            createContactButton(),
+          oneTimeButton(),
+          createContactButton(),
         ],
-        colorStartAnimation: Colors.blue,
-        colorEndAnimation: Colors.red,
+        colorStartAnimation: Color(0xFFFFFF), // Not working?
+        colorEndAnimation: Color(0xFFFFFFFF),
         // AnimatedIconData defines the start and end icons for the toggle animation
         animatedIconData: AnimatedIcons.menu_close,
       ),
