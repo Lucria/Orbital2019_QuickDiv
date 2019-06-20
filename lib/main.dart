@@ -2,16 +2,16 @@ import 'package:flutter/material.dart';
 import './splash_page.dart';
 import 'main_page/home_page.dart';
 
-import 'package:flutter/rendering.dart'; // to be delete - for debuging the widget lazyout.
+import 'package:flutter/rendering.dart'; // to be delete - for debugging the widget lazyout.
 void main() {
   // debugPaintSizeEnabled = true; // to view the rendering of the widget.
   // debugPaintBaselinesEnabled = true;
-  // debugPaintPointersEnabled = true; // show where the tab event is registered. for tab listner.
+    // debugPaintPointersEnabled = true; // show where the tab event is registered. for tab listener.
   runApp(MyApp());
 }
 
 class MyApp extends StatefulWidget {
-  //inherite class from material.dart package
+    // Inherit class from material.dart package
   @override
   State<StatefulWidget> createState() {
     return _MyAppState();
