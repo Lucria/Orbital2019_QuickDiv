@@ -34,10 +34,10 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget oneTimeButton() {
     return Container(
       child: FloatingActionButton(
-          heroTag: "oneTime",
-          onPressed: _incrementCounter,
-          tooltip: "One-time usage button",
-          child: Icon(Icons.add),
+        heroTag: "oneTime",
+        onPressed: _incrementCounter,
+        tooltip: "One-time usage button",
+        child: Icon(Icons.add),
       ),
     );
   }
@@ -63,7 +63,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 "Contacts added will appear here!",
                 textAlign: TextAlign.center,
                 style: TextStyle(
-                    fontSize: 26,
+                  fontSize: 26,
                   fontWeight: FontWeight.bold,
                   color: Colors.black87,
                 ),
@@ -119,8 +119,8 @@ class _MyHomePageState extends State<MyHomePage> {
           oneTimeButton(),
           createContactButton(),
         ],
-          colorStartAnimation: Colors.blue,
-          colorEndAnimation: Colors.red,
+        colorStartAnimation: Colors.blue,
+        colorEndAnimation: Colors.red,
         // AnimatedIconData defines the start and end icons for the toggle animation
         animatedIconData: AnimatedIcons.menu_close,
       ),
