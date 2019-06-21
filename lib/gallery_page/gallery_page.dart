@@ -79,14 +79,6 @@ class _MyGalleryState extends State<MyGallery> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               showImage(),
-              Text(
-                "You are the chosen one!",
-                style: TextStyle(
-                  fontSize: 20,
-                  fontStyle: FontStyle.italic,
-                  color: Colors.purple,
-                ),
-              ),
             ],
           ),
         ),
