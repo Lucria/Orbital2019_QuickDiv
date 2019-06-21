@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import './splash_page.dart';
 import 'main_page/home_page.dart';
-import 'gallery_page/gallery_page.dart';
+import 'image_confirmation/receipt_image_upload.dart';
+import 'image_confirmation/receipt_image_camera.dart';
 
 import 'package:flutter/rendering.dart'; // to be delete - for debugging the widget lazyout.
 
@@ -35,7 +36,8 @@ class _MyAppState extends State<MyApp> {
       routes: {
         '/': (BuildContext context) => SplashScreen(),
         '/home': (BuildContext context) => MyHomePage(),
-        '/gallery': (BuildContext context) => MyGallery(),
+        '/existingimage': (BuildContext context) => UploadImage(),
+        '/cameraimage' : (BuildContext context) => CameraImage(),
       },
     );
   }

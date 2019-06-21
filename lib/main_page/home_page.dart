@@ -47,13 +47,13 @@ class _MyHomePageState extends State<MyHomePage> {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: <Widget>[
                   new ListTile(
-                    onTap: () => Navigator.pushReplacementNamed(context, '/gallery'),
+                    onTap: () => Navigator.pushReplacementNamed(context, "/existingimage"),
                     leading: Icon(Icons.camera),
                     title: Text("Upload from Gallery"),
                     contentPadding: EdgeInsets.all(16),
                   ),
                   new ListTile(
-                    onTap: () => print("Placeholder for taking new photo"),
+                    onTap: () => Navigator.pushReplacementNamed(context, "/cameraimage"),
                     leading: Icon(Icons.camera_enhance),
                     title: Text("Take a new photo"),
                     contentPadding: EdgeInsets.all(16),
@@ -73,6 +73,7 @@ class _MyHomePageState extends State<MyHomePage> {
     return Container(
       child: FloatingActionButton(
         heroTag: "createContact",
+        // Open contacts and create a new group
         onPressed: _incrementCounter,
         tooltip: "Contact group button",
         child: Icon(Icons.assignment_ind)

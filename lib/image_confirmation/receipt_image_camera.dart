@@ -2,17 +2,17 @@ import 'package:flutter/material.dart';
 import 'dart:io';
 import 'package:image_picker/image_picker.dart';
 
-class MyGallery extends StatefulWidget {
+class CameraImage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    return _MyGalleryState();
+    return _CameraImageState();
   }
 }
 
-class _MyGalleryState extends State<MyGallery> {
+class _CameraImageState extends State<CameraImage> {
   Future<File> imageFile;
 
-  pickImageFromGallery(ImageSource source) {
+  pickImage(ImageSource source) {
     setState(() {
       imageFile = ImagePicker.pickImage(source: source);
     });
@@ -31,7 +31,7 @@ class _MyGalleryState extends State<MyGallery> {
           );
         } else if (snapshot.error != null) {
           return const Text(
-            'Error Picking Image',
+            "Error Picking Image",
             textAlign: TextAlign.center,
             style: TextStyle(
               fontSize: 20,
@@ -40,7 +40,7 @@ class _MyGalleryState extends State<MyGallery> {
           );
         } else {
           return const Text(
-            'No Image Selected',
+            "No Image Selected",
             textAlign: TextAlign.center,
             style: TextStyle(
               fontSize: 20,
@@ -54,7 +54,7 @@ class _MyGalleryState extends State<MyGallery> {
 
   @override
   Widget build(BuildContext context) {
-    pickImageFromGallery(ImageSource.gallery);
+    pickImage(ImageSource.camera);
     return Scaffold(
       appBar: AppBar(
         title: Text("QuickDiv v1.0"),
@@ -79,6 +79,13 @@ class _MyGalleryState extends State<MyGallery> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               showImage(),
+              Text(
+                "Is the image of the receipt you wish to upload?",
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                ),
+              )
             ],
           ),
         ),
