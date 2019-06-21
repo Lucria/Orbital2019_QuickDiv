@@ -24,7 +24,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
-  Future<File> imageFile;
+  // Future<File> imageFile;
 
   // Temporary function for testing
   void _incrementCounter() {
@@ -34,11 +34,11 @@ class _MyHomePageState extends State<MyHomePage> {
     print(_counter);
   }
 
-  pickImageFromGallery(ImageSource source) {
-    setState(() {
-      imageFile = ImagePicker.pickImage(source: source);
-    });
-  }
+  // pickImageFromGallery(ImageSource source) {
+  //   setState(() {
+  //     imageFile = ImagePicker.pickImage(source: source);
+  //   });
+  // }
 
   Widget oneTimeButton() {
     return Container(
@@ -50,7 +50,7 @@ class _MyHomePageState extends State<MyHomePage> {
           // ! One button for choosing from gallery
           Navigator.pushReplacementNamed(context, '/gallery'); 
           // TODO Will change route to OCR page.
-          pickImageFromGallery(ImageSource.gallery); // * Opens gallery option to choose photos from
+          // pickImageFromGallery(ImageSource.gallery); // * Opens gallery option to choose photos from
         },
         tooltip: "One-time usage button",
         child: Icon(Icons.add),

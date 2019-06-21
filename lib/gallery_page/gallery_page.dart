@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'dart:io';
+import 'package:image_picker/image_picker.dart';
 
 class MyGallery extends StatefulWidget {
   @override
@@ -8,9 +10,51 @@ class MyGallery extends StatefulWidget {
 }
 
 class _MyGalleryState extends State<MyGallery> {
+  Future<File> imageFile;
+
+  pickImageFromGallery(ImageSource source) {
+    setState(() {
+      imageFile = ImagePicker.pickImage(source: source);
+    });
+  }
+
+  Widget showImage() {
+    return FutureBuilder<File>(
+      future: imageFile,
+      builder: (BuildContext context, AsyncSnapshot<File> snapshot) {
+        if (snapshot.connectionState == ConnectionState.done &&
+            snapshot.data != null) {
+          return Image.file(
+            snapshot.data,
+            width: 300,
+            height: 300,
+          );
+        } else if (snapshot.error != null) {
+          return const Text(
+            'Error Picking Image',
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+            ),
+          );
+        } else {
+          return const Text(
+            'No Image Selected',
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+            ),
+          );
+        }
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
+    pickImageFromGallery(ImageSource.gallery);
     return Scaffold(
       appBar: AppBar(
         title: Text("QuickDiv v1.0"),
@@ -30,7 +74,23 @@ class _MyGalleryState extends State<MyGallery> {
             ],
           ),
         ),
-      )
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              showImage(),
+              Text(
+                "You are the chosen one!",
+                style: TextStyle(
+                  fontSize: 20,
+                  fontStyle: FontStyle.italic,
+                  color: Colors.purple,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }
