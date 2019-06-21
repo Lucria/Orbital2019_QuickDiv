@@ -1,5 +1,6 @@
 import 'package:animated_floatactionbuttons/animated_floatactionbuttons.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/gestures.dart';
 
 class MyHomePage extends StatefulWidget {
 //  This constructor declares 2 optional named parameters, optional named because of {}
@@ -89,32 +90,33 @@ class _MyHomePageState extends State<MyHomePage> {
 
   Widget emptyContactSection() {
     return Container(
-        padding: const EdgeInsets.all(12),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
-            Container(
-              padding: const EdgeInsets.only(bottom: 8),
-              child: Text(
-                "Groups added will appear here!",
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: 26,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black87,
-                ),
-              ),
-            ),
-            Text(
-              "Press the button below to get started!",
+      padding: const EdgeInsets.all(12),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: <Widget>[
+          Container(
+            padding: const EdgeInsets.only(bottom: 8),
+            child: Text(
+              "Groups added will appear here!",
+              textAlign: TextAlign.center,
               style: TextStyle(
-                fontStyle: FontStyle.italic,
-                fontSize: 18,
+                fontSize: 26,
+                fontWeight: FontWeight.bold,
                 color: Colors.black87,
               ),
-            )
-          ],
-        ));
+            ),
+          ),
+          Text(
+            "Press the button below to get started!",
+            style: TextStyle(
+              fontStyle: FontStyle.italic,
+              fontSize: 18,
+              color: Colors.black87,
+            ),
+          )
+        ],
+      )
+    );
   }
 
   @override
