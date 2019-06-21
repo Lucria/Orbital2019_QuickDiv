@@ -35,7 +35,7 @@ class _MyHomePageState extends State<MyHomePage> {
     return Container(
       child: FloatingActionButton(
         heroTag: "oneTime",
-        onPressed: _incrementCounter,
+        onPressed: () => Navigator.pushReplacementNamed(context, '/gallery'),
         tooltip: "One-time usage button",
         child: Icon(Icons.add),
       ),
@@ -60,7 +60,7 @@ class _MyHomePageState extends State<MyHomePage> {
             Container(
               padding: const EdgeInsets.only(bottom: 8),
               child: Text(
-                "Contacts added will appear here!",
+                "Groups added will appear here!",
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 26,
