@@ -29,9 +29,9 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       // debugShowMaterialGrid: true, // to show the grid of the layout.
       theme: ThemeData(
-          brightness: Brightness.light,
-          primarySwatch: Colors.pink,
-          accentColor: Colors.blue[800]),
+        brightness: Brightness.light,
+        primarySwatch: Colors.pink,
+        accentColor: Colors.blue[800]),
       debugShowCheckedModeBanner: false, //remove debug LOL
       routes: {
         '/': (BuildContext context) => SplashScreen(),
