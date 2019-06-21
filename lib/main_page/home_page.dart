@@ -39,9 +39,31 @@ class _MyHomePageState extends State<MyHomePage> {
         heroTag: "oneTime",
         onPressed: () {
           // TODO Add bottom sheet with two buttons.
+          showModalBottomSheet(
+            context: context,
+            builder: (BuildContext context){
+              return new Column(
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: <Widget>[
+                  new ListTile(
+                    onTap: () => Navigator.pushReplacementNamed(context, '/gallery'),
+                    leading: Icon(Icons.camera),
+                    title: Text("Upload from Gallery"),
+                    contentPadding: EdgeInsets.all(16),
+                  ),
+                  new ListTile(
+                    onTap: () => print("Placeholder for taking new photo"),
+                    leading: Icon(Icons.camera_enhance),
+                    title: Text("Take a new photo"),
+                    contentPadding: EdgeInsets.all(16),
+                  ),
+                ],
+              );
+            },
+          );
           // ! One button for taking a new photo
           // ! One button for choosing from gallery
-          Navigator.pushReplacementNamed(context, '/gallery'); 
           // TODO Will change route to OCR page.
         },
         tooltip: "One-time usage button",
