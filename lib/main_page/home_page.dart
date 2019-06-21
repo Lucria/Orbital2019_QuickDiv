@@ -1,6 +1,5 @@
 import 'package:animated_floatactionbuttons/animated_floatactionbuttons.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/gestures.dart';
 
 class MyHomePage extends StatefulWidget {
 //  This constructor declares 2 optional named parameters, optional named because of {}
