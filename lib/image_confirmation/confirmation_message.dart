@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 Widget confirmationText() {
     return Container(
-      padding: EdgeInsets.fromLTRB(12, 28, 12, 0),
+      padding: EdgeInsets.fromLTRB(12, 18, 12, 0),
       child: Text(
         "Is this the receipt you wish to upload?",
         style: TextStyle(
