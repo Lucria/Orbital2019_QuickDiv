@@ -23,7 +23,6 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
-  bool _visible = false;
 
   // Temporary function for testing
   void _incrementCounter() {
@@ -31,12 +30,6 @@ class _MyHomePageState extends State<MyHomePage> {
       _counter++;
     });
     print(_counter);
-  }
-
-  void _changeVisibility() {
-    setState(() {
-      _visible = !_visible;
-    });
   }
 
   Widget oneTimeButton() {
