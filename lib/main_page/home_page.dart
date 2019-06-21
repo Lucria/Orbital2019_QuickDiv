@@ -1,7 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:animated_floatactionbuttons/animated_floatactionbuttons.dart';
-import 'package:image_picker/image_picker.dart';
-import 'dart:io';
+import 'package:flutter/material.dart';
 
 class MyHomePage extends StatefulWidget {
 //  This constructor declares 2 optional named parameters, optional named because of {}
@@ -24,6 +22,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
+  bool _visible = false;
 
   // Temporary function for testing
   void _incrementCounter() {
@@ -33,12 +32,20 @@ class _MyHomePageState extends State<MyHomePage> {
     print(_counter);
   }
 
+  void _changeVisibility() {
+    setState(() {
+      _visible = !_visible;
+    });
+  }
+
   Widget oneTimeButton() {
     return Container(
       child: FloatingActionButton(
         heroTag: "oneTime",
         onPressed: () {
-          // TODO Add bottom sheet with two buttons.
+          // Bottom sheet will show two buttons
+          // One button is for users to upload exisiting photos from gallery
+          // The other button is for users to take a new photo using camera
           showModalBottomSheet(
             context: context,
             builder: (BuildContext context){
@@ -62,9 +69,6 @@ class _MyHomePageState extends State<MyHomePage> {
               );
             },
           );
-          // ! One button for taking a new photo
-          // ! One button for choosing from gallery
-          // TODO Will change route to OCR page.
         },
         tooltip: "One-time usage button",
         child: Icon(Icons.add),
@@ -72,14 +76,14 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
-  Widget createContactButton() {
+  Widget createContactButton() {     
     return Container(
       child: FloatingActionButton(
         heroTag: "createContact",
         onPressed: _incrementCounter,
-        tooltip: "Create contact group button",
+        tooltip: "Contact group button",
         child: Icon(Icons.assignment_ind)
-      )
+      ),
     );
   }
 
@@ -117,7 +121,6 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     // This method is rerun every time setState is called, for instance as done
     // by the _incrementCounter method above.
-
     return Scaffold(
       appBar: AppBar(
         title: Text("QuickDiv v1.0"),
@@ -152,9 +155,9 @@ class _MyHomePageState extends State<MyHomePage> {
           createContactButton(),
         ],
         colorStartAnimation: Colors.purple,
-        colorEndAnimation: Colors.red,
+        colorEndAnimation: Colors.pink,
         // AnimatedIconData defines the start and end icons for the toggle animation
-        animatedIconData: AnimatedIcons.menu_home,
+        animatedIconData: AnimatedIcons.menu_home, 
       ),
     );
   }
