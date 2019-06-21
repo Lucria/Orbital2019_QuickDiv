@@ -77,7 +77,7 @@ class _UploadImageState extends State<UploadImage> {
         ),
         child: Center(
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: <Widget>[
               showImage(),
               confirmationText(),

@@ -81,7 +81,7 @@ class _CameraImageState extends State<CameraImage> {
         ),
         child: Center(
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: <Widget>[
               showImage(),
               confirmationText(),
