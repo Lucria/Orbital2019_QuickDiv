@@ -62,8 +62,8 @@ class _MyGalleryState extends State<MyGallery> {
       body: Container(
         decoration: BoxDecoration(
           gradient: LinearGradient(
-            begin: Alignment.topRight,
-            end: Alignment.bottomLeft,
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
             stops: [0.1, 0.3, 0.5, 0.7, 0.9],
             colors: [
               Colors.indigo[300],
