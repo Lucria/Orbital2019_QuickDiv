@@ -74,11 +74,13 @@ class _MyHomePageState extends State<MyHomePage> {
 
   Widget createContactButton() {
     return Container(
-        child: FloatingActionButton(
-            heroTag: "createContact",
-            onPressed: _incrementCounter,
-            tooltip: "Create contact group button",
-            child: Icon(Icons.assignment_ind)));
+      child: FloatingActionButton(
+        heroTag: "createContact",
+        onPressed: _incrementCounter,
+        tooltip: "Create contact group button",
+        child: Icon(Icons.assignment_ind)
+      )
+    );
   }
 
   Widget emptyContactSection() {
@@ -149,10 +151,10 @@ class _MyHomePageState extends State<MyHomePage> {
           oneTimeButton(),
           createContactButton(),
         ],
-        colorStartAnimation: Colors.blue,
+        colorStartAnimation: Colors.purple,
         colorEndAnimation: Colors.red,
         // AnimatedIconData defines the start and end icons for the toggle animation
-        animatedIconData: AnimatedIcons.menu_close,
+        animatedIconData: AnimatedIcons.menu_home,
       ),
     );
   }
