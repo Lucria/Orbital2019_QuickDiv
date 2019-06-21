@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:animated_floatactionbuttons/animated_floatactionbuttons.dart';
+import 'package:image_picker/image_picker.dart';
+import 'dart:io';
 
 class MyHomePage extends StatefulWidget {
 //  This constructor declares 2 optional named parameters, optional named because of {}
@@ -22,6 +24,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
+  Future<File> imageFile;
 
   // Temporary function for testing
   void _incrementCounter() {
@@ -31,11 +34,24 @@ class _MyHomePageState extends State<MyHomePage> {
     print(_counter);
   }
 
+  pickImageFromGallery(ImageSource source) {
+    setState(() {
+      imageFile = ImagePicker.pickImage(source: source);
+    });
+  }
+
   Widget oneTimeButton() {
     return Container(
       child: FloatingActionButton(
         heroTag: "oneTime",
-        onPressed: () => Navigator.pushReplacementNamed(context, '/gallery'),
+        onPressed: () {
+          // TODO Add bottom sheet with two buttons.
+          // ! One button for taking a new photo
+          // ! One button for choosing from gallery
+          Navigator.pushReplacementNamed(context, '/gallery'); 
+          // TODO Will change route to OCR page.
+          pickImageFromGallery(ImageSource.gallery); // * Opens gallery option to choose photos from
+        },
         tooltip: "One-time usage button",
         child: Icon(Icons.add),
       ),
