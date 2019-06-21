@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'dart:io';
 import 'package:image_picker/image_picker.dart';
+import 'confirmation_message.dart';
 
 class CameraImage extends StatefulWidget {
   @override
@@ -26,26 +27,30 @@ class _CameraImageState extends State<CameraImage> {
             snapshot.data != null) {
           return Image.file(
             snapshot.data,
-            width: 300,
-            height: 300,
+            width: 500,
+            height: 500,
           );
         } else if (snapshot.error != null) {
-          return const Text(
-            "Error Picking Image",
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-            ),
+          return Container(
+            child: Text(
+              "Error Picking Image",
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+              ),
+            ) 
           );
         } else {
-          return const Text(
-            "No Image Selected",
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-            ),
+          return Container(
+            child: Text(
+              "No Image Selected",
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+              ),
+            )
           );
         }
       },
@@ -79,13 +84,7 @@ class _CameraImageState extends State<CameraImage> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               showImage(),
-              Text(
-                "Is the image of the receipt you wish to upload?",
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                ),
-              )
+              confirmationText(),
             ],
           ),
         ),

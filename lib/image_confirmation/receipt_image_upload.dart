@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'dart:io';
 import 'package:image_picker/image_picker.dart';
+import 'confirmation_message.dart';
 
 class UploadImage extends StatefulWidget {
   @override
@@ -26,8 +27,8 @@ class _UploadImageState extends State<UploadImage> {
             snapshot.data != null) {
           return Image.file(
             snapshot.data,
-            width: 300,
-            height: 300,
+            width: 500,
+            height: 500,
           );
         } else if (snapshot.error != null) {
           return const Text(
@@ -79,13 +80,7 @@ class _UploadImageState extends State<UploadImage> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               showImage(),
-              Text(
-                "Is the image of the receipt you wish to upload?",
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                ),
-              )
+              confirmationText(),
             ],
           ),
         ),
