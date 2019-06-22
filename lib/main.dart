@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'pages/splash_page.dart';
 import 'pages/home_page.dart';
 import 'pages/add_user_group.dart';
-import 'pages/custom_contacts.dart';
+import 'class/custom_contacts.dart';
 
 import 'package:flutter/rendering.dart'; // to be delete - for debugging the widget lazyout.
 

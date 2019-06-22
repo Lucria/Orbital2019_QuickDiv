@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'pages/custom_contacts.dart';
+import 'class/custom_contacts.dart';
 
 class Groups extends StatelessWidget {
   final List<Map<String, List<CustomContact>>> groups;
