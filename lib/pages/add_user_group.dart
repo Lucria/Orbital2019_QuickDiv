@@ -2,7 +2,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:contacts_service/contacts_service.dart';
 import 'package:simple_permissions/simple_permissions.dart';
-import './custom_contacts.dart';
+import '../class/custom_contacts.dart';
 import 'create_group_name.dart';
 
 class AddUserGroupPage extends StatefulWidget {

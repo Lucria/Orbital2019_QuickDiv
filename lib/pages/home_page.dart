@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:animated_floatactionbuttons/animated_floatactionbuttons.dart';
 import '../group_manager.dart';
-import './custom_contacts.dart';
+import '../class/custom_contacts.dart';
 
 class MyHomePage extends StatelessWidget {
 //  This constructor declares 2 optional named parameters, optional named because of {}
