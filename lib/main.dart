@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'pages/splash_page.dart';
 import 'pages/home_page.dart';
 import 'pages/add_user_group.dart';
+import 'pages/custom_contacts.dart';
 
 import 'package:flutter/rendering.dart'; // to be delete - for debugging the widget lazyout.
 
@@ -21,21 +22,21 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  List<Map<String,dynamic>> _groups = [];
-  
-   void _addGroups(Map<String, dynamic> groups) {
-    print("[ProductsManager Widget]  _addProducts()");
+  List<Map<String, List<CustomContact>>> _groups = [];
+
+  void _addGroups(Map<String, List<CustomContact>> groups) {
+    print("[GroupManager Widget]  _addGroup()");
     setState(() {
       _groups.add(groups);
     });
     print(_groups);
   }
 
-  void _deleteProduct(int index) {
-    setState(() {
-      _groups.removeAt(index);
-    });
-  }
+  // void _deleteProduct(int index) {
+  //   setState(() {
+  //     _groups.removeAt(index);
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -51,8 +52,7 @@ class _MyAppState extends State<MyApp> {
       routes: {
         '/': (BuildContext context) => SplashScreen(),
         '/home': (BuildContext context) => MyHomePage(_groups),
-        '/create': (BuildContext conext) => AddUserGroupPage(),
-        
+        '/create': (BuildContext conext) => AddUserGroupPage(_addGroups),
       },
     );
   }

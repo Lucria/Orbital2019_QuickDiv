@@ -6,6 +6,10 @@ import './custom_contacts.dart';
 import 'create_group_name.dart';
 
 class AddUserGroupPage extends StatefulWidget {
+  final Function addGroup;
+
+  AddUserGroupPage(this.addGroup);
+
   @override
   State<StatefulWidget> createState() {
     return _AddUserGroupPage();
@@ -43,10 +47,6 @@ class _AddUserGroupPage extends State<AddUserGroupPage> {
               child: Text('Next'),
               onPressed: _onSubmit,
             )
-            // IconButton(
-            //   icon: Icon(Icons.navigate_next, size: 35.0, textDirection:,),
-            //   onPressed: (){},
-            // )
           ],
         ),
         body: !_isLoading
@@ -73,10 +73,11 @@ class _AddUserGroupPage extends State<AddUserGroupPage> {
     _selectedContacts =
         _allContacts.where((contact) => contact.isChecked == true).toList();
 
-      Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (context) => CreateGroupName(_selectedContacts)));
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) =>
+                CreateGroupName(widget.addGroup, _selectedContacts)));
   }
 
   ListTile _buildListTile(CustomContact c, List<Item> list) {

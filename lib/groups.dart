@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'pages/custom_contacts.dart';
 
 class Groups extends StatelessWidget {
-  final List<Map<String, dynamic>> groups;
+  final List<Map<String, List<CustomContact>>> groups;
 
   Groups(this.groups) {
     print('[Groups widget] Constructor');
@@ -11,25 +12,37 @@ class Groups extends StatelessWidget {
     return Card(
       child: Column(
         children: <Widget>[
-          Text(groups[index]['title']),
-          ButtonBar(
-            alignment: MainAxisAlignment.center,
-            children: <Widget>[
-              FlatButton(
-                child: Text('Details'),
-                onPressed: () {},
-                // onPressed: () => Navigator.pushNamed<bool>(
-                //     context, '/product/' + index.toString()),
-              )
-            ],
-          )
+          ListTile(
+            leading: Icon(
+              Icons.group,
+              size: 35.0,
+            ),
+            title: Text(groups[index]
+                .keys
+                .toString()
+                .substring(1, groups[index].keys.toString().length - 1)),
+            subtitle: Text('Description'),
+            trailing: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                IconButton(
+                  icon: Icon(Icons.edit),
+                  onPressed: () {},
+                ),
+                IconButton(
+                  icon: Icon(Icons.delete),
+                  onPressed: () {},
+                ),
+              ],
+            ),
+          ),
         ],
       ),
     );
   }
 
   Widget _buildGroupList() {
-    Widget groupCards; //Variable for this function
+    Widget groupCards;
     if (groups.length > 0) {
       groupCards = ListView.builder(
         itemBuilder: _buildGroupContact,

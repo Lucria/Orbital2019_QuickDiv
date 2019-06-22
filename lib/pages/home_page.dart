@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:animated_floatactionbuttons/animated_floatactionbuttons.dart';
 import '../group_manager.dart';
+import './custom_contacts.dart';
 
 class MyHomePage extends StatelessWidget {
 //  This constructor declares 2 optional named parameters, optional named because of {}
@@ -16,11 +17,13 @@ class MyHomePage extends StatelessWidget {
 //   always marked "final".
 //
 //  final String title;
-  final List<Map<String,dynamic>> groups; 
+  // final String groupName;
+  // final CustomContact contact;
+  final List<Map<String,List<CustomContact>>> groups;
 
   MyHomePage(this.groups);
 
-  int _counter = 0;
+  final int _counter = 0;
 
   // Temporary function for testing
   void _incrementCounter() {
@@ -93,32 +96,33 @@ class MyHomePage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text("QuickDiv v1.0"),
+        automaticallyImplyLeading: false,
       ),
       body: GroupManager(groups),
 
       // Container(
-        // decoration: BoxDecoration(
-        //   gradient: LinearGradient(
-        //     begin: Alignment.topRight,
-        //     end: Alignment.bottomLeft,
-        //     stops: [0.1, 0.3, 0.5, 0.7, 0.9],
-        //     colors: [
-        //       Colors.indigo[300],
-        //       Colors.indigo[100],
-        //       Colors.pink[50],
-        //       Colors.pink[100],
-        //       Colors.pink[300],
-        //     ],
-        //   ),
-        // ),
-        // child: Center(
-        //   child: Column(
-        //     mainAxisAlignment: MainAxisAlignment.center,
-        //     children: <Widget>[
-        //       // emptyContactSection(),
-        //     ],
-        //   ),
-        // ),
+      // decoration: BoxDecoration(
+      //   gradient: LinearGradient(
+      //     begin: Alignment.topRight,
+      //     end: Alignment.bottomLeft,
+      //     stops: [0.1, 0.3, 0.5, 0.7, 0.9],
+      //     colors: [
+      //       Colors.indigo[300],
+      //       Colors.indigo[100],
+      //       Colors.pink[50],
+      //       Colors.pink[100],
+      //       Colors.pink[300],
+      //     ],
+      //   ),
+      // ),
+      // child: Center(
+      //   child: Column(
+      //     mainAxisAlignment: MainAxisAlignment.center,
+      //     children: <Widget>[
+      //       // emptyContactSection(),
+      //     ],
+      //   ),
+      // ),
       // ),
       floatingActionButton: AnimatedFloatingActionButton(
         fabButtons: <Widget>[

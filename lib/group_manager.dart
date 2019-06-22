@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'pages/custom_contacts.dart';
 import './groups.dart';
 
 class GroupManager extends StatelessWidget {
-  final List<Map<String,dynamic>> groups;
+  final List<Map<String,List<CustomContact>>> groups;
+
   GroupManager(this.groups);
 
   @override

@@ -3,9 +3,10 @@ import 'package:flutter/material.dart';
 import './custom_contacts.dart';
 
 class CreateGroupName extends StatefulWidget {
+  final Function addGroup;
   final List<CustomContact> contacts;
 
-  CreateGroupName(this.contacts);
+  CreateGroupName(this.addGroup, this.contacts);
 
   @override
   State<StatefulWidget> createState() {
@@ -49,72 +50,48 @@ class _CreateGroupName extends State<CreateGroupName> {
                 textColor: Colors.white,
                 child: Text('Create'),
                 onPressed: () {
-                  print('Creating Groups with: ');
+                  print('Creating ' + groupValue + ' Groups with: ');
                   for (var i = 0; i < widget.contacts.length; i++) {
                     print(widget.contacts[i].contact.displayName);
                     print(widget.contacts[i].contact.phones.elementAt(0).label +
                         ':' +
                         widget.contacts[i].contact.phones.elementAt(0).value);
                   }
+                  final Map<String, List<CustomContact>> group = {
+                    groupValue: widget.contacts
+                  };
+                  widget.addGroup(group);
+                  Navigator.pushReplacementNamed(context, '/home');
                 }),
-            // IconButton(
-            //   icon: Icon(Icons.navigate_next, size: 35.0, textDirection:,),
-            //   onPressed: (){},
-            // )
           ],
         ),
-        // body: Column(
-          
-        //   children: <Widget>[
-        //     Expanded( ListView.builder(
-        //       itemCount: widget.contacts.length,
-        //       itemBuilder: (BuildContext context, int index) {
-        //         CustomContact _contact = widget.contacts[index];
-        //         var _phoneList = _contact.contact.phones.toList();
+        body: Column(
+          children: <Widget>[
+            Container(
+              margin: EdgeInsets.all(10.0),
+              child: TextField(
+                decoration: InputDecoration(
+                  labelText: 'Group Name',
+                ),
+                onChanged: (String value) {
+                  setState(() {
+                    groupValue = value;
+                  });
+                },
+              ),
+            ),
+            Expanded(
+              child: ListView.builder(
+                  itemCount: widget.contacts.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    CustomContact _contact = widget.contacts[index];
+                    var _phoneList = _contact.contact.phones.toList();
 
-        //          _buildListTile(_contact,_phoneList);
-        //       }),
-
-        //     )
-        //   ],
-        // ),
-        
-        
-        body: Container(
-          child: ListView.builder(
-              itemCount: widget.contacts.length,
-              itemBuilder: (BuildContext context, int index) {
-                CustomContact _contact = widget.contacts[index];
-                var _phoneList = _contact.contact.phones.toList();
-
-                return _buildListTile(_contact,_phoneList);
-              }),
+                    return _buildListTile(_contact, _phoneList);
+                  }),
+            )
+          ],
         ),
-        // body: Container(
-        //   margin: EdgeInsets.all(10.0),
-        //   child: ListView(children: <Widget>[
-        //     TextField(
-        //       decoration: InputDecoration(
-        //         labelText: 'Group Name',
-        //       ),
-        //       onChanged: (String value) {
-        //         setState(() {
-        //           groupValue = value;
-        //         });
-        //       },
-        //     ),
-        //     Container(
-        //         child: ListView.builder(
-        //       itemCount: widget.contacts.length,
-        //       itemBuilder: (BuildContext context, int index) {
-        //         CustomContact _contact = widget.contacts[index];
-        //         var _phoneList = _contact.contact.phones.toList();
-
-        //         return _buildListTile(_contact, _phoneList);
-        //       },
-        //     ))
-        //   ]),
-        // ),
       ),
     );
   }
