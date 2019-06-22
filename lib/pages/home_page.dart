@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:animated_floatactionbuttons/animated_floatactionbuttons.dart';
+import '../group_manager.dart';
 
-class MyHomePage extends StatefulWidget {
+class MyHomePage extends StatelessWidget {
 //  This constructor declares 2 optional named parameters, optional named because of {}
 //  First is of name key with type Key
 //  Second is of name title with the type of the field this.title and automatically initializes this.title
@@ -15,19 +16,17 @@ class MyHomePage extends StatefulWidget {
 //   always marked "final".
 //
 //  final String title;
+  final List<Map<String,dynamic>> groups; 
 
-  @override
-  _MyHomePageState createState() => _MyHomePageState();
-}
+  MyHomePage(this.groups);
 
-class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
 
   // Temporary function for testing
   void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
+    // setState(() {
+    //   _counter++;
+    // });
     print(_counter);
   }
 
@@ -42,13 +41,18 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
-  Widget createContactButton() {
+  Widget createGroupButton(BuildContext context) {
     return Container(
-        child: FloatingActionButton(
-            heroTag: "createContact",
-            onPressed: _incrementCounter,
-            tooltip: "Create contact group button",
-            child: Icon(Icons.assignment_ind)));
+      child: FloatingActionButton(
+        heroTag: "createContact",
+        onPressed: () {
+          print('[home_page] trigger createContactButton()');
+          Navigator.pushNamed(context, '/create');
+        },
+        tooltip: "Create contact group button",
+        child: Icon(Icons.assignment_ind),
+      ),
+    );
   }
 
   Widget emptyContactSection() {
@@ -90,34 +94,36 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         title: Text("QuickDiv v1.0"),
       ),
-      body: Container(
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topRight,
-            end: Alignment.bottomLeft,
-            stops: [0.1, 0.3, 0.5, 0.7, 0.9],
-            colors: [
-              Colors.indigo[300],
-              Colors.indigo[100],
-              Colors.pink[50],
-              Colors.pink[100],
-              Colors.pink[300],
-            ],
-          ),
-        ),
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              emptyContactSection(),
-            ],
-          ),
-        ),
-      ),
+      body: GroupManager(groups),
+
+      // Container(
+        // decoration: BoxDecoration(
+        //   gradient: LinearGradient(
+        //     begin: Alignment.topRight,
+        //     end: Alignment.bottomLeft,
+        //     stops: [0.1, 0.3, 0.5, 0.7, 0.9],
+        //     colors: [
+        //       Colors.indigo[300],
+        //       Colors.indigo[100],
+        //       Colors.pink[50],
+        //       Colors.pink[100],
+        //       Colors.pink[300],
+        //     ],
+        //   ),
+        // ),
+        // child: Center(
+        //   child: Column(
+        //     mainAxisAlignment: MainAxisAlignment.center,
+        //     children: <Widget>[
+        //       // emptyContactSection(),
+        //     ],
+        //   ),
+        // ),
+      // ),
       floatingActionButton: AnimatedFloatingActionButton(
         fabButtons: <Widget>[
           oneTimeButton(),
-          createContactButton(),
+          createGroupButton(context),
         ],
         colorStartAnimation: Colors.blue,
         colorEndAnimation: Colors.red,

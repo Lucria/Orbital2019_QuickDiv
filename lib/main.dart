@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import './splash_page.dart';
-import 'main_page/home_page.dart';
+import 'pages/splash_page.dart';
+import 'pages/home_page.dart';
+import 'pages/add_user_group.dart';
 
 import 'package:flutter/rendering.dart'; // to be delete - for debugging the widget lazyout.
 
@@ -20,6 +21,22 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+  List<Map<String,dynamic>> _groups = [];
+  
+   void _addGroups(Map<String, dynamic> groups) {
+    print("[ProductsManager Widget]  _addProducts()");
+    setState(() {
+      _groups.add(groups);
+    });
+    print(_groups);
+  }
+
+  void _deleteProduct(int index) {
+    setState(() {
+      _groups.removeAt(index);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     print("[main Widget] build()");
@@ -33,7 +50,9 @@ class _MyAppState extends State<MyApp> {
       debugShowCheckedModeBanner: false, //remove debug LOL
       routes: {
         '/': (BuildContext context) => SplashScreen(),
-        '/home': (BuildContext context) => MyHomePage(),
+        '/home': (BuildContext context) => MyHomePage(_groups),
+        '/create': (BuildContext conext) => AddUserGroupPage(),
+        
       },
     );
   }
