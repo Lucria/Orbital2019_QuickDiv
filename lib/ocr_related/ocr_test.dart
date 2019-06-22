@@ -1,5 +1,5 @@
-import 'package:mlkit/mlkit.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_ml_vision/firebase_ml_vision.dart';
 import 'dart:io';
 import 'dart:async';
 
@@ -11,10 +11,6 @@ class DetectionWidget extends StatefulWidget {
 }
 
 class _DetectionWidgetState extends State<DetectionWidget> {
-
-    FirebaseVisionTextDetector textDetector = FirebaseVisionTextDetector
-        .instance;
-    List<VisionText> currentTextLabels = <VisionText>[];
 
     Widget build(BuildContext context) {
         return Scaffold(
