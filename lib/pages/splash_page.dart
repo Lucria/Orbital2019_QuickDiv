@@ -71,7 +71,7 @@ class _SplashScreenState extends State<SplashScreen> {
                       padding: EdgeInsets.only(top: 20.0),
                     ),
                     Text(
-                      "A simple way to split your bills.",
+                      "A Simple Way To Split Your Bills",
                       textAlign: TextAlign.center,
                       style: TextStyle(
                           color: Colors.white,

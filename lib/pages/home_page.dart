@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:animated_floatactionbuttons/animated_floatactionbuttons.dart';
+import 'package:flutter/material.dart';
 import '../group_manager.dart';
 import '../class/custom_contacts.dart';
 
@@ -33,11 +33,38 @@ class MyHomePage extends StatelessWidget {
     print(_counter);
   }
 
-  Widget oneTimeButton() {
+  Widget oneTimeButton(BuildContext context) {
     return Container(
       child: FloatingActionButton(
         heroTag: "oneTime",
-        onPressed: _incrementCounter,
+        onPressed: () {
+          // Bottom sheet will show two buttons
+          // One button is for users to upload exisiting photos from gallery
+          // The other button is for users to take a new photo using camera
+          showModalBottomSheet(
+            context: context,
+            builder: (BuildContext context){
+              return new Column(
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: <Widget>[
+                  new ListTile(
+                    onTap: () => Navigator.pushReplacementNamed(context, "/existingimage"),
+                    leading: Icon(Icons.camera),
+                    title: Text("Upload from Gallery"),
+                    contentPadding: EdgeInsets.all(16),
+                  ),
+                  new ListTile(
+                    onTap: () => Navigator.pushReplacementNamed(context, "/cameraimage"),
+                    leading: Icon(Icons.camera_enhance),
+                    title: Text("Take a new photo"),
+                    contentPadding: EdgeInsets.all(16),
+                  ),
+                ],
+              );
+            },
+          );
+        },
         tooltip: "One-time usage button",
         child: Icon(Icons.add),
       ),
@@ -60,79 +87,79 @@ class MyHomePage extends StatelessWidget {
 
   Widget emptyContactSection() {
     return Container(
-        padding: const EdgeInsets.all(12),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
-            Container(
-              padding: const EdgeInsets.only(bottom: 8),
-              child: Text(
-                "Contacts added will appear here!",
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: 26,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black87,
-                ),
-              ),
-            ),
-            Text(
-              "Press the button below to get started!",
+      padding: const EdgeInsets.all(12),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: <Widget>[
+          Container(
+            padding: const EdgeInsets.only(bottom: 8),
+            child: Text(
+              "Groups added will appear here!",
+              textAlign: TextAlign.center,
               style: TextStyle(
-                fontStyle: FontStyle.italic,
-                fontSize: 18,
+                fontSize: 26,
+                fontWeight: FontWeight.bold,
                 color: Colors.black87,
               ),
-            )
-          ],
-        ));
+            ),
+          ),
+          Text(
+            "Press the button below to get started!",
+            style: TextStyle(
+              fontStyle: FontStyle.italic,
+              fontSize: 18,
+              color: Colors.black87,
+            ),
+          )
+        ],
+      )
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     // This method is rerun every time setState is called, for instance as done
     // by the _incrementCounter method above.
-
     return Scaffold(
       appBar: AppBar(
         title: Text("QuickDiv v1.0"),
         automaticallyImplyLeading: false,
       ),
       body: GroupManager(groups),
+//      Container(
+//        decoration: BoxDecoration(
+//          gradient: LinearGradient(
+//            begin: Alignment.topLeft,
+//            end: Alignment.bottomRight,
+//            stops: [0.1, 0.3, 0.5, 0.7, 0.9],
+//            colors: [
+//              Colors.indigo[300],
+//              Colors.indigo[100],
+//              Colors.pink[50],
+//              Colors.pink[100],
+//              Colors.pink[300],
+//            ],
+//          ),
+//        ),
+//        child: Center(
+//          child: Column(
+//            mainAxisAlignment: MainAxisAlignment.center,
+//            children: <Widget>[
+//              emptyContactSection(),
+//            ],
+//          ),
+//        ),
+//      ),
 
-      // Container(
-      // decoration: BoxDecoration(
-      //   gradient: LinearGradient(
-      //     begin: Alignment.topRight,
-      //     end: Alignment.bottomLeft,
-      //     stops: [0.1, 0.3, 0.5, 0.7, 0.9],
-      //     colors: [
-      //       Colors.indigo[300],
-      //       Colors.indigo[100],
-      //       Colors.pink[50],
-      //       Colors.pink[100],
-      //       Colors.pink[300],
-      //     ],
-      //   ),
-      // ),
-      // child: Center(
-      //   child: Column(
-      //     mainAxisAlignment: MainAxisAlignment.center,
-      //     children: <Widget>[
-      //       // emptyContactSection(),
-      //     ],
-      //   ),
-      // ),
-      // ),
       floatingActionButton: AnimatedFloatingActionButton(
         fabButtons: <Widget>[
-          oneTimeButton(),
+          oneTimeButton(context),
           createGroupButton(context),
         ],
-        colorStartAnimation: Colors.blue,
-        colorEndAnimation: Colors.red,
+          colorStartAnimation: Colors.deepPurple,
+        colorEndAnimation: Colors.pink,
         // AnimatedIconData defines the start and end icons for the toggle animation
-        animatedIconData: AnimatedIcons.menu_close,
+        animatedIconData: AnimatedIcons.menu_home,
       ),
     );
   }

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'image_confirmation/receipt_image_upload.dart';
+import 'image_confirmation/receipt_image_camera.dart';
 import 'pages/splash_page.dart';
 import 'pages/home_page.dart';
 import 'pages/add_user_group.dart';
@@ -45,12 +47,14 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       // debugShowMaterialGrid: true, // to show the grid of the layout.
       theme: ThemeData(
-          brightness: Brightness.light,
-          primarySwatch: Colors.pink,
-          accentColor: Colors.blue),
+        brightness: Brightness.light,
+        primarySwatch: Colors.pink,
+        accentColor: Colors.blue[800]),
       debugShowCheckedModeBanner: false, //remove debug LOL
       routes: {
         '/': (BuildContext context) => SplashScreen(),
+        '/existingimage': (BuildContext context) => UploadImage(),
+        '/cameraimage' : (BuildContext context) => CameraImage(),
         '/home': (BuildContext context) => MyHomePage(_groups),
         '/create': (BuildContext context) => AddUserGroupPage(_addGroups),
       },
