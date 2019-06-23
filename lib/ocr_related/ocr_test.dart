@@ -12,6 +12,15 @@ class DetectionWidget extends StatefulWidget {
 
 class _DetectionWidgetState extends State<DetectionWidget> {
 
+    // TODO pass image file from receipt_image page to here
+//    File imageFile = getImageFile(); // * Placeholder
+//    FirebaseVisionImage visionImage = FirebaseVisionImage.fromFile(imageFile);
+//    TextRecognizer textRecognizer = FirebaseVision.instance.textRecognizer();
+//    Future<VisionText> getVisionText() async {
+//        VisionText visionText = await textRecognizer.processImage(visionImage);
+//        return visionText;
+//    }
+
     Widget build(BuildContext context) {
         return Scaffold(
             appBar: AppBar(
