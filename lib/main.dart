@@ -52,7 +52,7 @@ class _MyAppState extends State<MyApp> {
       routes: {
         '/': (BuildContext context) => SplashScreen(),
         '/home': (BuildContext context) => MyHomePage(_groups),
-        '/create': (BuildContext conext) => AddUserGroupPage(_addGroups),
+        '/create': (BuildContext context) => AddUserGroupPage(_addGroups),
       },
     );
   }
