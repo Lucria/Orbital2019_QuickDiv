@@ -1,7 +1,9 @@
 import 'package:animated_floatactionbuttons/animated_floatactionbuttons.dart';
 import 'package:flutter/material.dart';
+import '../group_manager.dart';
+import '../class/custom_contacts.dart';
 
-class MyHomePage extends StatefulWidget {
+class MyHomePage extends StatelessWidget {
 //  This constructor declares 2 optional named parameters, optional named because of {}
 //  First is of name key with type Key
 //  Second is of name title with the type of the field this.title and automatically initializes this.title
@@ -15,19 +17,19 @@ class MyHomePage extends StatefulWidget {
 //   always marked "final".
 //
 //  final String title;
+  // final String groupName;
+  // final CustomContact contact;
+  final List<Map<String,List<CustomContact>>> groups;
 
-  @override
-  _MyHomePageState createState() => _MyHomePageState();
-}
+  MyHomePage(this.groups);
 
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
+  final int _counter = 0;
 
   // Temporary function for testing
   void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
+    // setState(() {
+    //   _counter++;
+    // });
     print(_counter);
   }
 
@@ -69,14 +71,16 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
-  Widget createContactButton() {     
+  Widget createGroupButton(BuildContext context) {
     return Container(
       child: FloatingActionButton(
         heroTag: "createContact",
-        // Open contacts and create a new group
-        onPressed: _incrementCounter,
-        tooltip: "Contact group button",
-        child: Icon(Icons.assignment_ind)
+        onPressed: () {
+          print('[home_page] trigger createContactButton()');
+          Navigator.pushNamed(context, '/create');
+        },
+        tooltip: "Create contact group button",
+        child: Icon(Icons.assignment_ind),
       ),
     );
   }
@@ -119,40 +123,43 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       appBar: AppBar(
         title: Text("QuickDiv v1.0"),
+        automaticallyImplyLeading: false,
       ),
-      body: Container(
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-            stops: [0.1, 0.3, 0.5, 0.7, 0.9],
-            colors: [
-              Colors.indigo[300],
-              Colors.indigo[100],
-              Colors.pink[50],
-              Colors.pink[100],
-              Colors.pink[300],
-            ],
-          ),
-        ),
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              emptyContactSection(),
-            ],
-          ),
-        ),
-      ),
+      body: GroupManager(groups),
+//      Container(
+//        decoration: BoxDecoration(
+//          gradient: LinearGradient(
+//            begin: Alignment.topLeft,
+//            end: Alignment.bottomRight,
+//            stops: [0.1, 0.3, 0.5, 0.7, 0.9],
+//            colors: [
+//              Colors.indigo[300],
+//              Colors.indigo[100],
+//              Colors.pink[50],
+//              Colors.pink[100],
+//              Colors.pink[300],
+//            ],
+//          ),
+//        ),
+//        child: Center(
+//          child: Column(
+//            mainAxisAlignment: MainAxisAlignment.center,
+//            children: <Widget>[
+//              emptyContactSection(),
+//            ],
+//          ),
+//        ),
+//      ),
+
       floatingActionButton: AnimatedFloatingActionButton(
         fabButtons: <Widget>[
           oneTimeButton(),
-          createContactButton(),
+          createGroupButton(context),
         ],
           colorStartAnimation: Colors.deepPurple,
         colorEndAnimation: Colors.pink,
         // AnimatedIconData defines the start and end icons for the toggle animation
-        animatedIconData: AnimatedIcons.menu_home, 
+        animatedIconData: AnimatedIcons.menu_home,
       ),
     );
   }
