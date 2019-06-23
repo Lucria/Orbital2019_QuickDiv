@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:contacts_service/contacts_service.dart';
-import 'package:simple_permissions/simple_permissions.dart';
+import 'package:permission_handler/permission_handler.dart';
 import '../class/custom_contacts.dart';
 import 'create_group_name.dart';
 
@@ -21,18 +21,18 @@ class _AddUserGroupPage extends State<AddUserGroupPage> {
   List<CustomContact> _selectedContacts = List<CustomContact>();
   List<CustomContact> _allContacts = List<CustomContact>();
   bool _isLoading = false;
+  PermissionStatus _status;
 
   @override
   void initState() {
     super.initState();
-    getContactsPermission();
-    refreshContacts();
+    waitContactsPermission();
   }
 
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-      // WillPopScope will listen to the back button being press - for andriod only.
+      // WillPopScope will listen to the back button being press - for Android only.
       onWillPop: () {
         print('[AddUserGroupPage] Back button pressed!');
         Navigator.pop(context, false);
@@ -124,7 +124,15 @@ class _AddUserGroupPage extends State<AddUserGroupPage> {
     });
   }
 
-  void getContactsPermission() {
-    SimplePermissions.requestPermission(Permission.ReadContacts);
+  Future<void> getContactsPermission() async {
+    Map<PermissionGroup,
+      PermissionStatus> permissions = await PermissionHandler()
+      .requestPermissions([PermissionGroup.contacts]);
+    _status = permissions[PermissionGroup.contacts];
+  }
+
+  void waitContactsPermission() async {
+    await getContactsPermission();
+    refreshContacts();
   }
 }

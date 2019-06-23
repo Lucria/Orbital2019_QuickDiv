@@ -25,7 +25,7 @@ dependencies:
   cupertino_icons: ^0.1.2
   animated_floatactionbuttons: ^0.1.0
   contacts_service: ^0.0.8
-  simple_permissions: ^0.1.6
+  permission_handler: ^3.1.0
 
 dev_dependencies:
   flutter_test:
