@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'dart:io';
 import 'package:image_picker/image_picker.dart';
 import 'confirmation_message.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class UploadImage extends StatefulWidget {
   @override
@@ -54,8 +55,14 @@ class _UploadImageState extends State<UploadImage> {
   }
 
   @override
+  void initState() {
+    super.initState();
+    waitGalleryPermission();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    pickImage(ImageSource.gallery);
+//    pickImage(ImageSource.gallery);
     return Scaffold(
       appBar: AppBar(
         title: Text("QuickDiv v1.0"),
@@ -86,5 +93,16 @@ class _UploadImageState extends State<UploadImage> {
         ),
       ),
     );
+  }
+
+  Future<void> getGalleryPermission() async {
+    Map<PermissionGroup,
+      PermissionStatus> permissions = await PermissionHandler()
+      .requestPermissions([PermissionGroup.storage]);
+  }
+
+  void waitGalleryPermission() async {
+    await getGalleryPermission();
+    pickImage(ImageSource.gallery);
   }
 }
