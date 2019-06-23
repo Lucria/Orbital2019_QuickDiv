@@ -33,7 +33,7 @@ class MyHomePage extends StatelessWidget {
     print(_counter);
   }
 
-  Widget oneTimeButton() {
+  Widget oneTimeButton(BuildContext context) {
     return Container(
       child: FloatingActionButton(
         heroTag: "oneTime",
@@ -153,7 +153,7 @@ class MyHomePage extends StatelessWidget {
 
       floatingActionButton: AnimatedFloatingActionButton(
         fabButtons: <Widget>[
-          oneTimeButton(),
+          oneTimeButton(context),
           createGroupButton(context),
         ],
           colorStartAnimation: Colors.deepPurple,
