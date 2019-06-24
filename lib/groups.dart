@@ -59,7 +59,7 @@ class Groups extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print('[Product Widget] build()');
+    print('[Group Widget] build()');
     return _buildGroupList();
   }
 }

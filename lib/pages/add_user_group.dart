@@ -57,7 +57,7 @@ class _AddUserGroupPage extends State<AddUserGroupPage> {
                     CustomContact _contact = _selectedContacts[index];
                     var _phonesList = _contact.contact.phones.toList();
 
-                    return _buildListTile(_contact, _phonesList);
+                    return _buildListTile(_contact, _phonesList, context);
                   },
                 ),
               )
@@ -80,16 +80,15 @@ class _AddUserGroupPage extends State<AddUserGroupPage> {
                 CreateGroupName(widget.addGroup, _selectedContacts)));
   }
 
-  ListTile _buildListTile(CustomContact c, List<Item> list) {
+  ListTile _buildListTile(
+      CustomContact c, List<Item> list, BuildContext context) {
+    bool _load =
+        Theme.of(context).platform == TargetPlatform.iOS ? true : false;
+
     return ListTile(
-      leading: (c.contact.avatar != null)
-          ? CircleAvatar(backgroundImage: MemoryImage(c.contact.avatar))
-          : CircleAvatar(
-              child: Text(
-                  (c.contact.displayName[0] +
-                      c.contact.displayName[1].toUpperCase()),
-                  style: TextStyle(color: Colors.white)),
-            ),
+      leading: (_load) // if true load ios code else android code
+          ? loadAvatar(c, (c.contact.avatar != null))
+          : loadAvatar(c, (c.contact.avatar.isNotEmpty)),
       title: Text(c.contact.displayName ?? ""),
       subtitle: list.length >= 1 && list[0]?.value != null
           ? Text(list[0].value)
@@ -103,6 +102,17 @@ class _AddUserGroupPage extends State<AddUserGroupPage> {
             });
           }),
     );
+  }
+
+  Widget loadAvatar(CustomContact c, bool contactAvatar) {
+    return contactAvatar
+        ? CircleAvatar(backgroundImage: MemoryImage(c.contact.avatar))
+        : CircleAvatar(
+            child: Text(
+                (c.contact.displayName[0] +
+                    c.contact.displayName[1].toUpperCase().toString()),
+                style: TextStyle(color: Colors.white)),
+          );
   }
 
   refreshContacts() async {
@@ -125,9 +135,9 @@ class _AddUserGroupPage extends State<AddUserGroupPage> {
   }
 
   Future<void> getContactsPermission() async {
-    Map<PermissionGroup,
-      PermissionStatus> permissions = await PermissionHandler()
-      .requestPermissions([PermissionGroup.contacts]);
+    Map<PermissionGroup, PermissionStatus> permissions =
+        await PermissionHandler()
+            .requestPermissions([PermissionGroup.contacts]);
     _status = permissions[PermissionGroup.contacts];
   }
 
