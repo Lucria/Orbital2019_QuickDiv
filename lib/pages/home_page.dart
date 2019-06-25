@@ -85,37 +85,6 @@ class MyHomePage extends StatelessWidget {
     );
   }
 
-  Widget emptyContactSection() {
-    return Container(
-      padding: const EdgeInsets.all(12),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: <Widget>[
-          Container(
-            padding: const EdgeInsets.only(bottom: 8),
-            child: Text(
-              "Groups added will appear here!",
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontSize: 26,
-                fontWeight: FontWeight.bold,
-                color: Colors.black87,
-              ),
-            ),
-          ),
-          Text(
-            "Press the button below to get started!",
-            style: TextStyle(
-              fontStyle: FontStyle.italic,
-              fontSize: 18,
-              color: Colors.black87,
-            ),
-          )
-        ],
-      )
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     // This method is rerun every time setState is called, for instance as done
@@ -125,31 +94,24 @@ class MyHomePage extends StatelessWidget {
         title: Text("QuickDiv v1.0"),
         automaticallyImplyLeading: false,
       ),
-      body: GroupManager(groups),
-//      Container(
-//        decoration: BoxDecoration(
-//          gradient: LinearGradient(
-//            begin: Alignment.topLeft,
-//            end: Alignment.bottomRight,
-//            stops: [0.1, 0.3, 0.5, 0.7, 0.9],
-//            colors: [
-//              Colors.indigo[300],
-//              Colors.indigo[100],
-//              Colors.pink[50],
-//              Colors.pink[100],
-//              Colors.pink[300],
-//            ],
-//          ),
-//        ),
-//        child: Center(
-//          child: Column(
-//            mainAxisAlignment: MainAxisAlignment.center,
-//            children: <Widget>[
-//              emptyContactSection(),
-//            ],
-//          ),
-//        ),
-//      ),
+      body: 
+      Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            stops: [0.1, 0.3, 0.5, 0.7, 0.9],
+            colors: [
+              Colors.indigo[300],
+              Colors.indigo[100],
+              Colors.pink[50],
+              Colors.pink[100],
+              Colors.pink[300],
+            ],
+          ),
+        ),
+        child: GroupManager(groups),
+      ),
 
       floatingActionButton: AnimatedFloatingActionButton(
         fabButtons: <Widget>[

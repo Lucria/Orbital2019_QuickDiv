@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'class/custom_contacts.dart';
+import 'emptycontactswidget.dart';
 
 class Groups extends StatelessWidget {
   final List<Map<String, List<CustomContact>>> groups;
@@ -50,8 +51,12 @@ class Groups extends StatelessWidget {
       );
     } else {
       groupCards = Center(
-        child: Text(
-            'Groups will appear here. \nPress the button below to get started!'),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            emptyContactSection(),
+          ],
+        ),
       );
     }
     return groupCards;
