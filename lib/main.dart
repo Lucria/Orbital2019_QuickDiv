@@ -5,6 +5,7 @@ import 'pages/splash_page.dart';
 import 'pages/home_page.dart';
 import 'pages/add_user_group.dart';
 import 'class/custom_contacts.dart';
+import 'pages/split_bill_tap.dart';
 
 import 'package:flutter/rendering.dart'; // to be delete - for debugging the widget lazyout.
 
@@ -57,6 +58,8 @@ class _MyAppState extends State<MyApp> {
         '/cameraimage' : (BuildContext context) => CameraImage(),
         '/home': (BuildContext context) => MyHomePage(_groups),
         '/create': (BuildContext context) => AddUserGroupPage(_addGroups),
+        // '/splitbill' : (BuildContext context) => SplitBill(),
+        '/splitbill' : (BuildContext context) => SplitBillTap(),
       },
     );
   }

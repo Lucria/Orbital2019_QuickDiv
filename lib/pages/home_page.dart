@@ -77,7 +77,7 @@ class MyHomePage extends StatelessWidget {
         heroTag: "createContact",
         onPressed: () {
           print('[home_page] trigger createContactButton()');
-          Navigator.pushNamed(context, '/create');
+          Navigator.pushNamed(context, '/splitbill');
         },
         tooltip: "Create contact group button",
         child: Icon(Icons.assignment_ind),
