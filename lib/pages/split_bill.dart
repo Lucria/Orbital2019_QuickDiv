@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
 
 class SplitBill extends StatefulWidget {
   @override
@@ -24,10 +25,17 @@ class _SplitBill extends State<SplitBill> {
       appBar: AppBar(
         title: Text('QuickDiv'),
       ),
-      body: ListView.builder(
+      body:
+          // FlatButton(
+          //   child: Text('press'),
+          //   onPressed: () {
+          //     _onAlertButtonPressed(context);
+          //   },
+          // )
+          ListView.builder(
         itemCount: list.length,
         itemBuilder: (context, index) {
-          return itemCard(list[index], index);
+          return itemCard(context, list[index], index);
         },
       ),
     );
@@ -39,7 +47,19 @@ class _SplitBill extends State<SplitBill> {
     });
   }
 
-  Widget itemCard(String name, int index) {
+  Widget _shareDialog() {
+    return AlertDialog(
+      title: Text('Share'),
+      actions: <Widget>[
+        FlatButton(
+          child: Text('Submit'),
+          onPressed: () {},
+        )
+      ],
+    );
+  }
+
+  Widget itemCard(BuildContext context, String name, int index) {
     return Card(
       child: Column(
         children: <Widget>[
@@ -52,8 +72,12 @@ class _SplitBill extends State<SplitBill> {
             subtitle: Text('Price 1'),
             trailing: PopupMenuButton(
               onSelected: (value) {
-                print(value);
-                removeItem(value);
+                if (value == 'Share') {
+                  _onAlertButtonPressed(context);
+                } else {
+                  print(value);
+                  removeItem(value);
+                }
               },
               itemBuilder: (context) {
                 var list = List<PopupMenuEntry<Object>>();
@@ -75,7 +99,7 @@ class _SplitBill extends State<SplitBill> {
                 );
 
                 list.add(
-                  PopupMenuItem(child: Text('Share'), value: index),
+                  PopupMenuItem(child: Text('Share'), value: 'Share'),
                 );
                 return list;
               },
@@ -84,5 +108,24 @@ class _SplitBill extends State<SplitBill> {
         ],
       ),
     );
+  }
+
+  _onAlertButtonPressed(context) {
+    Alert(
+      context: context,
+      type: AlertType.error,
+      title: "RFLUTTER ALERT",
+      desc: "Flutter is more awesome with RFlutter Alert.",
+      buttons: [
+        DialogButton(
+          child: Text(
+            "COOL",
+            style: TextStyle(color: Colors.white, fontSize: 20),
+          ),
+          onPressed: () => Navigator.pop(context),
+          width: 120,
+        )
+      ],
+    ).show();
   }
 }
