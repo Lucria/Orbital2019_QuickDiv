@@ -10,34 +10,66 @@ class Groups extends StatelessWidget {
   }
 
   Widget _buildGroupContact(BuildContext context, int index) {
-    return Card(
-      child: Column(
-        children: <Widget>[
-          ListTile(
-            leading: Icon(
-              Icons.group,
-              size: 35.0,
+    return GestureDetector(
+      onTap: () {
+            // Bottom sheet will show two buttons
+            // One button is for users to upload exisiting photos from gallery
+            // The other button is for users to take a new photo using camera
+            showModalBottomSheet(
+              context: context,
+              builder: (BuildContext context) {
+                return new Column(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: <Widget>[
+                    new ListTile(
+                      onTap: () => Navigator.pushReplacementNamed(
+                          context, "/existingimage"),
+                      leading: Icon(Icons.camera),
+                      title: Text("Upload from Gallery"),
+                      contentPadding: EdgeInsets.all(16),
+                    ),
+                    new ListTile(
+                      onTap: () => Navigator.pushReplacementNamed(
+                          context, "/cameraimage"),
+                      leading: Icon(Icons.camera_enhance),
+                      title: Text("Take a new photo"),
+                      contentPadding: EdgeInsets.all(16),
+                    ),
+                  ],
+                );
+              },
+            );
+          },
+      child: Card(
+        child: Column(
+          children: <Widget>[
+            ListTile(
+              leading: Icon(
+                Icons.group,
+                size: 35.0,
+              ),
+              title: Text(groups[index]
+                  .keys
+                  .toString()
+                  .substring(1, groups[index].keys.toString().length - 1)),
+              subtitle: Text('Description'),
+              trailing: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  IconButton(
+                    icon: Icon(Icons.edit),
+                    onPressed: () {},
+                  ),
+                  IconButton(
+                    icon: Icon(Icons.delete),
+                    onPressed: () {},
+                  ),
+                ],
+              ),
             ),
-            title: Text(groups[index]
-                .keys
-                .toString()
-                .substring(1, groups[index].keys.toString().length - 1)),
-            subtitle: Text('Description'),
-            trailing: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: <Widget>[
-                IconButton(
-                  icon: Icon(Icons.edit),
-                  onPressed: () {},
-                ),
-                IconButton(
-                  icon: Icon(Icons.delete),
-                  onPressed: () {},
-                ),
-              ],
-            ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
