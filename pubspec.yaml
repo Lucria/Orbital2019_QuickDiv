@@ -28,6 +28,8 @@ dependencies:
   image_picker: ^0.6.0+10
   #firebase_ml_vision: ^0.9.0
   contacts_service: ^0.2.7
+  rflutter_alert: ^1.0.2
+  grouped_buttons: ^1.0.4
 
 dev_dependencies:
   flutter_test:

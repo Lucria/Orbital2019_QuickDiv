@@ -5,6 +5,7 @@ import 'pages/splash_page.dart';
 import 'pages/home_page.dart';
 import 'pages/add_user_group.dart';
 import 'class/custom_contacts.dart';
+import 'pages/split_bill.dart';
 
 import 'package:flutter/rendering.dart'; // to be delete - for debugging the widget lazyout.
 
@@ -47,16 +48,17 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       // debugShowMaterialGrid: true, // to show the grid of the layout.
       theme: ThemeData(
-        brightness: Brightness.light,
-        primarySwatch: Colors.pink,
-        accentColor: Colors.blue[800]),
+          brightness: Brightness.light,
+          primarySwatch: Colors.pink,
+          accentColor: Colors.blue[800]),
       debugShowCheckedModeBanner: false, //remove debug LOL
       routes: {
         '/': (BuildContext context) => SplashScreen(),
         '/existingimage': (BuildContext context) => UploadImage(),
-        '/cameraimage' : (BuildContext context) => CameraImage(),
+        '/cameraimage': (BuildContext context) => CameraImage(),
         '/home': (BuildContext context) => MyHomePage(_groups),
         '/create': (BuildContext context) => AddUserGroupPage(_addGroups),
+        '/splitbill': (BuildContext context) => SplitBill(),
       },
     );
   }
