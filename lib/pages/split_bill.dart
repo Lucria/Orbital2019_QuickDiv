@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
+import 'package:grouped_buttons/grouped_buttons.dart';
 
 class SplitBill extends StatefulWidget {
   @override
@@ -25,18 +26,15 @@ class _SplitBill extends State<SplitBill> {
       appBar: AppBar(
         title: Text('QuickDiv'),
       ),
-      body:
-          // FlatButton(
-          //   child: Text('press'),
-          //   onPressed: () {
-          //     _onAlertButtonPressed(context);
-          //   },
-          // )
-          ListView.builder(
+      body: ListView.builder(
         itemCount: list.length,
         itemBuilder: (context, index) {
           return itemCard(context, list[index], index);
         },
+      ),
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.undo),
+        onPressed: () {},
       ),
     );
   }
@@ -73,7 +71,7 @@ class _SplitBill extends State<SplitBill> {
             trailing: PopupMenuButton(
               onSelected: (value) {
                 if (value == 'Share') {
-                  _onAlertButtonPressed(context);
+                  _onAlertButtonPressed(context, index);
                 } else {
                   print(value);
                   removeItem(value);
@@ -110,19 +108,37 @@ class _SplitBill extends State<SplitBill> {
     );
   }
 
-  _onAlertButtonPressed(context) {
+  _onAlertButtonPressed(context, index) {
     Alert(
       context: context,
-      type: AlertType.error,
-      title: "RFLUTTER ALERT",
-      desc: "Flutter is more awesome with RFlutter Alert.",
+      title: "Who are you sharing this item with? ",
+      content: CheckboxGroup(
+        labels: <String>[
+          "Dillen",
+          "Jerry",
+          "Jon",
+          "Pink",
+          "Select All",
+        ],
+        onChange: (bool isChecked, String label, int index) {
+
+          if(label == 'Select All'){
+          }
+          print("isChecked: $isChecked   label: $label  index: $index");
+        },
+        onSelected: (List<String> checked) =>
+            print("checked: ${checked.toString()}"),
+      ),
       buttons: [
         DialogButton(
           child: Text(
-            "COOL",
+            "Done",
             style: TextStyle(color: Colors.white, fontSize: 20),
           ),
-          onPressed: () => Navigator.pop(context),
+          onPressed: () {
+            removeItem(index);
+            Navigator.pop(context);
+          },
           width: 120,
         )
       ],
