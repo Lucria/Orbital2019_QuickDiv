@@ -66,6 +66,15 @@ class _UploadImageState extends State<UploadImage> {
     return Scaffold(
       appBar: AppBar(
         title: Text("QuickDiv v1.0"),
+        actions: <Widget>[
+          FlatButton(
+            textColor: Colors.white,
+            child: Text('Next'),
+            onPressed: (){
+              Navigator.pushReplacementNamed(context, '/splitbill');
+            },
+          )
+        ],
       ),
       body: Container(
         decoration: BoxDecoration(
