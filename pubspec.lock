@@ -42,7 +42,7 @@ packages:
       name: contacts_service
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.2.7"
+    version: "0.2.8"
   cupertino_icons:
     dependency: "direct main"
     description:
