@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../widget/background.dart';
 
 class ReviewPage extends StatelessWidget {
   Widget _inCard() {
@@ -46,6 +47,7 @@ class ReviewPage extends StatelessWidget {
         title: Text('QuickDiv'),
       ),
       body: Container(
+         decoration: BackgroundImage.myBoxDecoration(),
         padding: EdgeInsets.all(10.0),
         child: Column(
           children: <Widget>[
