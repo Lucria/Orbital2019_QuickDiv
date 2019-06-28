@@ -26,11 +26,21 @@ class _SplitBill extends State<SplitBill> {
       appBar: AppBar(
         title: Text('QuickDiv'),
       ),
-      body: ListView.builder(
-        itemCount: list.length,
-        itemBuilder: (context, index) {
-          return itemCard(context, list[index], index);
-        },
+      body: Container(
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            fit: BoxFit.cover,
+            colorFilter: ColorFilter.mode(
+                Colors.black.withOpacity(0.3), BlendMode.dstATop),
+            image: AssetImage('assets/background.jpg'),
+          ),
+        ),
+        child: ListView.builder(
+          itemCount: list.length,
+          itemBuilder: (context, index) {
+            return itemCard(context, list[index], index);
+          },
+        ),
       ),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.undo),
@@ -121,9 +131,7 @@ class _SplitBill extends State<SplitBill> {
           "Select All",
         ],
         onChange: (bool isChecked, String label, int index) {
-
-          if(label == 'Select All'){
-          }
+          if (label == 'Select All') {}
           print("isChecked: $isChecked   label: $label  index: $index");
         },
         onSelected: (List<String> checked) =>

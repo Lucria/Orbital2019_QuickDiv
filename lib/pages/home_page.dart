@@ -19,7 +19,7 @@ class MyHomePage extends StatelessWidget {
 //  final String title;
   // final String groupName;
   // final CustomContact contact;
-  final List<Map<String,List<CustomContact>>> groups;
+  final List<Map<String, List<CustomContact>>> groups;
 
   MyHomePage(this.groups);
 
@@ -43,19 +43,21 @@ class MyHomePage extends StatelessWidget {
           // The other button is for users to take a new photo using camera
           showModalBottomSheet(
             context: context,
-            builder: (BuildContext context){
+            builder: (BuildContext context) {
               return new Column(
                 mainAxisSize: MainAxisSize.min,
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: <Widget>[
                   new ListTile(
-                    onTap: () => Navigator.pushReplacementNamed(context, "/existingimage"),
+                    onTap: () => Navigator.pushReplacementNamed(
+                        context, "/existingimage"),
                     leading: Icon(Icons.camera),
                     title: Text("Upload from Gallery"),
                     contentPadding: EdgeInsets.all(16),
                   ),
                   new ListTile(
-                    onTap: () => Navigator.pushReplacementNamed(context, "/cameraimage"),
+                    onTap: () =>
+                        Navigator.pushReplacementNamed(context, "/cameraimage"),
                     leading: Icon(Icons.camera_enhance),
                     title: Text("Take a new photo"),
                     contentPadding: EdgeInsets.all(16),
@@ -94,31 +96,23 @@ class MyHomePage extends StatelessWidget {
         title: Text("QuickDiv v1.0"),
         automaticallyImplyLeading: false,
       ),
-      body: 
-      Container(
+      body: Container(
         decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-            stops: [0.1, 0.3, 0.5, 0.7, 0.9],
-            colors: [
-              Colors.indigo[300],
-              Colors.indigo[100],
-              Colors.pink[50],
-              Colors.pink[100],
-              Colors.pink[300],
-            ],
+          image: DecorationImage(
+            fit: BoxFit.cover,
+            colorFilter: ColorFilter.mode(
+                Colors.black.withOpacity(0.3), BlendMode.dstATop),
+            image: AssetImage('assets/background.jpg'),
           ),
         ),
         child: GroupManager(groups),
       ),
-
       floatingActionButton: AnimatedFloatingActionButton(
         fabButtons: <Widget>[
           oneTimeButton(context),
           createGroupButton(context),
         ],
-          colorStartAnimation: Colors.deepPurple,
+        colorStartAnimation: Colors.deepPurple,
         colorEndAnimation: Colors.pink,
         // AnimatedIconData defines the start and end icons for the toggle animation
         animatedIconData: AnimatedIcons.menu_home,
