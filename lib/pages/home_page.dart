@@ -1,6 +1,6 @@
 import 'package:animated_floatactionbuttons/animated_floatactionbuttons.dart';
 import 'package:flutter/material.dart';
-import '../group_manager.dart';
+import '../widget/groups/groups.dart';
 import '../class/custom_contacts.dart';
 
 class MyHomePage extends StatelessWidget {
@@ -105,7 +105,7 @@ class MyHomePage extends StatelessWidget {
             image: AssetImage('assets/background.jpg'),
           ),
         ),
-        child: GroupManager(groups),
+        child: Groups(groups),
       ),
       floatingActionButton: AnimatedFloatingActionButton(
         fabButtons: <Widget>[
