@@ -26,6 +26,15 @@ class _SplitBill extends State<SplitBill> {
     return Scaffold(
       appBar: AppBar(
         title: Text('QuickDiv'),
+        actions: <Widget>[
+          FlatButton(
+            child: Text('Done'),
+            textColor: Colors.white,
+            onPressed: () {
+              Navigator.pushReplacementNamed(context, '/reviewpage');
+            },
+          )
+        ],
       ),
       body: Container(
         decoration: BackgroundImage.myBoxDecoration(),
