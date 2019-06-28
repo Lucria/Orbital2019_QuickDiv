@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:grouped_buttons/grouped_buttons.dart';
+import '../widget/background.dart';
 
 class SplitBill extends StatefulWidget {
   @override
@@ -27,14 +28,7 @@ class _SplitBill extends State<SplitBill> {
         title: Text('QuickDiv'),
       ),
       body: Container(
-        decoration: BoxDecoration(
-          image: DecorationImage(
-            fit: BoxFit.cover,
-            colorFilter: ColorFilter.mode(
-                Colors.black.withOpacity(0.3), BlendMode.dstATop),
-            image: AssetImage('assets/background.jpg'),
-          ),
-        ),
+        decoration: BackgroundImage.myBoxDecoration(),
         child: ListView.builder(
           itemCount: list.length,
           itemBuilder: (context, index) {

@@ -2,6 +2,7 @@ import 'package:animated_floatactionbuttons/animated_floatactionbuttons.dart';
 import 'package:flutter/material.dart';
 import '../widget/groups/groups.dart';
 import '../class/custom_contacts.dart';
+import '../widget/background.dart';
 
 class MyHomePage extends StatelessWidget {
 //  This constructor declares 2 optional named parameters, optional named because of {}
@@ -79,7 +80,8 @@ class MyHomePage extends StatelessWidget {
         heroTag: "createContact",
         onPressed: () {
           print('[home_page] trigger createContactButton()');
-          Navigator.pushNamed(context, '/create');
+          // Navigator.pushNamed(context, '/create');
+          Navigator.pushNamed(context, '/reviewpage');
         },
         tooltip: "Create contact group button",
         child: Icon(Icons.assignment_ind),
@@ -97,14 +99,7 @@ class MyHomePage extends StatelessWidget {
         automaticallyImplyLeading: false,
       ),
       body: Container(
-        decoration: BoxDecoration(
-          image: DecorationImage(
-            fit: BoxFit.cover,
-            colorFilter: ColorFilter.mode(
-                Colors.black.withOpacity(0.3), BlendMode.dstATop),
-            image: AssetImage('assets/background.jpg'),
-          ),
-        ),
+        decoration: BackgroundImage.myBoxDecoration(),
         child: Groups(groups),
       ),
       floatingActionButton: AnimatedFloatingActionButton(
