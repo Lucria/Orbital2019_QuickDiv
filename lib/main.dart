@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:quickdiv_orbital2019/pages/review_page.dart';
 import 'image_confirmation/receipt_image_upload.dart';
 import 'image_confirmation/receipt_image_camera.dart';
 import 'pages/splash_page.dart';
@@ -6,6 +7,7 @@ import 'pages/home_page.dart';
 import 'pages/add_user_group.dart';
 import 'class/custom_contacts.dart';
 import 'pages/split_bill.dart';
+import 'pages/review_page.dart';
 
 import 'package:flutter/rendering.dart'; // to be delete - for debugging the widget lazyout.
 
@@ -51,7 +53,7 @@ class _MyAppState extends State<MyApp> {
           brightness: Brightness.light,
           primarySwatch: Colors.pink,
           accentColor: Colors.blue[800]),
-      debugShowCheckedModeBanner: false, //remove debug LOL
+      debugShowCheckedModeBanner: false, //remove debug
       routes: {
         '/': (BuildContext context) => SplashScreen(),
         '/existingimage': (BuildContext context) => UploadImage(),
@@ -59,6 +61,7 @@ class _MyAppState extends State<MyApp> {
         '/home': (BuildContext context) => MyHomePage(_groups),
         '/create': (BuildContext context) => AddUserGroupPage(_addGroups),
         '/splitbill': (BuildContext context) => SplitBill(),
+        '/reviewpage': (BuildContext context) => ReviewPage(),
       },
     );
   }

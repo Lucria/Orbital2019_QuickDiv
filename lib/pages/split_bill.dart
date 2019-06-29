@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:grouped_buttons/grouped_buttons.dart';
+import '../widget/background.dart';
 
 class SplitBill extends StatefulWidget {
   @override
@@ -25,12 +26,24 @@ class _SplitBill extends State<SplitBill> {
     return Scaffold(
       appBar: AppBar(
         title: Text('QuickDiv'),
+        actions: <Widget>[
+          FlatButton(
+            child: Text('Done'),
+            textColor: Colors.white,
+            onPressed: () {
+              Navigator.pushReplacementNamed(context, '/reviewpage');
+            },
+          )
+        ],
       ),
-      body: ListView.builder(
-        itemCount: list.length,
-        itemBuilder: (context, index) {
-          return itemCard(context, list[index], index);
-        },
+      body: Container(
+        decoration: BackgroundImage.myBoxDecoration(),
+        child: ListView.builder(
+          itemCount: list.length,
+          itemBuilder: (context, index) {
+            return itemCard(context, list[index], index);
+          },
+        ),
       ),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.undo),
@@ -121,9 +134,7 @@ class _SplitBill extends State<SplitBill> {
           "Select All",
         ],
         onChange: (bool isChecked, String label, int index) {
-
-          if(label == 'Select All'){
-          }
+          if (label == 'Select All') {}
           print("isChecked: $isChecked   label: $label  index: $index");
         },
         onSelected: (List<String> checked) =>

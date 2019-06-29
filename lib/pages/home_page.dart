@@ -1,7 +1,9 @@
 import 'package:animated_floatactionbuttons/animated_floatactionbuttons.dart';
 import 'package:flutter/material.dart';
-import '../group_manager.dart';
+import '../widget/groups/groups.dart';
 import '../class/custom_contacts.dart';
+import '../widget/background.dart';
+import '../widget/show_model.dart';
 
 class MyHomePage extends StatelessWidget {
 //  This constructor declares 2 optional named parameters, optional named because of {}
@@ -19,7 +21,7 @@ class MyHomePage extends StatelessWidget {
 //  final String title;
   // final String groupName;
   // final CustomContact contact;
-  final List<Map<String,List<CustomContact>>> groups;
+  final List<Map<String, List<CustomContact>>> groups;
 
   MyHomePage(this.groups);
 
@@ -41,29 +43,7 @@ class MyHomePage extends StatelessWidget {
           // Bottom sheet will show two buttons
           // One button is for users to upload exisiting photos from gallery
           // The other button is for users to take a new photo using camera
-          showModalBottomSheet(
-            context: context,
-            builder: (BuildContext context){
-              return new Column(
-                mainAxisSize: MainAxisSize.min,
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: <Widget>[
-                  new ListTile(
-                    onTap: () => Navigator.pushReplacementNamed(context, "/existingimage"),
-                    leading: Icon(Icons.camera),
-                    title: Text("Upload from Gallery"),
-                    contentPadding: EdgeInsets.all(16),
-                  ),
-                  new ListTile(
-                    onTap: () => Navigator.pushReplacementNamed(context, "/cameraimage"),
-                    leading: Icon(Icons.camera_enhance),
-                    title: Text("Take a new photo"),
-                    contentPadding: EdgeInsets.all(16),
-                  ),
-                ],
-              );
-            },
-          );
+          ShowModal.myModal(context);
         },
         tooltip: "One-time usage button",
         child: Icon(Icons.add),
@@ -94,31 +74,16 @@ class MyHomePage extends StatelessWidget {
         title: Text("QuickDiv v1.0"),
         automaticallyImplyLeading: false,
       ),
-      body: 
-      Container(
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-            stops: [0.1, 0.3, 0.5, 0.7, 0.9],
-            colors: [
-              Colors.indigo[300],
-              Colors.indigo[100],
-              Colors.pink[50],
-              Colors.pink[100],
-              Colors.pink[300],
-            ],
-          ),
-        ),
-        child: GroupManager(groups),
+      body: Container(
+        decoration: BackgroundImage.myBoxDecoration(),
+        child: Groups(groups),
       ),
-
       floatingActionButton: AnimatedFloatingActionButton(
         fabButtons: <Widget>[
           oneTimeButton(context),
           createGroupButton(context),
         ],
-          colorStartAnimation: Colors.deepPurple,
+        colorStartAnimation: Colors.deepPurple,
         colorEndAnimation: Colors.pink,
         // AnimatedIconData defines the start and end icons for the toggle animation
         animatedIconData: AnimatedIcons.menu_home,

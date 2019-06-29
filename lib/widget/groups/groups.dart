@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'class/custom_contacts.dart';
-import 'emptycontactswidget.dart';
+import '../../class/custom_contacts.dart';
+import './emptycontactswidget.dart';
+import '../show_model.dart';
 
 class Groups extends StatelessWidget {
   final List<Map<String, List<CustomContact>>> groups;
@@ -12,35 +13,8 @@ class Groups extends StatelessWidget {
   Widget _buildGroupContact(BuildContext context, int index) {
     return GestureDetector(
       onTap: () {
-            // Bottom sheet will show two buttons
-            // One button is for users to upload exisiting photos from gallery
-            // The other button is for users to take a new photo using camera
-            showModalBottomSheet(
-              context: context,
-              builder: (BuildContext context) {
-                return new Column(
-                  mainAxisSize: MainAxisSize.min,
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: <Widget>[
-                    new ListTile(
-                      onTap: () => Navigator.pushReplacementNamed(
-                          context, "/existingimage"),
-                      leading: Icon(Icons.camera),
-                      title: Text("Upload from Gallery"),
-                      contentPadding: EdgeInsets.all(16),
-                    ),
-                    new ListTile(
-                      onTap: () => Navigator.pushReplacementNamed(
-                          context, "/cameraimage"),
-                      leading: Icon(Icons.camera_enhance),
-                      title: Text("Take a new photo"),
-                      contentPadding: EdgeInsets.all(16),
-                    ),
-                  ],
-                );
-              },
-            );
-          },
+        ShowModal.myModal(context);
+      },
       child: Card(
         child: Column(
           children: <Widget>[
