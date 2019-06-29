@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'dart:io';
 import 'package:image_picker/image_picker.dart';
+import 'package:quickdiv_orbital2019/widget/background.dart';
 import 'confirmation_message.dart';
 import 'package:permission_handler/permission_handler.dart';
 
@@ -77,20 +78,7 @@ class _UploadImageState extends State<UploadImage> {
         ],
       ),
       body: Container(
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-            stops: [0.1, 0.3, 0.5, 0.7, 0.9],
-            colors: [
-              Colors.indigo[300],
-              Colors.indigo[100],
-              Colors.pink[50],
-              Colors.pink[100],
-              Colors.pink[300],
-            ],
-          ),
-        ),
+        decoration: BackgroundImage.myBoxDecoration(),
         child: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
