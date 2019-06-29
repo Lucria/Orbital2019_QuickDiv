@@ -64,6 +64,15 @@ class _CameraImageState extends State<CameraImage> {
     return Scaffold(
       appBar: AppBar(
         title: Text("QuickDiv v1.0"),
+        actions: <Widget>[
+          FlatButton(
+            textColor: Colors.white,
+            child: Text('Next'),
+            onPressed: (){
+              Navigator.pushReplacementNamed(context, '/splitbill');
+            },
+          )
+        ],
       ),
       body: Container(
         decoration: BackgroundImage.myBoxDecoration(),
