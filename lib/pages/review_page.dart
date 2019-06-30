@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import '../widget/background.dart';
 
 class ReviewPage extends StatelessWidget {
-  Widget _inCard() {
+
+  
+  Widget _inCard1() {
     return Card(
       child: Column(
         children: <Widget>[
@@ -11,14 +13,12 @@ class ReviewPage extends StatelessWidget {
               Icons.group,
               size: 35.0,
             ),
-            title: Text('Test'),
+            title: Text('Arya'),
             subtitle: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 SizedBox(height: 10.0),
-                Text('Item 1'),
-                Text('Item 2'),
-                Text('Item 3'),
+                Text('Prawn Masala'),
                 SizedBox(height: 10.0),
               ],
             ),
@@ -28,7 +28,156 @@ class ReviewPage extends StatelessWidget {
                 borderRadius: new BorderRadius.circular(8.0),
               ),
               child: Text(
-                '\$1000',
+                '\$10.00',
+                style: TextStyle(
+                  fontSize: 30.0,
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+    Widget _inCard2() {
+    return Card(
+      child: Column(
+        children: <Widget>[
+          ListTile(
+            leading: Icon(
+              Icons.group,
+              size: 35.0,
+            ),
+            title: Text('Daenerys'),
+            subtitle: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                SizedBox(height: 10.0),
+                Text('Aloo Gopi Masala'),
+                Text('Garlic Naan (Share with Jon)'),
+                SizedBox(height: 10.0),
+              ],
+            ),
+            trailing: Container(
+              decoration: BoxDecoration(
+                border: Border.all(color: Colors.red),
+                borderRadius: new BorderRadius.circular(8.0),
+              ),
+              child: Text(
+                '\$8.40',
+                style: TextStyle(
+                  fontSize: 30.0,
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+    Widget _inCard3() {
+    return Card(
+      child: Column(
+        children: <Widget>[
+          ListTile(
+            leading: Icon(
+              Icons.group,
+              size: 35.0,
+            ),
+            title: Text('Jamie'),
+            subtitle: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                SizedBox(height: 10.0),
+                Text('Butter Chicken Masala'),
+                Text('Fresh Lime Sweet (Share with Tyrion)'),
+                SizedBox(height: 10.0),
+              ],
+            ),
+            trailing: Container(
+              decoration: BoxDecoration(
+                border: Border.all(color: Colors.red),
+                borderRadius: new BorderRadius.circular(8.0),
+              ),
+              child: Text(
+                '\$10.50',
+                style: TextStyle(
+                  fontSize: 30.0,
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+    Widget _inCard4() {
+    return Card(
+      child: Column(
+        children: <Widget>[
+          ListTile(
+            leading: Icon(
+              Icons.group,
+              size: 35.0,
+            ),
+            title: Text('Jon'),
+            subtitle: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                SizedBox(height: 10.0),
+                Text('Mushrrom 65'),
+                Text('Garlic Naan (Share with Daenerys)'),
+                SizedBox(height: 10.0),
+              ],
+            ),
+            trailing: Container(
+              decoration: BoxDecoration(
+                border: Border.all(color: Colors.red),
+                borderRadius: new BorderRadius.circular(8.0),
+              ),
+              child: Text(
+                '\$8.90',
+                style: TextStyle(
+                  fontSize: 30.0,
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+    Widget _inCard5() {
+    return Card(
+      child: Column(
+        children: <Widget>[
+          ListTile(
+            leading: Icon(
+              Icons.group,
+              size: 35.0,
+            ),
+            title: Text('Tyrion'),
+            subtitle: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                SizedBox(height: 10.0),
+                Text('Onion Pakoda'),
+                Text('Steamed Basmathi Rice'),
+                Text('Fresh Lime Sweet (Share with Jamie)'),
+                SizedBox(height: 10.0),
+              ],
+            ),
+            trailing: Container(
+              decoration: BoxDecoration(
+                border: Border.all(color: Colors.red),
+                borderRadius: new BorderRadius.circular(8.0),
+              ),
+              child: Text(
+                '\$10.50',
                 style: TextStyle(
                   fontSize: 30.0,
                 ),
@@ -51,8 +200,11 @@ class ReviewPage extends StatelessWidget {
         padding: EdgeInsets.all(10.0),
         child: Column(
           children: <Widget>[
-            _inCard(),
-            _inCard(),
+            _inCard1(),
+            _inCard2(),
+            _inCard3(),
+            _inCard4(),
+            _inCard5(),
           ],
         ),
       ),

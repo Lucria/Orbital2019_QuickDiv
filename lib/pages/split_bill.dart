@@ -13,12 +13,24 @@ class SplitBill extends StatefulWidget {
 
 class _SplitBill extends State<SplitBill> {
   List<String> list = [
-    'Item #1',
-    'Item #2',
-    'Item #3',
-    'Item #4',
-    'Item #5',
-    'Item #6',
+    'Prawn Masala',
+    'Aloo Gopi Masala',
+    'Butter Chicken Masala',
+    'Mushrrom 65',
+    'Onion Pakoda',
+    'Steamed Basmathi Rice',
+    'Garlic Naan',
+    'Fresh Lime Sweet'
+  ];
+  List<String> price = [
+    '\$10.00',
+    '\$6.50',
+    '\$9.00',
+    '\$7.00',
+    '\$5.50',
+    '\$3.50',
+    '\$3.80',
+    '\$3.00'
   ];
 
   @override
@@ -41,7 +53,7 @@ class _SplitBill extends State<SplitBill> {
         child: ListView.builder(
           itemCount: list.length,
           itemBuilder: (context, index) {
-            return itemCard(context, list[index], index);
+            return itemCard(context, list[index], price[index], index);
           },
         ),
       ),
@@ -70,17 +82,17 @@ class _SplitBill extends State<SplitBill> {
     );
   }
 
-  Widget itemCard(BuildContext context, String name, int index) {
+  Widget itemCard(BuildContext context, String name, String price, int index) {
     return Card(
       child: Column(
         children: <Widget>[
           ListTile(
-            leading: SizedBox(
-              height: 50,
-              width: 50,
+            leading: Icon(
+              Icons.fastfood,
+              size: 45,
             ),
             title: Text(name.toString()),
-            subtitle: Text('Price 1'),
+            subtitle: Text(price.toString()),
             trailing: PopupMenuButton(
               onSelected: (value) {
                 if (value == 'Share') {
@@ -94,24 +106,51 @@ class _SplitBill extends State<SplitBill> {
                 var list = List<PopupMenuEntry<Object>>();
 
                 list.add(
-                  PopupMenuItem(child: Text('Dillen'), value: index),
+                  PopupMenuItem(
+                      child: ListTile(
+                          leading: Icon(Icons.person), title: Text('Arya')),
+                      value: index),
                 );
 
                 list.add(
-                  PopupMenuItem(child: Text('Jerry'), value: index),
+                  PopupMenuItem(
+                      child: ListTile(
+                          leading: Icon(Icons.person), title: Text('Daenerys')),
+                      value: index),
                 );
 
                 list.add(
-                  PopupMenuItem(child: Text('Jon'), value: index),
+                  PopupMenuItem(
+                      child: ListTile(
+                          leading: Icon(Icons.person), title: Text('Jamie')),
+                      value: index),
+                );
+                
+                list.add(
+                  PopupMenuItem(
+                      child: ListTile(
+                          leading: Icon(Icons.person), title: Text('Jon')),
+                      value: index),
                 );
 
                 list.add(
-                  PopupMenuItem(child: Text('Pink'), value: index),
+                  PopupMenuItem(
+                      child: ListTile(
+                          leading: Icon(Icons.person), title: Text('Tyrion')),
+                      value: index),
                 );
 
                 list.add(
-                  PopupMenuItem(child: Text('Share'), value: 'Share'),
+                  PopupMenuItem(
+                      child: ListTile(
+                          leading: Icon(Icons.group), title: Text('Share')),
+                      value: 'Share'),
                 );
+                
+
+                // list.add(
+                //   PopupMenuItem(child: Text('Share'), value: 'Share'),
+                // );
                 return list;
               },
             ),
@@ -127,10 +166,11 @@ class _SplitBill extends State<SplitBill> {
       title: "Who are you sharing this item with? ",
       content: CheckboxGroup(
         labels: <String>[
-          "Dillen",
-          "Jerry",
+          "Arya",
+          'Daenerys',
+          "Jamie",
           "Jon",
-          "Pink",
+          "Tyrion",
           "Select All",
         ],
         onChange: (bool isChecked, String label, int index) {
