@@ -67,6 +67,7 @@ class _SplitBill extends State<SplitBill> {
   removeItem(int index) {
     setState(() {
       list.removeAt(index);
+      price.removeAt(index);
     });
   }
 
