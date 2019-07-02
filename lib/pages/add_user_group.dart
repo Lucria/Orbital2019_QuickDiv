@@ -52,11 +52,10 @@ class _AddUserGroupPage extends State<AddUserGroupPage> {
         body: !_isLoading
             ? Container(
                 child: ListView.builder(
-                  itemCount: _selectedContacts?.length,
+                  itemCount: _allContacts?.length,
                   itemBuilder: (BuildContext context, int index) {
-                    CustomContact _contact = _selectedContacts[index];
+                    CustomContact _contact = _allContacts[index];
                     var _phonesList = _contact.contact.phones.toList();
-
                     return _buildListTile(_contact, _phonesList, context);
                   },
                 ),
