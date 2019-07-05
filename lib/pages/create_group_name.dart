@@ -15,7 +15,8 @@ class CreateGroupName extends StatefulWidget {
 }
 
 class _CreateGroupName extends State<CreateGroupName> {
-  String groupValue = '';
+  String _groupValue = '';
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   ListTile _buildListTile(CustomContact c, List<Item> list) {
     return ListTile(
@@ -37,13 +38,20 @@ class _CreateGroupName extends State<CreateGroupName> {
   Widget _buildCreateGroupName() {
     return Container(
       margin: EdgeInsets.all(10.0),
-      child: TextField(
+      child: TextFormField(
         decoration: InputDecoration(
           labelText: 'Group Name',
         ),
-        onChanged: (String value) {
+        validator: (String value) {
+          if (value.isEmpty) {
+            print('Group name is empty');
+            return 'Group name is empty.';
+          }
+          return null;
+        },
+        onSaved: (String value) {
           setState(() {
-            groupValue = value;
+            _groupValue = value;
           });
         },
       ),
@@ -63,6 +71,28 @@ class _CreateGroupName extends State<CreateGroupName> {
     );
   }
 
+  void _createGroup() {
+    if (!_formKey.currentState.validate()) {
+      return;
+    }
+    _formKey.currentState.save();
+    print('Creating ' + _groupValue + ' Groups with: ');
+
+    for (var i = 0; i < widget.contacts.length; i++) {
+      print(widget.contacts[i].contact.displayName);
+      print(widget.contacts[i].contact.phones.elementAt(0).label +
+          ':' +
+          widget.contacts[i].contact.phones.elementAt(0).value);
+    }
+
+    final Map<String, List<CustomContact>> group = {
+      _groupValue: widget.contacts
+    };
+
+    widget.addGroup(group);
+    Navigator.pushReplacementNamed(context, '/home');
+  }
+
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
@@ -76,29 +106,20 @@ class _CreateGroupName extends State<CreateGroupName> {
           title: Text('New Group'),
           actions: <Widget>[
             FlatButton(
-                textColor: Colors.white,
-                child: Text('Create'),
-                onPressed: () {
-                  print('Creating ' + groupValue + ' Groups with: ');
-                  for (var i = 0; i < widget.contacts.length; i++) {
-                    print(widget.contacts[i].contact.displayName);
-                    print(widget.contacts[i].contact.phones.elementAt(0).label +
-                        ':' +
-                        widget.contacts[i].contact.phones.elementAt(0).value);
-                  }
-                  final Map<String, List<CustomContact>> group = {
-                    groupValue: widget.contacts
-                  };
-                  widget.addGroup(group);
-                  Navigator.pushReplacementNamed(context, '/home');
-                }),
+              textColor: Colors.white,
+              child: Text('Create'),
+              onPressed: _createGroup,
+            ),
           ],
         ),
-        body: Column(
-          children: <Widget>[
-            _buildCreateGroupName(),
-            _buildViewSelectedContact(),
-          ],
+        body: Form(
+          key: _formKey,
+          child: Column(
+            children: <Widget>[
+              _buildCreateGroupName(),
+              _buildViewSelectedContact(),
+            ],
+          ),
         ),
       ),
     );
