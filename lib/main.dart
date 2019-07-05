@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:quickdiv_orbital2019/pages/review_page.dart';
 import 'image_confirmation/receipt_image_upload.dart';
@@ -8,6 +9,7 @@ import 'pages/add_user_group.dart';
 import 'class/custom_contacts.dart';
 import 'pages/split_bill.dart';
 import 'pages/review_page.dart';
+import './ocr_related/ocr_test.dart';
 
 import 'package:flutter/rendering.dart'; // to be delete - for debugging the widget lazyout.
 
@@ -28,6 +30,7 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   List<Map<String, List<CustomContact>>> _groups = [];
+  File _imageFile;
 
   void _addGroups(Map<String, List<CustomContact>> groups) {
     print("[GroupManager Widget]  _addGroup()");
@@ -62,6 +65,7 @@ class _MyAppState extends State<MyApp> {
         '/create': (BuildContext context) => AddUserGroupPage(_addGroups),
         '/splitbill': (BuildContext context) => SplitBill(),
         '/reviewpage': (BuildContext context) => ReviewPage(),
+        '/ocrtest': (BuildContext context) => DetectionWidget(),
       },
     );
   }
