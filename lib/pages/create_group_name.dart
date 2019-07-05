@@ -50,9 +50,7 @@ class _CreateGroupName extends State<CreateGroupName> {
           return null;
         },
         onSaved: (String value) {
-          setState(() {
-            _groupValue = value;
-          });
+          _groupValue = value;
         },
       ),
     );
