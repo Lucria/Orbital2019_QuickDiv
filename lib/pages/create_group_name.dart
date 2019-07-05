@@ -34,6 +34,35 @@ class _CreateGroupName extends State<CreateGroupName> {
     );
   }
 
+  Widget _buildCreateGroupName() {
+    return Container(
+      margin: EdgeInsets.all(10.0),
+      child: TextField(
+        decoration: InputDecoration(
+          labelText: 'Group Name',
+        ),
+        onChanged: (String value) {
+          setState(() {
+            groupValue = value;
+          });
+        },
+      ),
+    );
+  }
+
+  Widget _buildViewSelectedContact() {
+    return Expanded(
+      child: ListView.builder(
+          itemCount: widget.contacts.length,
+          itemBuilder: (BuildContext context, int index) {
+            CustomContact _contact = widget.contacts[index];
+            var _phoneList = _contact.contact.phones.toList();
+
+            return _buildListTile(_contact, _phoneList);
+          }),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
@@ -67,29 +96,8 @@ class _CreateGroupName extends State<CreateGroupName> {
         ),
         body: Column(
           children: <Widget>[
-            Container(
-              margin: EdgeInsets.all(10.0),
-              child: TextField(
-                decoration: InputDecoration(
-                  labelText: 'Group Name',
-                ),
-                onChanged: (String value) {
-                  setState(() {
-                    groupValue = value;
-                  });
-                },
-              ),
-            ),
-            Expanded(
-              child: ListView.builder(
-                  itemCount: widget.contacts.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    CustomContact _contact = widget.contacts[index];
-                    var _phoneList = _contact.contact.phones.toList();
-
-                    return _buildListTile(_contact, _phoneList);
-                  }),
-            )
+            _buildCreateGroupName(),
+            _buildViewSelectedContact(),
           ],
         ),
       ),
