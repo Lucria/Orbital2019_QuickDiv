@@ -60,7 +60,7 @@ class Groups extends StatelessWidget {
                                   groupName: groupName,
                                 )));
                   } else if (value == 'delete') {
-                    print('delete at ' + index.toString());
+                    print('deleting at ' + index.toString());
                     deleteGroup(index);
                   }
                 },

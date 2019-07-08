@@ -47,10 +47,10 @@ class _MyAppState extends State<MyApp> {
 
   void _deleteGroup(int index) {
     print("[GroupManager Widget]  _deleteGroup()");
-    print(index);
     setState(() {
       _groups.removeAt(index);
     });
+    print(_groups);
   }
 
   @override
