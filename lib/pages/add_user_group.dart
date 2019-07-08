@@ -37,81 +37,30 @@ class _AddUserGroupPage extends State<AddUserGroupPage> {
     waitContactsPermission();
   }
 
-  @override
-  Widget build(BuildContext context) {
-    if (widget.editGroup != null) {
-      for (int i = 0; i < widget.editContacts.length; i++) {
-        for (int j = 0; j < _allContacts.length; j++) {
-          // print("check: " + _allContacts[j].contact.displayName);
-          if (_allContacts[j].contact.displayName ==
-              widget.editContacts[i].contact.displayName) {
-            _allContacts[j].isChecked = true;
-            // print("found: " + _allContacts[j].contact.displayName);
-            break;
-          }
-        }
-      }
-    }
-
-    return WillPopScope(
-      // WillPopScope will listen to the back button being press - for Android only.
-      onWillPop: () {
-        print('[AddUserGroupPage] Back button pressed!');
-        Navigator.pop(context, false);
-        return Future.value(false);
-      },
-      child: Scaffold(
-        appBar: AppBar(
-          title: widget.editGroup == null
-              ? Text('Add Participants')
-              : Text('Edit Participants'),
-          actions: <Widget>[
-            FlatButton(
-              textColor: Colors.white,
-              child: Text('Next'),
-              onPressed: _onSubmit,
-            )
-          ],
-        ),
-        body: !_isLoading
-            ? Container(
-                child: ListView.builder(
-                  itemCount: _allContacts?.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    CustomContact _contact = _allContacts[index];
-                    var _phonesList = _contact.contact.phones.toList();
-
-                    return _buildListTile(_contact, _phonesList, context);
-                  },
-                ),
-              )
-            : Center(
-                child: CircularProgressIndicator(),
-              ),
-      ),
-    );
+  refreshContacts() async {
+    setState(() {
+      _isLoading = true;
+    });
+    var contacts = await ContactsService.getContacts();
+    _populateContacts(contacts);
   }
 
-  void _onSubmit() {
-    print('Create Button Pressed');
-    _selectedContacts =
-        _allContacts.where((contact) => contact.isChecked == true).toList();
+  void _populateContacts(Iterable<Contact> contacts) {
+    _contacts = contacts.where((item) => item.displayName != null).toList();
+    _contacts.sort((a, b) => a.displayName.compareTo(b.displayName));
+    _allContacts =
+        _contacts.map((contact) => CustomContact(contact: contact)).toList();
+    setState(() {
+      _selectedContacts = _allContacts;
+      _isLoading = false;
+    });
+  }
 
-    widget.editGroup == null
-        ? Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => CreateGroupName(_selectedContacts,
-                    addGroup: widget.addGroup)))
-        : Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => CreateGroupName(
-                      _selectedContacts,
-                      editGroup: widget.editGroup,
-                      index: widget.index,
-                      groupName: widget.groupName,
-                    )));
+  Future<void> getContactsPermission() async {
+    Map<PermissionGroup, PermissionStatus> permissions =
+        await PermissionHandler()
+            .requestPermissions([PermissionGroup.contacts]);
+    _status = permissions[PermissionGroup.contacts];
   }
 
   ListTile _buildListTile(
@@ -149,34 +98,85 @@ class _AddUserGroupPage extends State<AddUserGroupPage> {
           );
   }
 
-  refreshContacts() async {
-    setState(() {
-      _isLoading = true;
-    });
-    var contacts = await ContactsService.getContacts();
-    _populateContacts(contacts);
-  }
-
-  void _populateContacts(Iterable<Contact> contacts) {
-    _contacts = contacts.where((item) => item.displayName != null).toList();
-    _contacts.sort((a, b) => a.displayName.compareTo(b.displayName));
-    _allContacts =
-        _contacts.map((contact) => CustomContact(contact: contact)).toList();
-    setState(() {
-      _selectedContacts = _allContacts;
-      _isLoading = false;
-    });
-  }
-
-  Future<void> getContactsPermission() async {
-    Map<PermissionGroup, PermissionStatus> permissions =
-        await PermissionHandler()
-            .requestPermissions([PermissionGroup.contacts]);
-    _status = permissions[PermissionGroup.contacts];
-  }
-
   void waitContactsPermission() async {
     await getContactsPermission();
     refreshContacts();
+  }
+
+  void _onSubmit() {
+    print('Create Button Pressed');
+    _selectedContacts =
+        _allContacts.where((contact) => contact.isChecked == true).toList();
+
+    widget.editGroup == null
+        ? Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => CreateGroupName(_selectedContacts,
+                    addGroup: widget.addGroup)))
+        : Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => CreateGroupName(
+                      _selectedContacts,
+                      editGroup: widget.editGroup,
+                      index: widget.index,
+                      groupName: widget.groupName,
+                    )));
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    if (widget.editGroup != null) {
+      for (int i = 0; i < widget.editContacts.length; i++) {
+        for (int j = 0; j < _allContacts.length; j++) {
+          // print("check: " + _allContacts[j].contact.displayName);
+          if (_allContacts[j].contact.displayName ==
+              widget.editContacts[i].contact.displayName) {
+            _allContacts[j].isChecked = true;
+            // print("found: " + _allContacts[j].contact.displayName);
+            break;
+          }
+        }
+      }
+    }
+
+    return WillPopScope(
+      // WillPopScope will listen to the back button being press - for Android only.
+      onWillPop: () {
+        print('[AddUserGroupPage] Back button pressed!');
+        Navigator.pop(context, false);
+        return Future.value(false);
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          title: widget.editGroup == null
+              ? Text('Add Participants')
+              : Text('Edit Group'),
+          actions: <Widget>[
+            FlatButton(
+              textColor: Colors.white,
+              child: Text('Next'),
+              onPressed: _onSubmit,
+            )
+          ],
+        ),
+        body: !_isLoading
+            ? Container(
+                child: ListView.builder(
+                  itemCount: _allContacts?.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    CustomContact _contact = _allContacts[index];
+                    var _phonesList = _contact.contact.phones.toList();
+
+                    return _buildListTile(_contact, _phonesList, context);
+                  },
+                ),
+              )
+            : Center(
+                child: CircularProgressIndicator(),
+              ),
+      ),
+    );
   }
 }

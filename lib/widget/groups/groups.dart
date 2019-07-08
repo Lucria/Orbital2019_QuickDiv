@@ -17,6 +17,7 @@ class Groups extends StatelessWidget {
         .keys
         .toString()
         .substring(1, groups[index].keys.toString().length - 1);
+
     return GestureDetector(
       onTap: () {
         ShowModal.myModal(context);
