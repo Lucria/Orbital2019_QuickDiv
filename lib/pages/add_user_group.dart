@@ -123,11 +123,37 @@ class _AddUserGroupPage extends State<AddUserGroupPage> {
     refreshContacts();
   }
 
+  void dialog(String title, String message) {
+    showDialog(
+        context: context,
+        builder: (_) => new AlertDialog(
+              title: new Text(title),
+              content: new Text(message),
+              actions: <Widget>[
+                FlatButton(
+                  child: Text('Dimiss'),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                )
+              ],
+            ));
+  }
+
   void _onSubmit() {
-    print('Create Button Pressed');
+    print('Next Button Pressed');
     _selectedContacts =
         _allContacts.where((contact) => contact.isChecked == true).toList();
 
+    if (_selectedContacts.length == 0) {
+      print('0 contact la');
+      dialog('Alert!', 'No contact selected.');
+      return;
+    } else if (_selectedContacts.length == 1) {
+      print('please select 2 or more contact');
+      dialog('Alert!', 'Please select 2 or more contact.');
+      return;
+    }
     widget.editGroup == null
         ? Navigator.push(
             context,
