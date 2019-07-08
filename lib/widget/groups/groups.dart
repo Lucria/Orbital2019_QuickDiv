@@ -6,9 +6,10 @@ import '../../pages/add_user_group.dart';
 
 class Groups extends StatelessWidget {
   final Function editGroup;
+  final Function deleteGroup;
   final List<Map<String, List<CustomContact>>> groups;
 
-  Groups(this.editGroup, this.groups) {
+  Groups(this.editGroup, this.deleteGroup, this.groups) {
     print('[Groups widget] Constructor');
   }
 
@@ -34,29 +35,34 @@ class Groups extends StatelessWidget {
               subtitle: Text('Description'),
               trailing: PopupMenuButton(
                 onSelected: (value) {
-                  print(value);
-                  print('Card index: ' + index.toString());
-                  print(groupName);
+                  if (value == 'edit') {
+                    print(value);
+                    print('Card index: ' + index.toString());
+                    print(groupName);
 
-                  List<CustomContact> groupContact = groups[index][groupName];
+                    List<CustomContact> groupContact = groups[index][groupName];
 
-                  // for (int i = 0; i < groupContact.length; i++) {
-                  //   print(groupContact[i].contact.displayName);
-                  //   print(groupContact[i].isChecked);
-                  //   print(groupContact[i].contact.phones.elementAt(0).label +
-                  //       ':' +
-                  //       groupContact[i].contact.phones.elementAt(0).value);
-                  // }
+                    // for (int i = 0; i < groupContact.length; i++) {
+                    //   print(groupContact[i].contact.displayName);
+                    //   print(groupContact[i].isChecked);
+                    //   print(groupContact[i].contact.phones.elementAt(0).label +
+                    //       ':' +
+                    //       groupContact[i].contact.phones.elementAt(0).value);
+                    // }
 
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => AddUserGroupPage(
-                                editGroup: editGroup,
-                                editContacts: groupContact,
-                                index: index,
-                                groupName: groupName,
-                              )));
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => AddUserGroupPage(
+                                  editGroup: editGroup,
+                                  editContacts: groupContact,
+                                  index: index,
+                                  groupName: groupName,
+                                )));
+                  } else if (value == 'delete') {
+                    print('delete at ' + index.toString());
+                    deleteGroup(index);
+                  }
                 },
                 itemBuilder: (context) {
                   var list = List<PopupMenuEntry<Object>>();

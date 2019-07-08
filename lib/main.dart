@@ -45,11 +45,13 @@ class _MyAppState extends State<MyApp> {
     });
   }
 
-  // void _deleteProduct(int index) {
-  //   setState(() {
-  //     _groups.removeAt(index);
-  //   });
-  // }
+  void _deleteGroup(int index) {
+    print("[GroupManager Widget]  _deleteGroup()");
+    print(index);
+    setState(() {
+      _groups.removeAt(index);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -66,7 +68,8 @@ class _MyAppState extends State<MyApp> {
         '/': (BuildContext context) => SplashScreen(),
         '/existingimage': (BuildContext context) => UploadImage(),
         '/cameraimage': (BuildContext context) => CameraImage(),
-        '/home': (BuildContext context) => MyHomePage(_editGroup, _groups),
+        '/home': (BuildContext context) =>
+            MyHomePage(_editGroup, _deleteGroup, _groups),
         // MyHomePage(_addGroups, _editGroup, _groups),
         '/create': (BuildContext context) =>
             AddUserGroupPage(addGroup: _addGroups),
