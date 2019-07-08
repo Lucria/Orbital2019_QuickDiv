@@ -21,9 +21,12 @@ class MyHomePage extends StatelessWidget {
 //  final String title;
   // final String groupName;
   // final CustomContact contact;
+  // final Function addGroup;
+  final Function editGroup;
   final List<Map<String, List<CustomContact>>> groups;
 
-  MyHomePage(this.groups);
+  // MyHomePage(this.addGroup, this.editGroup, this.groups);
+  MyHomePage(this.editGroup, this.groups);
 
   final int _counter = 0;
 
@@ -76,7 +79,7 @@ class MyHomePage extends StatelessWidget {
       ),
       body: Container(
         decoration: BackgroundImage.myBoxDecoration(),
-        child: Groups(groups),
+        child: Groups(editGroup, groups),
       ),
       floatingActionButton: AnimatedFloatingActionButton(
         fabButtons: <Widget>[

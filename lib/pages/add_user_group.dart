@@ -7,8 +7,16 @@ import 'create_group_name.dart';
 
 class AddUserGroupPage extends StatefulWidget {
   final Function addGroup;
-
-  AddUserGroupPage(this.addGroup);
+  final Function editGroup;
+  final int index;
+  final String groupName;
+  final List<CustomContact> editContacts;
+  AddUserGroupPage(
+      {this.addGroup,
+      this.editGroup,
+      this.index,
+      this.groupName,
+      this.editContacts});
 
   @override
   State<StatefulWidget> createState() {
@@ -31,6 +39,20 @@ class _AddUserGroupPage extends State<AddUserGroupPage> {
 
   @override
   Widget build(BuildContext context) {
+    if (widget.editGroup != null) {
+      for (int i = 0; i < widget.editContacts.length; i++) {
+        for (int j = 0; j < _allContacts.length; j++) {
+          // print("check: " + _allContacts[j].contact.displayName);
+          if (_allContacts[j].contact.displayName ==
+              widget.editContacts[i].contact.displayName) {
+            _allContacts[j].isChecked = true;
+            // print("found: " + _allContacts[j].contact.displayName);
+            break;
+          }
+        }
+      }
+    }
+
     return WillPopScope(
       // WillPopScope will listen to the back button being press - for Android only.
       onWillPop: () {
@@ -40,7 +62,9 @@ class _AddUserGroupPage extends State<AddUserGroupPage> {
       },
       child: Scaffold(
         appBar: AppBar(
-          title: Text('Add Participants'),
+          title: widget.editGroup == null
+              ? Text('Add Participants')
+              : Text('Edit Participants'),
           actions: <Widget>[
             FlatButton(
               textColor: Colors.white,
@@ -56,6 +80,7 @@ class _AddUserGroupPage extends State<AddUserGroupPage> {
                   itemBuilder: (BuildContext context, int index) {
                     CustomContact _contact = _allContacts[index];
                     var _phonesList = _contact.contact.phones.toList();
+
                     return _buildListTile(_contact, _phonesList, context);
                   },
                 ),
@@ -72,11 +97,21 @@ class _AddUserGroupPage extends State<AddUserGroupPage> {
     _selectedContacts =
         _allContacts.where((contact) => contact.isChecked == true).toList();
 
-    Navigator.push(
-        context,
-        MaterialPageRoute(
-            builder: (context) =>
-                CreateGroupName(widget.addGroup, _selectedContacts)));
+    widget.editGroup == null
+        ? Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => CreateGroupName(_selectedContacts,
+                    addGroup: widget.addGroup)))
+        : Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => CreateGroupName(
+                      _selectedContacts,
+                      editGroup: widget.editGroup,
+                      index: widget.index,
+                      groupName: widget.groupName,
+                    )));
   }
 
   ListTile _buildListTile(

@@ -29,12 +29,20 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   List<Map<String, List<CustomContact>>> _groups = [];
 
-  void _addGroups(Map<String, List<CustomContact>> groups) {
+  void _addGroups(Map<String, List<CustomContact>> group) {
     print("[GroupManager Widget]  _addGroup()");
     setState(() {
-      _groups.add(groups);
+      _groups.add(group);
     });
     print(_groups);
+  }
+
+  void _editGroup(int index, Map<String, List<CustomContact>> group) {
+    print("[GroupManager Widget]  _editGroup()");
+    print(_groups[index]);
+    setState(() {
+      _groups[index] = group;
+    });
   }
 
   // void _deleteProduct(int index) {
@@ -58,8 +66,10 @@ class _MyAppState extends State<MyApp> {
         '/': (BuildContext context) => SplashScreen(),
         '/existingimage': (BuildContext context) => UploadImage(),
         '/cameraimage': (BuildContext context) => CameraImage(),
-        '/home': (BuildContext context) => MyHomePage(_groups),
-        '/create': (BuildContext context) => AddUserGroupPage(_addGroups),
+        '/home': (BuildContext context) => MyHomePage(_editGroup, _groups),
+        // MyHomePage(_addGroups, _editGroup, _groups),
+        '/create': (BuildContext context) =>
+            AddUserGroupPage(addGroup: _addGroups),
         '/splitbill': (BuildContext context) => SplitBill(),
         '/reviewpage': (BuildContext context) => ReviewPage(),
       },

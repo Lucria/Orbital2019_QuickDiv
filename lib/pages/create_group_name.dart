@@ -4,9 +4,13 @@ import '../class/custom_contacts.dart';
 
 class CreateGroupName extends StatefulWidget {
   final Function addGroup;
+  final Function editGroup;
+  final int index;
+  final String groupName;
   final List<CustomContact> contacts;
 
-  CreateGroupName(this.addGroup, this.contacts);
+  CreateGroupName(this.contacts,
+      {this.addGroup, this.editGroup, this.index, this.groupName});
 
   @override
   State<StatefulWidget> createState() {
@@ -42,6 +46,7 @@ class _CreateGroupName extends State<CreateGroupName> {
         decoration: InputDecoration(
           labelText: 'Group Name',
         ),
+        initialValue: widget.editGroup == null ? '' : widget.groupName,
         validator: (String value) {
           if (value.isEmpty) {
             print('Group name is empty');
@@ -91,6 +96,28 @@ class _CreateGroupName extends State<CreateGroupName> {
     Navigator.pushReplacementNamed(context, '/home');
   }
 
+  void _editGroup() {
+    if (!_formKey.currentState.validate()) {
+      return;
+    }
+    _formKey.currentState.save();
+    print('Creating ' + _groupName + ' Groups with: ');
+
+    for (var i = 0; i < widget.contacts.length; i++) {
+      print(widget.contacts[i].contact.displayName);
+      print(widget.contacts[i].contact.phones.elementAt(0).label +
+          ':' +
+          widget.contacts[i].contact.phones.elementAt(0).value);
+    }
+
+    final Map<String, List<CustomContact>> group = {
+      _groupName: widget.contacts
+    };
+
+    widget.editGroup(widget.index, group);
+    Navigator.pushReplacementNamed(context, '/home');
+  }
+
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
@@ -101,12 +128,13 @@ class _CreateGroupName extends State<CreateGroupName> {
       },
       child: Scaffold(
         appBar: AppBar(
-          title: Text('New Group'),
+          title:
+              widget.editGroup == null ? Text('New Group') : Text('Edit Group'),
           actions: <Widget>[
             FlatButton(
               textColor: Colors.white,
-              child: Text('Create'),
-              onPressed: _createGroup,
+              child: widget.editGroup == null ? Text('Create') : Text('Update'),
+              onPressed: widget.editGroup == null ? _createGroup : _editGroup,
             ),
           ],
         ),
