@@ -50,6 +50,24 @@ class _AddUserGroupPage extends State<AddUserGroupPage> {
     _contacts.sort((a, b) => a.displayName.compareTo(b.displayName));
     _allContacts =
         _contacts.map((contact) => CustomContact(contact: contact)).toList();
+
+    if (widget.editGroup != null) {
+      print('running');
+      for (int i = 0; i < widget.editContacts.length; i++) {
+        for (int j = 0; j < _allContacts.length; j++) {
+          // print("check: " + _allContacts[j].contact.displayName);
+          // print("check: " + _allContacts[j].isChecked.toString());
+          if (_allContacts[j].contact.displayName ==
+              widget.editContacts[i].contact.displayName) {
+            _allContacts[j].isChecked = true;
+            // print("found: " + _allContacts[j].contact.displayName);
+            // print("check: " + _allContacts[j].isChecked.toString());
+            break;
+          }
+        }
+      }
+    }
+
     setState(() {
       _selectedContacts = _allContacts;
       _isLoading = false;
@@ -67,6 +85,8 @@ class _AddUserGroupPage extends State<AddUserGroupPage> {
       CustomContact c, List<Item> list, BuildContext context) {
     bool _load =
         Theme.of(context).platform == TargetPlatform.iOS ? true : false;
+    // print(c.contact.displayName);
+    // print(c.isChecked);
 
     return ListTile(
       leading: (_load) // if true load ios code else android code
@@ -127,20 +147,6 @@ class _AddUserGroupPage extends State<AddUserGroupPage> {
 
   @override
   Widget build(BuildContext context) {
-    if (widget.editGroup != null) {
-      for (int i = 0; i < widget.editContacts.length; i++) {
-        for (int j = 0; j < _allContacts.length; j++) {
-          // print("check: " + _allContacts[j].contact.displayName);
-          if (_allContacts[j].contact.displayName ==
-              widget.editContacts[i].contact.displayName) {
-            _allContacts[j].isChecked = true;
-            // print("found: " + _allContacts[j].contact.displayName);
-            break;
-          }
-        }
-      }
-    }
-
     return WillPopScope(
       // WillPopScope will listen to the back button being press - for Android only.
       onWillPop: () {
