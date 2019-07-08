@@ -15,7 +15,7 @@ class CreateGroupName extends StatefulWidget {
 }
 
 class _CreateGroupName extends State<CreateGroupName> {
-  String _groupValue = '';
+  String _groupName = '';
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   ListTile _buildListTile(CustomContact c, List<Item> list) {
@@ -50,7 +50,7 @@ class _CreateGroupName extends State<CreateGroupName> {
           return null;
         },
         onSaved: (String value) {
-          _groupValue = value;
+          _groupName = value;
         },
       ),
     );
@@ -74,7 +74,7 @@ class _CreateGroupName extends State<CreateGroupName> {
       return;
     }
     _formKey.currentState.save();
-    print('Creating ' + _groupValue + ' Groups with: ');
+    print('Creating ' + _groupName + ' Groups with: ');
 
     for (var i = 0; i < widget.contacts.length; i++) {
       print(widget.contacts[i].contact.displayName);
@@ -84,7 +84,7 @@ class _CreateGroupName extends State<CreateGroupName> {
     }
 
     final Map<String, List<CustomContact>> group = {
-      _groupValue: widget.contacts
+      _groupName: widget.contacts
     };
 
     widget.addGroup(group);
