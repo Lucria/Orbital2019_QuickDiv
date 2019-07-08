@@ -52,7 +52,7 @@ class _AddUserGroupPage extends State<AddUserGroupPage> {
         _contacts.map((contact) => CustomContact(contact: contact)).toList();
 
     if (widget.editGroup != null) {
-      print('running');
+      print('Selecting contact that are part of the group.');
       for (int i = 0; i < widget.editContacts.length; i++) {
         for (int j = 0; j < _allContacts.length; j++) {
           // print("check: " + _allContacts[j].contact.displayName);
