@@ -1,7 +1,7 @@
 import 'package:animated_floatactionbuttons/animated_floatactionbuttons.dart';
 import 'package:flutter/material.dart';
 import '../widget/groups/groups.dart';
-import '../class/custom_contacts.dart';
+import '../models/custom_contacts.dart';
 import '../widget/background.dart';
 import '../widget/show_model.dart';
 

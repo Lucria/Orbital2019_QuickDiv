@@ -5,7 +5,7 @@ import 'image_confirmation/receipt_image_camera.dart';
 import 'pages/splash_page.dart';
 import 'pages/home_page.dart';
 import 'pages/add_user_group.dart';
-import 'class/custom_contacts.dart';
+import 'models/custom_contacts.dart';
 import 'pages/split_bill.dart';
 import 'pages/review_page.dart';
 

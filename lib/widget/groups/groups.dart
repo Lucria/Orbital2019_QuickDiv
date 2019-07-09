@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../class/custom_contacts.dart';
+import '../../models/custom_contacts.dart';
 import './emptycontactswidget.dart';
 import '../show_model.dart';
 import '../../pages/add_user_group.dart';

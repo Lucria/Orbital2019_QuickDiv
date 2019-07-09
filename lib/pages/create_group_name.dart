@@ -1,6 +1,6 @@
 import 'package:contacts_service/contacts_service.dart';
 import 'package:flutter/material.dart';
-import '../class/custom_contacts.dart';
+import '../models/custom_contacts.dart';
 
 class CreateGroupName extends StatefulWidget {
   final Function addGroup;
