@@ -178,19 +178,17 @@ class _AddUserGroupPage extends State<AddUserGroupPage> {
   void filterSearchResults(String query) {
     List<CustomContact> dummySearchList = List<CustomContact>();
     dummySearchList.addAll(_allContacts);
-    print('query:' + query);
-    print('query lenght:' + query.length.toString());
+    print('querying:' + query);
+    print('query length: ' + query.length.toString());
     if (query.isNotEmpty) {
-      print('query not empty ');
       List<CustomContact> dummyListData = List<CustomContact>();
       dummySearchList.forEach((item) {
-        if (item.contact.displayName.contains(query)) {
-          print('searching contact');
+        if (item.contact.displayName.toLowerCase().contains(query)) {
+          print('searching for matching string in earch contact');
           dummyListData.add(item);
         }
       });
       setState(() {
-        print('Adding search item into it');
         items.clear();
         items.addAll(dummyListData);
       });
@@ -248,7 +246,7 @@ class _AddUserGroupPage extends State<AddUserGroupPage> {
                   ),
                   Expanded(
                     child: ListView.builder(
-                      // shrinkWrap: true,
+                      shrinkWrap: true,
                       itemCount: items?.length,
                       itemBuilder: (BuildContext context, int index) {
                         CustomContact _contact = items[index];
