@@ -18,9 +18,20 @@ class Groups extends StatelessWidget {
         .keys
         .toString()
         .substring(1, groups[index].keys.toString().length - 1);
+    List<CustomContact> groupContact = groups[index][groupName];
 
     return GestureDetector(
       onTap: () {
+        print('GroupName: ' + groupName);
+        print('Group participant: ');
+
+        for (int i = 0; i < groupContact.length; i++) {
+          print(groupContact[i].contact.displayName);
+          //   print(groupContact[i].isChecked);
+          //   print(groupContact[i].contact.phones.elementAt(0).label +
+          //       ':' +
+          //       groupContact[i].contact.phones.elementAt(0).value);
+        }
         ShowModal.myModal(context);
       },
       child: Card(
@@ -39,16 +50,6 @@ class Groups extends StatelessWidget {
                     print(value);
                     print('Card index: ' + index.toString());
                     print(groupName);
-
-                    List<CustomContact> groupContact = groups[index][groupName];
-
-                    // for (int i = 0; i < groupContact.length; i++) {
-                    //   print(groupContact[i].contact.displayName);
-                    //   print(groupContact[i].isChecked);
-                    //   print(groupContact[i].contact.phones.elementAt(0).label +
-                    //       ':' +
-                    //       groupContact[i].contact.phones.elementAt(0).value);
-                    // }
 
                     Navigator.push(
                         context,
