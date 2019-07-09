@@ -31,6 +31,9 @@ class _AddUserGroupPage extends State<AddUserGroupPage> {
   bool _isLoading = false;
   PermissionStatus _status;
 
+  TextEditingController editingController = TextEditingController();
+  var items = List<CustomContact>();
+
   @override
   void initState() {
     super.initState();
@@ -67,7 +70,8 @@ class _AddUserGroupPage extends State<AddUserGroupPage> {
         }
       }
     }
-
+    items.addAll(_allContacts);
+    // print('hi');
     setState(() {
       _selectedContacts = _allContacts;
       _isLoading = false;
@@ -171,6 +175,35 @@ class _AddUserGroupPage extends State<AddUserGroupPage> {
                     )));
   }
 
+  void filterSearchResults(String query) {
+    List<CustomContact> dummySearchList = List<CustomContact>();
+    dummySearchList.addAll(_allContacts);
+    print('query:' + query);
+    print('query lenght:' + query.length.toString());
+    if (query.isNotEmpty) {
+      print('query not empty ');
+      List<CustomContact> dummyListData = List<CustomContact>();
+      dummySearchList.forEach((item) {
+        if (item.contact.displayName.contains(query)) {
+          print('searching contact');
+          dummyListData.add(item);
+        }
+      });
+      setState(() {
+        print('Adding search item into it');
+        items.clear();
+        items.addAll(dummyListData);
+      });
+      return;
+    } else {
+      setState(() {
+        items.clear();
+        items.addAll(_allContacts);
+        print('_allContacts');
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
@@ -195,16 +228,38 @@ class _AddUserGroupPage extends State<AddUserGroupPage> {
         ),
         body: !_isLoading
             ? Container(
-                child: ListView.builder(
-                  itemCount: _allContacts?.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    CustomContact _contact = _allContacts[index];
-                    var _phonesList = _contact.contact.phones.toList();
+                child: Column(
+                children: <Widget>[
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: TextField(
+                      onChanged: (value) {
+                        filterSearchResults(value);
+                      },
+                      controller: editingController,
+                      decoration: InputDecoration(
+                          labelText: "Search",
+                          hintText: "Search",
+                          prefixIcon: Icon(Icons.search),
+                          border: OutlineInputBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(25.0)))),
+                    ),
+                  ),
+                  Expanded(
+                    child: ListView.builder(
+                      // shrinkWrap: true,
+                      itemCount: items?.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        CustomContact _contact = items[index];
+                        var _phonesList = _contact.contact.phones.toList();
 
-                    return _buildListTile(_contact, _phonesList, context);
-                  },
-                ),
-              )
+                        return _buildListTile(_contact, _phonesList, context);
+                      },
+                    ),
+                  ),
+                ],
+              ))
             : Center(
                 child: CircularProgressIndicator(),
               ),
