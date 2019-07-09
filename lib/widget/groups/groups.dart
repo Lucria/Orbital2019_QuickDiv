@@ -1,24 +1,22 @@
 import 'package:flutter/material.dart';
-import '../../models/custom_contacts.dart';
 import './emptycontactswidget.dart';
 import '../show_model.dart';
+import '../../models/custom_contacts.dart';
 import '../../pages/add_user_group.dart';
+import '../../models/group.dart';
 
 class Groups extends StatelessWidget {
   final Function editGroup;
   final Function deleteGroup;
-  final List<Map<String, List<CustomContact>>> groups;
+  final List<Group> groups;
 
   Groups(this.editGroup, this.deleteGroup, this.groups) {
     print('[Groups widget] Constructor');
   }
 
   Widget _buildGroupContact(BuildContext context, int index) {
-    String groupName = groups[index]
-        .keys
-        .toString()
-        .substring(1, groups[index].keys.toString().length - 1);
-    List<CustomContact> groupContact = groups[index][groupName];
+    String groupName = groups[index].groupName;
+    List<CustomContact> groupContact = groups[index].contacts;
 
     return GestureDetector(
       onTap: () {

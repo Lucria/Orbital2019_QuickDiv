@@ -1,6 +1,7 @@
 import 'package:contacts_service/contacts_service.dart';
 import 'package:flutter/material.dart';
 import '../models/custom_contacts.dart';
+import '../models/group.dart';
 
 class CreateGroupName extends StatefulWidget {
   final Function addGroup;
@@ -88,11 +89,10 @@ class _CreateGroupName extends State<CreateGroupName> {
           widget.contacts[i].contact.phones.elementAt(0).value);
     }
 
-    final Map<String, List<CustomContact>> group = {
-      _groupName: widget.contacts
-    };
-
-    widget.addGroup(group);
+    widget.addGroup(Group(
+      groupName: _groupName,
+      contacts: widget.contacts,
+    ));
     Navigator.pushReplacementNamed(context, '/home');
   }
 
@@ -110,11 +110,12 @@ class _CreateGroupName extends State<CreateGroupName> {
           widget.contacts[i].contact.phones.elementAt(0).value);
     }
 
-    final Map<String, List<CustomContact>> group = {
-      _groupName: widget.contacts
-    };
-
-    widget.editGroup(widget.index, group);
+    widget.editGroup(
+        widget.index,
+        Group(
+          groupName: _groupName,
+          contacts: widget.contacts,
+        ));
     Navigator.pushReplacementNamed(context, '/home');
   }
 

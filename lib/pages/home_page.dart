@@ -1,9 +1,9 @@
 import 'package:animated_floatactionbuttons/animated_floatactionbuttons.dart';
 import 'package:flutter/material.dart';
 import '../widget/groups/groups.dart';
-import '../models/custom_contacts.dart';
 import '../widget/background.dart';
 import '../widget/show_model.dart';
+import '../models/group.dart';
 
 class MyHomePage extends StatelessWidget {
 //  This constructor declares 2 optional named parameters, optional named because of {}
@@ -17,14 +17,10 @@ class MyHomePage extends StatelessWidget {
 //   case the title) provided by the parent (in this case the App widget) and
 //   used by the build method of the State. Fields in a Widget subclass are
 //   always marked "final".
-//
-//  final String title;
-  // final String groupName;
-  // final CustomContact contact;
-  // final Function addGroup;
+
   final Function editGroup;
   final Function deleteGroup;
-  final List<Map<String, List<CustomContact>>> groups;
+  final List<Group> groups;
 
   // MyHomePage(this.addGroup, this.editGroup, this.groups);
   MyHomePage(this.editGroup, this.deleteGroup, this.groups);

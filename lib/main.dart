@@ -5,9 +5,9 @@ import 'image_confirmation/receipt_image_camera.dart';
 import 'pages/splash_page.dart';
 import 'pages/home_page.dart';
 import 'pages/add_user_group.dart';
-import 'models/custom_contacts.dart';
 import 'pages/split_bill.dart';
 import 'pages/review_page.dart';
+import './models/group.dart';
 
 import 'package:flutter/rendering.dart'; // to be delete - for debugging the widget lazyout.
 
@@ -27,9 +27,9 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  List<Map<String, List<CustomContact>>> _groups = [];
+  List<Group> _groups = [];
 
-  void _addGroups(Map<String, List<CustomContact>> group) {
+  void _addGroups(Group group) {
     print("[GroupManager Widget]  _addGroup()");
     setState(() {
       _groups.add(group);
@@ -37,7 +37,7 @@ class _MyAppState extends State<MyApp> {
     print(_groups);
   }
 
-  void _editGroup(int index, Map<String, List<CustomContact>> group) {
+  void _editGroup(int index, Group group) {
     print("[GroupManager Widget]  _editGroup()");
     print(_groups[index]);
     setState(() {
