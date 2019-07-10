@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:contacts_service/contacts_service.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:scoped_model/scoped_model.dart';
-import 'create_group_name.dart';
+import './create_group_name.dart';
 import '../models/custom_contacts.dart';
 import '../scoped-models/groups_model.dart';
 

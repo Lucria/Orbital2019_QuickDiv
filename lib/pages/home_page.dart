@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import '../widget/groups/groups.dart';
 import '../widget/background.dart';
 import '../widget/show_model.dart';
-import '../models/group.dart';
 
 class MyHomePage extends StatelessWidget {
 //  This constructor declares 2 optional named parameters, optional named because of {}

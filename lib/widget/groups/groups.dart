@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:scoped_model/scoped_model.dart';
 import '../../models/custom_contacts.dart';
-import '../../pages/add_user_group.dart';
 import '../../scoped-models/groups_model.dart';
 import '../show_model.dart';
 import './emptycontactswidget.dart';
