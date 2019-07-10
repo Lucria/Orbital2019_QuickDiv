@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'dart:io';
 import 'package:image_picker/image_picker.dart';
-import 'package:quickdiv_orbital2019/widget/background.dart';
+import 'package:quickdiv_orbital2019/widget/ui_elements/background.dart';
 import 'confirmation_message.dart';
 
 class CameraImage extends StatefulWidget {
