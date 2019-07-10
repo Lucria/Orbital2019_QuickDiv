@@ -62,8 +62,9 @@ class _CameraImageState extends State<CameraImage> {
   Widget build(BuildContext context) {
     pickImage(ImageSource.camera);
     return Scaffold(
+      // TODO Add AppBar to a seperate widget file
       appBar: AppBar(
-        title: Text("QuickDiv v1.0"),
+        title: Text("QuickDiv v2.0"),
         actions: <Widget>[
           FlatButton(
             textColor: Colors.white,
