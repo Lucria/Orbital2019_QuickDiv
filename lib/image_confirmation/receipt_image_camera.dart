@@ -60,7 +60,7 @@ class _CameraImageState extends State<CameraImage> {
 
   @override
   Widget build(BuildContext context) {
-    pickImage(ImageSource.camera);
+    pickImage(ImageSource.camera); // Doesn't require asking for permissions as permissions are handled by image_picker package already
     return Scaffold(
       // TODO Add AppBar to a seperate widget file
       appBar: AppBar(
