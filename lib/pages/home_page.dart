@@ -14,7 +14,7 @@ class MyHomePage extends StatelessWidget {
           // Bottom sheet will show two buttons
           // One button is for users to upload exisiting photos from gallery
           // The other button is for users to take a new photo using camera
-          ShowModal.myModal(context);
+          ShowModal.myModal(context); // Calling myModal function from the ShowModal class
         },
         tooltip: "One-time usage button",
         child: Icon(Icons.add),
