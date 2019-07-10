@@ -2,14 +2,12 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:contacts_service/contacts_service.dart';
 import 'package:permission_handler/permission_handler.dart';
-import '../class/custom_contacts.dart';
-import 'create_group_name.dart';
+import 'package:scoped_model/scoped_model.dart';
+import './create_group_name.dart';
+import '../models/custom_contacts.dart';
+import '../scoped-models/groups_model.dart';
 
 class AddUserGroupPage extends StatefulWidget {
-  final Function addGroup;
-
-  AddUserGroupPage(this.addGroup);
-
   @override
   State<StatefulWidget> createState() {
     return _AddUserGroupPage();
@@ -21,7 +19,11 @@ class _AddUserGroupPage extends State<AddUserGroupPage> {
   List<CustomContact> _selectedContacts = List<CustomContact>();
   List<CustomContact> _allContacts = List<CustomContact>();
   bool _isLoading = false;
+  bool _editting = false;
   PermissionStatus _status;
+
+  TextEditingController editingController = TextEditingController();
+  var items = List<CustomContact>();
 
   @override
   void initState() {
@@ -29,60 +31,67 @@ class _AddUserGroupPage extends State<AddUserGroupPage> {
     waitContactsPermission();
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return WillPopScope(
-      // WillPopScope will listen to the back button being press - for Android only.
-      onWillPop: () {
-        print('[AddUserGroupPage] Back button pressed!');
-        Navigator.pop(context, false);
-        return Future.value(false);
-      },
-      child: Scaffold(
-        appBar: AppBar(
-          title: Text('Add Participants'),
-          actions: <Widget>[
-            FlatButton(
-              textColor: Colors.white,
-              child: Text('Next'),
-              onPressed: _onSubmit,
-            )
-          ],
-        ),
-        body: !_isLoading
-            ? Container(
-                child: ListView.builder(
-                  itemCount: _allContacts?.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    CustomContact _contact = _allContacts[index];
-                    var _phonesList = _contact.contact.phones.toList();
-                    return _buildListTile(_contact, _phonesList, context);
-                  },
-                ),
-              )
-            : Center(
-                child: CircularProgressIndicator(),
-              ),
-      ),
-    );
+  void waitContactsPermission() async {
+    await getContactsPermission();
+    refreshContacts();
   }
 
-  void _onSubmit() {
-    print('Create Button Pressed');
-    _selectedContacts =
-        _allContacts.where((contact) => contact.isChecked == true).toList();
+  refreshContacts() async {
+    setState(() {
+      _isLoading = true;
+    });
+    var contacts = await ContactsService.getContacts();
+    _populateContacts(contacts);
+  }
 
-    Navigator.push(
-        context,
-        MaterialPageRoute(
-            builder: (context) =>
-                CreateGroupName(widget.addGroup, _selectedContacts)));
+  void _populateContacts(Iterable<Contact> contacts) {
+    _contacts = contacts.where((item) => item.displayName != null).toList();
+    _contacts.sort((a, b) => a.displayName.compareTo(b.displayName));
+    _allContacts =
+        _contacts.map((contact) => CustomContact(contact: contact)).toList();
+
+    print('Selecting contact that are part of the group.');
+    GroupsModel model = ScopedModel.of(context);
+
+    if (model.selectedGroup != null) {
+      print('Selected group name: ' + model.selectedGroup.groupName);
+      print('part: ' + model.selectedGroup.contacts[0].contact.displayName);
+      for (int i = 0; i < model.selectedGroup.contacts.length; i++) {
+        for (int j = 0; j < _allContacts.length; j++) {
+          // print("check: " + _allContacts[j].contact.displayName);
+          // print("check: " + _allContacts[j].isChecked.toString());
+          if (_allContacts[j].contact.displayName ==
+              model.selectedGroup.contacts[i].contact.displayName) {
+            _allContacts[j].isChecked = true;
+            // print("found: " + _allContacts[j].contact.displayName);
+            // print("check: " + _allContacts[j].isChecked.toString());
+            break;
+          }
+        }
+      }
+      _editting = true;
+    }
+
+    items.addAll(_allContacts);
+    setState(() {
+      _selectedContacts = _allContacts;
+      _isLoading = false;
+    });
+  }
+
+  Future<void> getContactsPermission() async {
+    Map<PermissionGroup, PermissionStatus> permissions =
+        await PermissionHandler()
+            .requestPermissions([PermissionGroup.contacts]);
+    _status = permissions[PermissionGroup.contacts];
   }
 
   ListTile _buildListTile(
       CustomContact c, List<Item> list, BuildContext context) {
     bool _load =
         Theme.of(context).platform == TargetPlatform.iOS ? true : false;
+    // print(c.contact.displayName);
+    // print(c.isChecked);
 
     return ListTile(
       leading: (_load) // if true load ios code else android code
@@ -114,34 +123,136 @@ class _AddUserGroupPage extends State<AddUserGroupPage> {
           );
   }
 
-  refreshContacts() async {
-    setState(() {
-      _isLoading = true;
-    });
-    var contacts = await ContactsService.getContacts();
-    _populateContacts(contacts);
+  void dialog(String title, String message) {
+    showDialog(
+        context: context,
+        builder: (_) => new AlertDialog(
+              title: new Text(title),
+              content: new Text(message),
+              actions: <Widget>[
+                FlatButton(
+                  child: Text('Dimiss'),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                )
+              ],
+            ));
   }
 
-  void _populateContacts(Iterable<Contact> contacts) {
-    _contacts = contacts.where((item) => item.displayName != null).toList();
-    _contacts.sort((a, b) => a.displayName.compareTo(b.displayName));
-    _allContacts =
-        _contacts.map((contact) => CustomContact(contact: contact)).toList();
-    setState(() {
-      _selectedContacts = _allContacts;
-      _isLoading = false;
-    });
+  void _onSubmit() {
+    print('Next Button Pressed');
+    _selectedContacts =
+        _allContacts.where((contact) => contact.isChecked == true).toList();
+
+    if (_selectedContacts.length == 0) {
+      print('0 contact la');
+      dialog('Alert!', 'No contact selected.');
+      return;
+    } else if (_selectedContacts.length == 1) {
+      print('please select 2 or more contact');
+      dialog('Alert!', 'Please select 2 or more contact.');
+      return;
+    }
+    // widget.editGroup == null
+    //     ? Navigator.push(
+    //         context,
+    //         MaterialPageRoute(
+    //             builder: (context) => CreateGroupName(_selectedContacts,
+    //                 addGroup: widget.addGroup))):
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => CreateGroupName(_selectedContacts)));
   }
 
-  Future<void> getContactsPermission() async {
-    Map<PermissionGroup, PermissionStatus> permissions =
-        await PermissionHandler()
-            .requestPermissions([PermissionGroup.contacts]);
-    _status = permissions[PermissionGroup.contacts];
+  void filterSearchResults(String query) {
+    List<CustomContact> dummySearchList = List<CustomContact>();
+    dummySearchList.addAll(_allContacts);
+    print('querying:' + query);
+    print('query length: ' + query.length.toString());
+    if (query.isNotEmpty) {
+      List<CustomContact> dummyListData = List<CustomContact>();
+      dummySearchList.forEach((item) {
+        if (item.contact.displayName.toLowerCase().contains(query)) {
+          print('searching for matching string in earch contact');
+          dummyListData.add(item);
+        }
+      });
+      setState(() {
+        items.clear();
+        items.addAll(dummyListData);
+      });
+      return;
+    } else {
+      setState(() {
+        items.clear();
+        items.addAll(_allContacts);
+        print('_allContacts');
+      });
+    }
   }
 
-  void waitContactsPermission() async {
-    await getContactsPermission();
-    refreshContacts();
+  @override
+  Widget build(BuildContext context) {
+    return WillPopScope(
+      // WillPopScope will listen to the back button being press - for Android only.
+      onWillPop: () {
+        print('[AddUserGroupPage] Back button pressed!');
+        Navigator.pop(context, false);
+        return Future.value(false);
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          title: _editting == false
+              ? Text('Add Participants')
+              : Text('Edit Group'),
+          actions: <Widget>[
+            FlatButton(
+              textColor: Colors.white,
+              child: Text('Next'),
+              onPressed: _onSubmit,
+            )
+          ],
+        ),
+        body: !_isLoading
+            ? Container(
+                child: Column(
+                children: <Widget>[
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: TextField(
+                      onChanged: (value) {
+                        filterSearchResults(value);
+                      },
+                      controller: editingController,
+                      decoration: InputDecoration(
+                          labelText: "Search",
+                          hintText: "Search",
+                          prefixIcon: Icon(Icons.search),
+                          border: OutlineInputBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(25.0)))),
+                    ),
+                  ),
+                  Expanded(
+                    child: ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: items?.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        CustomContact _contact = items[index];
+                        var _phonesList = _contact.contact.phones.toList();
+
+                        return _buildListTile(_contact, _phonesList, context);
+                      },
+                    ),
+                  ),
+                ],
+              ))
+            : Center(
+                child: CircularProgressIndicator(),
+              ),
+      ),
+    );
   }
 }

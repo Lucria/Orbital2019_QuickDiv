@@ -1,15 +1,16 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:quickdiv_orbital2019/pages/review_page.dart';
+import 'package:scoped_model/scoped_model.dart';
 import 'image_confirmation/receipt_image_upload.dart';
 import 'image_confirmation/receipt_image_camera.dart';
 import 'pages/splash_page.dart';
 import 'pages/home_page.dart';
 import 'pages/add_user_group.dart';
-import 'class/custom_contacts.dart';
 import 'pages/split_bill.dart';
 import 'pages/review_page.dart';
 import './ocr_related/ocr_test.dart';
+import './scoped-models/groups_model.dart';
+import './pages/review_page.dart';
 
 import 'package:flutter/rendering.dart'; // to be delete - for debugging the widget lazyout.
 
@@ -29,44 +30,30 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  List<Map<String, List<CustomContact>>> _groups = [];
-  File _imageFile;
-
-  void _addGroups(Map<String, List<CustomContact>> groups) {
-    print("[GroupManager Widget]  _addGroup()");
-    setState(() {
-      _groups.add(groups);
-    });
-    print(_groups);
-  }
-
-  // void _deleteProduct(int index) {
-  //   setState(() {
-  //     _groups.removeAt(index);
-  //   });
-  // }
-
   @override
   Widget build(BuildContext context) {
     print("[main Widget] build()");
 
-    return MaterialApp(
-      // debugShowMaterialGrid: true, // to show the grid of the layout.
-      theme: ThemeData(
-          brightness: Brightness.light,
-          primarySwatch: Colors.pink,
-          accentColor: Colors.blue[800]),
-      debugShowCheckedModeBanner: false, //remove debug
-      routes: {
-        '/': (BuildContext context) => SplashScreen(),
-        '/existingimage': (BuildContext context) => UploadImage(),
-        '/cameraimage': (BuildContext context) => CameraImage(),
-        '/home': (BuildContext context) => MyHomePage(_groups),
-        '/create': (BuildContext context) => AddUserGroupPage(_addGroups),
-        '/splitbill': (BuildContext context) => SplitBill(),
-        '/reviewpage': (BuildContext context) => ReviewPage(),
-        '/ocrtest': (BuildContext context) => DetectionWidget(),
-      },
+    return ScopedModel<GroupsModel>(
+      model: GroupsModel(),
+      child: MaterialApp(
+        // debugShowMaterialGrid: true, // to show the grid of the layout.
+        theme: ThemeData(
+            brightness: Brightness.light,
+            primarySwatch: Colors.pink,
+            accentColor: Colors.blue[800]),
+        debugShowCheckedModeBanner: false, //remove debug
+        routes: {
+          '/': (BuildContext context) => SplashScreen(),
+          '/existingimage': (BuildContext context) => UploadImage(),
+          '/cameraimage': (BuildContext context) => CameraImage(),
+          '/home': (BuildContext context) => MyHomePage(),
+          '/create': (BuildContext context) => AddUserGroupPage(),
+          '/splitbill': (BuildContext context) => SplitBill(),
+          '/reviewpage': (BuildContext context) => ReviewPage(),
+          '/ocrtest': (BuildContext context) => DetectionWidget(),
+        },
+      ),
     );
   }
 }

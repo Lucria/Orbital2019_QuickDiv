@@ -1,12 +1,14 @@
 import 'package:contacts_service/contacts_service.dart';
 import 'package:flutter/material.dart';
-import '../class/custom_contacts.dart';
+import 'package:scoped_model/scoped_model.dart';
+import '../models/custom_contacts.dart';
+import '../models/group.dart';
+import '../scoped-models/groups_model.dart';
 
 class CreateGroupName extends StatefulWidget {
-  final Function addGroup;
   final List<CustomContact> contacts;
 
-  CreateGroupName(this.addGroup, this.contacts);
+  CreateGroupName(this.contacts);
 
   @override
   State<StatefulWidget> createState() {
@@ -16,6 +18,7 @@ class CreateGroupName extends StatefulWidget {
 
 class _CreateGroupName extends State<CreateGroupName> {
   String _groupName = '';
+  bool _editing = false;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   ListTile _buildListTile(CustomContact c, List<Item> list) {
@@ -35,13 +38,14 @@ class _CreateGroupName extends State<CreateGroupName> {
     );
   }
 
-  Widget _buildCreateGroupName() {
+  Widget _buildCreateGroupName(Group group) {
     return Container(
       margin: EdgeInsets.all(10.0),
       child: TextFormField(
         decoration: InputDecoration(
           labelText: 'Group Name',
         ),
+        initialValue: _editing == false ? '' : group.groupName,
         validator: (String value) {
           if (value.isEmpty) {
             print('Group name is empty');
@@ -69,7 +73,7 @@ class _CreateGroupName extends State<CreateGroupName> {
     );
   }
 
-  void _createGroup() {
+  void _createGroup(Function addGroup) {
     if (!_formKey.currentState.validate()) {
       return;
     }
@@ -83,43 +87,72 @@ class _CreateGroupName extends State<CreateGroupName> {
           widget.contacts[i].contact.phones.elementAt(0).value);
     }
 
-    final Map<String, List<CustomContact>> group = {
-      _groupName: widget.contacts
-    };
+    addGroup(Group(
+      groupName: _groupName,
+      contacts: widget.contacts,
+    ));
+    Navigator.pushReplacementNamed(context, '/home');
+  }
 
-    widget.addGroup(group);
+  void _editGroup(Function editGroup) {
+    if (!_formKey.currentState.validate()) {
+      return;
+    }
+    _formKey.currentState.save();
+    print('Creating ' + _groupName + ' Groups with: ');
+
+    for (var i = 0; i < widget.contacts.length; i++) {
+      print(widget.contacts[i].contact.displayName);
+      print(widget.contacts[i].contact.phones.elementAt(0).label +
+          ':' +
+          widget.contacts[i].contact.phones.elementAt(0).value);
+    }
+
+    editGroup(Group(
+      groupName: _groupName,
+      contacts: widget.contacts,
+    ));
     Navigator.pushReplacementNamed(context, '/home');
   }
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: () {
-        print('[CreateGroupName Widget] Back button pressed!');
-        Navigator.pop(context, false);
-        return Future.value(false);
-      },
-      child: Scaffold(
-        appBar: AppBar(
-          title: Text('New Group'),
-          actions: <Widget>[
-            FlatButton(
-              textColor: Colors.white,
-              child: Text('Create'),
-              onPressed: _createGroup,
-            ),
-          ],
-        ),
-        body: Form(
-          key: _formKey,
-          child: Column(
-            children: <Widget>[
-              _buildCreateGroupName(),
-              _buildViewSelectedContact(),
+    return WillPopScope(onWillPop: () {
+      print('[CreateGroupName Widget] Back button pressed!');
+      Navigator.pop(context, false);
+      return Future.value(false);
+    }, child: ScopedModelDescendant<GroupsModel>(
+      builder: (BuildContext context, Widget child, GroupsModel model) {
+        if (model.selectedGroup != null) {
+          _editing = true;
+        }
+
+        return Scaffold(
+          appBar: AppBar(
+            title: _editing == false ? Text('New Group') : Text('Edit Group'),
+            actions: <Widget>[
+              FlatButton(
+                textColor: Colors.white,
+                child: _editing == false ? Text('Create') : Text('Update'),
+                onPressed: () {
+                  _editing == false
+                      ? _createGroup(model.addGroups)
+                      : _editGroup(model.editGroup);
+                },
+              ),
             ],
           ),
-        ),
-      ),
-    );
+          body: Form(
+            key: _formKey,
+            child: Column(
+              children: <Widget>[
+                _buildCreateGroupName(model.selectedGroup),
+                _buildViewSelectedContact(),
+              ],
+            ),
+          ),
+        );
+      },
+    ));
   }
 }

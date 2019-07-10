@@ -1,39 +1,11 @@
 import 'package:animated_floatactionbuttons/animated_floatactionbuttons.dart';
 import 'package:flutter/material.dart';
 import '../widget/groups/groups.dart';
-import '../class/custom_contacts.dart';
-import '../widget/background.dart';
+import '../widget/ui_elements/background.dart';
+import '../widget/ui_elements/appbar.dart';
 import '../widget/show_model.dart';
 
 class MyHomePage extends StatelessWidget {
-//  This constructor declares 2 optional named parameters, optional named because of {}
-//  First is of name key with type Key
-//  Second is of name title with the type of the field this.title and automatically initializes this.title
-//  with the passed value
-//  : starts the initializer list. Initializer list allows some to execute some expressions before the call is
-//  forwarded to the constructor of the super class
-//  MyHomePage({Key key, this.title}) : super(key: key);
-//   This class is the configuration for the state. It holds the values (in this
-//   case the title) provided by the parent (in this case the App widget) and
-//   used by the build method of the State. Fields in a Widget subclass are
-//   always marked "final".
-//
-//  final String title;
-  // final String groupName;
-  // final CustomContact contact;
-  final List<Map<String, List<CustomContact>>> groups;
-
-  MyHomePage(this.groups);
-
-  final int _counter = 0;
-
-  // Temporary function for testing
-  void _incrementCounter() {
-    // setState(() {
-    //   _counter++;
-    // });
-    print(_counter);
-  }
 
   Widget oneTimeButton(BuildContext context) {
     return Container(
@@ -43,7 +15,7 @@ class MyHomePage extends StatelessWidget {
           // Bottom sheet will show two buttons
           // One button is for users to upload exisiting photos from gallery
           // The other button is for users to take a new photo using camera
-          ShowModal.myModal(context);
+          ShowModal.myModal(context); // Calling myModal function from the ShowModal class
         },
         tooltip: "One-time usage button",
         child: Icon(Icons.add),
@@ -70,13 +42,10 @@ class MyHomePage extends StatelessWidget {
     // This method is rerun every time setState is called, for instance as done
     // by the _incrementCounter method above.
     return Scaffold(
-      appBar: AppBar(
-        title: Text("QuickDiv v1.0"),
-        automaticallyImplyLeading: false,
-      ),
+      appBar: TitleText.defaultTitle(),
       body: Container(
         decoration: BackgroundImage.myBoxDecoration(),
-        child: Groups(groups),
+        child: Groups(),
       ),
       floatingActionButton: AnimatedFloatingActionButton(
         fabButtons: <Widget>[

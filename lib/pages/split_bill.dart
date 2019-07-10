@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:grouped_buttons/grouped_buttons.dart';
-import '../widget/background.dart';
+import '../widget/ui_elements/background.dart';
+import '../widget/ui_elements/appbar.dart';
 
 class SplitBill extends StatefulWidget {
   @override
@@ -37,7 +38,7 @@ class _SplitBill extends State<SplitBill> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('QuickDiv'),
+        title: TitleText.defaultTitle(),
         actions: <Widget>[
           FlatButton(
             child: Text('Done'),

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'dart:io';
 import 'package:image_picker/image_picker.dart';
-import 'package:quickdiv_orbital2019/widget/background.dart';
+import 'package:quickdiv_orbital2019/widget/ui_elements/background.dart';
 import 'confirmation_message.dart';
 import 'package:permission_handler/permission_handler.dart';
 
@@ -65,8 +65,9 @@ class _UploadImageState extends State<UploadImage> {
   Widget build(BuildContext context) {
 //    pickImage(ImageSource.gallery);
     return Scaffold(
+      // TODO Add AppBar to a seperate widget file
       appBar: AppBar(
-        title: Text("QuickDiv v1.0"),
+        title: Text("QuickDiv v2.0"),
         actions: <Widget>[
           FlatButton(
             textColor: Colors.white,

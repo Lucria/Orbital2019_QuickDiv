@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'dart:io';
 import 'package:image_picker/image_picker.dart';
-import 'package:quickdiv_orbital2019/widget/background.dart';
+import 'package:quickdiv_orbital2019/widget/ui_elements/background.dart';
 import 'confirmation_message.dart';
 
 class CameraImage extends StatefulWidget {
@@ -60,10 +60,11 @@ class _CameraImageState extends State<CameraImage> {
 
   @override
   Widget build(BuildContext context) {
-    pickImage(ImageSource.camera);
+    pickImage(ImageSource.camera); // Doesn't require asking for permissions as permissions are handled by image_picker package already
     return Scaffold(
+      // TODO Add AppBar to a seperate widget file
       appBar: AppBar(
-        title: Text("QuickDiv v1.0"),
+        title: Text("QuickDiv v2.0"),
         actions: <Widget>[
           FlatButton(
             textColor: Colors.white,
