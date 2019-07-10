@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import '../widget/background.dart';
+import '../widget/ui_elements/background.dart';
+import '../widget/ui_elements/appbar.dart';
 
 class ReviewPage extends StatelessWidget {
 
@@ -192,11 +193,9 @@ class ReviewPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('QuickDiv'),
-      ),
+      appBar: TitleText.defaultTitle(),
       body: Container(
-         decoration: BackgroundImage.myBoxDecoration(),
+        decoration: BackgroundImage.myBoxDecoration(),
         padding: EdgeInsets.all(10.0),
         child: Column(
           children: <Widget>[

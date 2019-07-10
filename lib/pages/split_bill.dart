@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:grouped_buttons/grouped_buttons.dart';
-import '../widget/background.dart';
+import '../widget/ui_elements/background.dart';
 
 class SplitBill extends StatefulWidget {
   @override

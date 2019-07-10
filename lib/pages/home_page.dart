@@ -1,7 +1,8 @@
 import 'package:animated_floatactionbuttons/animated_floatactionbuttons.dart';
 import 'package:flutter/material.dart';
 import '../widget/groups/groups.dart';
-import '../widget/background.dart';
+import '../widget/ui_elements/background.dart';
+import '../widget/ui_elements/appbar.dart';
 import '../widget/show_model.dart';
 
 class MyHomePage extends StatelessWidget {
@@ -41,10 +42,7 @@ class MyHomePage extends StatelessWidget {
     // This method is rerun every time setState is called, for instance as done
     // by the _incrementCounter method above.
     return Scaffold(
-      appBar: AppBar(
-        title: Text("QuickDiv v1.0"),
-        automaticallyImplyLeading: false,
-      ),
+      appBar: TitleText.defaultTitle(),
       body: Container(
         decoration: BackgroundImage.myBoxDecoration(),
         child: Groups(),
