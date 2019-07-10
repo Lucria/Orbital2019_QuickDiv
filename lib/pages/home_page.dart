@@ -16,15 +16,6 @@ class MyHomePage extends StatelessWidget {
 //   case the title) provided by the parent (in this case the App widget) and
 //   used by the build method of the State. Fields in a Widget subclass are
 //   always marked "final".
-  final int _counter = 0;
-
-  // Temporary function for testing
-  void _incrementCounter() {
-    // setState(() {
-    //   _counter++;
-    // });
-    print(_counter);
-  }
 
   Widget oneTimeButton(BuildContext context) {
     return Container(
