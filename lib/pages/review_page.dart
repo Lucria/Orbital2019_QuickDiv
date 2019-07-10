@@ -210,7 +210,9 @@ class ReviewPage extends StatelessWidget {
       floatingActionButton: FloatingActionButton.extended(
         icon: Icon(Icons.send),
         label: Text('Send to all'),
-        onPressed: () {},
+        onPressed: () {
+          Navigator.pushNamed(context, '/home');
+        },
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
