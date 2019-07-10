@@ -5,17 +5,6 @@ import '../widget/background.dart';
 import '../widget/show_model.dart';
 
 class MyHomePage extends StatelessWidget {
-//  This constructor declares 2 optional named parameters, optional named because of {}
-//  First is of name key with type Key
-//  Second is of name title with the type of the field this.title and automatically initializes this.title
-//  with the passed value
-//  : starts the initializer list. Initializer list allows some to execute some expressions before the call is
-//  forwarded to the constructor of the super class
-//  MyHomePage({Key key, this.title}) : super(key: key);
-//   This class is the configuration for the state. It holds the values (in this
-//   case the title) provided by the parent (in this case the App widget) and
-//   used by the build method of the State. Fields in a Widget subclass are
-//   always marked "final".
 
   Widget oneTimeButton(BuildContext context) {
     return Container(
