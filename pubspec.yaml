@@ -30,6 +30,7 @@ dependencies:
   contacts_service: ^0.2.7
   rflutter_alert: ^1.0.2
   grouped_buttons: ^1.0.4
+  scoped_model: ^1.0.1
 
 dev_dependencies:
   flutter_test:

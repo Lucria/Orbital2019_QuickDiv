@@ -17,14 +17,6 @@ class MyHomePage extends StatelessWidget {
 //   case the title) provided by the parent (in this case the App widget) and
 //   used by the build method of the State. Fields in a Widget subclass are
 //   always marked "final".
-
-  final Function editGroup;
-  final Function deleteGroup;
-  final List<Group> groups;
-
-  // MyHomePage(this.addGroup, this.editGroup, this.groups);
-  MyHomePage(this.editGroup, this.deleteGroup, this.groups);
-
   final int _counter = 0;
 
   // Temporary function for testing
@@ -76,7 +68,7 @@ class MyHomePage extends StatelessWidget {
       ),
       body: Container(
         decoration: BackgroundImage.myBoxDecoration(),
-        child: Groups(editGroup, deleteGroup, groups),
+        child: Groups(),
       ),
       floatingActionButton: AnimatedFloatingActionButton(
         fabButtons: <Widget>[

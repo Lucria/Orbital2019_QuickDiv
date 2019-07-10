@@ -2,22 +2,12 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:contacts_service/contacts_service.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:scoped_model/scoped_model.dart';
 import 'create_group_name.dart';
 import '../models/custom_contacts.dart';
+import '../scoped-models/groups_model.dart';
 
 class AddUserGroupPage extends StatefulWidget {
-  final Function addGroup;
-  final Function editGroup;
-  final int index;
-  final String groupName;
-  final List<CustomContact> editContacts;
-  AddUserGroupPage(
-      {this.addGroup,
-      this.editGroup,
-      this.index,
-      this.groupName,
-      this.editContacts});
-
   @override
   State<StatefulWidget> createState() {
     return _AddUserGroupPage();
@@ -29,6 +19,7 @@ class _AddUserGroupPage extends State<AddUserGroupPage> {
   List<CustomContact> _selectedContacts = List<CustomContact>();
   List<CustomContact> _allContacts = List<CustomContact>();
   bool _isLoading = false;
+  bool _editting = false;
   PermissionStatus _status;
 
   TextEditingController editingController = TextEditingController();
@@ -38,6 +29,11 @@ class _AddUserGroupPage extends State<AddUserGroupPage> {
   void initState() {
     super.initState();
     waitContactsPermission();
+  }
+
+  void waitContactsPermission() async {
+    await getContactsPermission();
+    refreshContacts();
   }
 
   refreshContacts() async {
@@ -54,14 +50,18 @@ class _AddUserGroupPage extends State<AddUserGroupPage> {
     _allContacts =
         _contacts.map((contact) => CustomContact(contact: contact)).toList();
 
-    if (widget.editGroup != null) {
-      print('Selecting contact that are part of the group.');
-      for (int i = 0; i < widget.editContacts.length; i++) {
+    print('Selecting contact that are part of the group.');
+    GroupsModel model = ScopedModel.of(context);
+
+    if (model.selectedGroup != null) {
+      print('Selected group name: ' + model.selectedGroup.groupName);
+      print('part: ' + model.selectedGroup.contacts[0].contact.displayName);
+      for (int i = 0; i < model.selectedGroup.contacts.length; i++) {
         for (int j = 0; j < _allContacts.length; j++) {
           // print("check: " + _allContacts[j].contact.displayName);
           // print("check: " + _allContacts[j].isChecked.toString());
           if (_allContacts[j].contact.displayName ==
-              widget.editContacts[i].contact.displayName) {
+              model.selectedGroup.contacts[i].contact.displayName) {
             _allContacts[j].isChecked = true;
             // print("found: " + _allContacts[j].contact.displayName);
             // print("check: " + _allContacts[j].isChecked.toString());
@@ -69,9 +69,10 @@ class _AddUserGroupPage extends State<AddUserGroupPage> {
           }
         }
       }
+      _editting = true;
     }
+
     items.addAll(_allContacts);
-    // print('hi');
     setState(() {
       _selectedContacts = _allContacts;
       _isLoading = false;
@@ -122,11 +123,6 @@ class _AddUserGroupPage extends State<AddUserGroupPage> {
           );
   }
 
-  void waitContactsPermission() async {
-    await getContactsPermission();
-    refreshContacts();
-  }
-
   void dialog(String title, String message) {
     showDialog(
         context: context,
@@ -158,21 +154,16 @@ class _AddUserGroupPage extends State<AddUserGroupPage> {
       dialog('Alert!', 'Please select 2 or more contact.');
       return;
     }
-    widget.editGroup == null
-        ? Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => CreateGroupName(_selectedContacts,
-                    addGroup: widget.addGroup)))
-        : Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => CreateGroupName(
-                      _selectedContacts,
-                      editGroup: widget.editGroup,
-                      index: widget.index,
-                      groupName: widget.groupName,
-                    )));
+    // widget.editGroup == null
+    //     ? Navigator.push(
+    //         context,
+    //         MaterialPageRoute(
+    //             builder: (context) => CreateGroupName(_selectedContacts,
+    //                 addGroup: widget.addGroup))):
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => CreateGroupName(_selectedContacts)));
   }
 
   void filterSearchResults(String query) {
@@ -213,7 +204,7 @@ class _AddUserGroupPage extends State<AddUserGroupPage> {
       },
       child: Scaffold(
         appBar: AppBar(
-          title: widget.editGroup == null
+          title: _editting == false
               ? Text('Add Participants')
               : Text('Edit Group'),
           actions: <Widget>[
