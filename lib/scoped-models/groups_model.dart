@@ -5,14 +5,10 @@ class GroupsModel extends Model {
   List<Group> _groups = [];
   int _selectedGroupIndex;
 
-  List<Group> get groups {
-    // Getter function to get the private var
-    return List.from(_groups);
-  }
+  List<Group> get groups => List.from(_groups);
+  // Getter function to get the private var
 
-  int get selectedGroupIndex {
-    return _selectedGroupIndex;
-  }
+  int get selectedGroupIndex => _selectedGroupIndex;
 
   Group get selectedGroup {
     if (_selectedGroupIndex == null) {
