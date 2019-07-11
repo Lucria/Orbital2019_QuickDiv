@@ -102,7 +102,7 @@ class _AddUserGroupPage extends State<AddUserGroupPage> {
           ? Text(list[0].value)
           : Text(''),
       trailing: Checkbox(
-          activeColor: Colors.green,
+          activeColor: Theme.of(context).toggleableActiveColor,
           value: c.isChecked,
           onChanged: (bool value) {
             setState(() {
@@ -116,6 +116,7 @@ class _AddUserGroupPage extends State<AddUserGroupPage> {
     return contactAvatar
         ? CircleAvatar(backgroundImage: MemoryImage(c.contact.avatar))
         : CircleAvatar(
+            backgroundColor: Theme.of(context).toggleableActiveColor,
             child: Text(
                 (c.contact.displayName[0] +
                     c.contact.displayName[1].toUpperCase().toString()),

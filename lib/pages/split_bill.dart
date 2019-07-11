@@ -145,6 +145,7 @@ class _SplitBill extends State<SplitBill> {
             removeItem(index);
             Navigator.pop(context);
           },
+          color: Theme.of(context).toggleableActiveColor,
           width: 120,
         )
       ],

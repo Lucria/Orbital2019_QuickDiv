@@ -37,10 +37,12 @@ class _MyAppState extends State<MyApp> {
       child: MaterialApp(
         // debugShowMaterialGrid: true, // to show the grid of the layout.
         theme: ThemeData(
-            brightness: Brightness.light,
-            primarySwatch: Colors.pink,
-            accentColor: Colors.blue[800],
-            toggleableActiveColor: Colors.pink),
+          brightness: Brightness.light,
+          primarySwatch: Colors.pink,
+          accentColor: Colors.blue[800],
+          toggleableActiveColor:
+              Colors.pink, // Checkbox, CircularAvatar, Button
+        ),
         debugShowCheckedModeBanner: false, //remove debug
         routes: {
           '/': (BuildContext context) => SplashScreen(),
