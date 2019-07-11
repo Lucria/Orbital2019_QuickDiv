@@ -73,7 +73,7 @@ class _SplitBill extends State<SplitBill> {
             trailing: PopupMenuButton(
               onSelected: (value) {
                 if (value == 'Share') {
-                  _onAlertButtonPressed(context, index, group);
+                  _onAlertShareSheet(context, index, group);
                 } else {
                   print(value);
                   removeItem(value);
@@ -116,11 +116,13 @@ class _SplitBill extends State<SplitBill> {
     );
   }
 
-  _onAlertButtonPressed(context, index, Group group) {
+  _onAlertShareSheet(context, index, Group group) {
     List<String> names = new List();
+    List<String> selected = new List();
 
     group.contacts.forEach((group) => names.add(group.contact.displayName));
     names.add('Select all');
+
     Alert(
       context: context,
       title: "Who are you sharing this item with? ",
@@ -133,6 +135,7 @@ class _SplitBill extends State<SplitBill> {
         },
         onSelected: (List<String> checked) {
           print("checked: ${checked.toString()}");
+          selected = checked;
         },
       ),
       buttons: [
@@ -142,6 +145,9 @@ class _SplitBill extends State<SplitBill> {
             style: TextStyle(color: Colors.white, fontSize: 20),
           ),
           onPressed: () {
+            if (names.length == selected.length) selected.removeLast();
+            print('Share with ' + selected.toString());
+
             removeItem(index);
             Navigator.pop(context);
           },
@@ -156,7 +162,7 @@ class _SplitBill extends State<SplitBill> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: TitleText.defaultTitle(),
+        title: Text('Divide your bill'),
         actions: <Widget>[
           FlatButton(
             child: Text('Done'),
