@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
-import 'package:grouped_buttons/grouped_buttons.dart';
+import 'package:scoped_model/scoped_model.dart';
+import '../widget/ui_elements/groupcheckbox.dart';
 import '../widget/ui_elements/background.dart';
 import '../widget/ui_elements/appbar.dart';
+import '../scoped-models/groups_model.dart';
+import '../models/group.dart';
 
 class SplitBill extends StatefulWidget {
   @override
@@ -34,37 +37,6 @@ class _SplitBill extends State<SplitBill> {
     '\$3.00'
   ];
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: TitleText.defaultTitle(),
-        actions: <Widget>[
-          FlatButton(
-            child: Text('Done'),
-            textColor: Colors.white,
-            onPressed: () {
-              Navigator.pushReplacementNamed(context, '/reviewpage');
-            },
-          )
-        ],
-      ),
-      body: Container(
-        decoration: BackgroundImage.myBoxDecoration(),
-        child: ListView.builder(
-          itemCount: list.length,
-          itemBuilder: (context, index) {
-            return itemCard(context, list[index], price[index], index);
-          },
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.undo),
-        onPressed: () {},
-      ),
-    );
-  }
-
   removeItem(int index) {
     setState(() {
       list.removeAt(index);
@@ -84,7 +56,10 @@ class _SplitBill extends State<SplitBill> {
     );
   }
 
-  Widget itemCard(BuildContext context, String name, String price, int index) {
+  Widget itemCard(
+      BuildContext context, String name, String price, int index, Group group) {
+    // print(group.groupName);
+    // print(group.contacts.length);
     return Card(
       child: Column(
         children: <Widget>[
@@ -98,7 +73,7 @@ class _SplitBill extends State<SplitBill> {
             trailing: PopupMenuButton(
               onSelected: (value) {
                 if (value == 'Share') {
-                  _onAlertButtonPressed(context, index);
+                  _onAlertButtonPressed(context, index, group);
                 } else {
                   print(value);
                   removeItem(value);
@@ -107,40 +82,20 @@ class _SplitBill extends State<SplitBill> {
               itemBuilder: (context) {
                 var list = List<PopupMenuEntry<Object>>();
 
-                list.add(
-                  PopupMenuItem(
-                      child: ListTile(
-                          leading: Icon(Icons.person), title: Text('Arya')),
-                      value: index),
-                );
-
-                list.add(
-                  PopupMenuItem(
-                      child: ListTile(
-                          leading: Icon(Icons.person), title: Text('Daenerys')),
-                      value: index),
-                );
-
-                list.add(
-                  PopupMenuItem(
-                      child: ListTile(
-                          leading: Icon(Icons.person), title: Text('Jamie')),
-                      value: index),
-                );
-                
-                list.add(
-                  PopupMenuItem(
-                      child: ListTile(
-                          leading: Icon(Icons.person), title: Text('Jon')),
-                      value: index),
-                );
-
-                list.add(
-                  PopupMenuItem(
-                      child: ListTile(
-                          leading: Icon(Icons.person), title: Text('Tyrion')),
-                      value: index),
-                );
+                for (int i = 0; i < group.contacts.length; i++) {
+                  list.add(
+                    PopupMenuItem(
+                        child: ListTile(
+                            leading: group.contacts[i].contact.avatar != null
+                                ? CircleAvatar(
+                                    backgroundImage: MemoryImage(
+                                        group.contacts[i].contact.avatar),
+                                  )
+                                : Icon(Icons.person),
+                            title: Text(group.contacts[i].contact.displayName)),
+                        value: index),
+                  );
+                }
 
                 list.add(
                   PopupMenuItem(
@@ -148,7 +103,6 @@ class _SplitBill extends State<SplitBill> {
                           leading: Icon(Icons.group), title: Text('Share')),
                       value: 'Share'),
                 );
-                
 
                 // list.add(
                 //   PopupMenuItem(child: Text('Share'), value: 'Share'),
@@ -162,25 +116,24 @@ class _SplitBill extends State<SplitBill> {
     );
   }
 
-  _onAlertButtonPressed(context, index) {
+  _onAlertButtonPressed(context, index, Group group) {
+    List<String> names = new List();
+
+    group.contacts.forEach((group) => names.add(group.contact.displayName));
+    names.add('Select all');
     Alert(
       context: context,
       title: "Who are you sharing this item with? ",
-      content: CheckboxGroup(
-        labels: <String>[
-          "Arya",
-          'Daenerys',
-          "Jamie",
-          "Jon",
-          "Tyrion",
-          "Select All",
-        ],
+      content: GroupCheckbox(
+        // my modifed version for select all
+        labels: names,
         onChange: (bool isChecked, String label, int index) {
           if (label == 'Select All') {}
           print("isChecked: $isChecked   label: $label  index: $index");
         },
-        onSelected: (List<String> checked) =>
-            print("checked: ${checked.toString()}"),
+        onSelected: (List<String> checked) {
+          print("checked: ${checked.toString()}");
+        },
       ),
       buttons: [
         DialogButton(
@@ -196,5 +149,41 @@ class _SplitBill extends State<SplitBill> {
         )
       ],
     ).show();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: TitleText.defaultTitle(),
+        actions: <Widget>[
+          FlatButton(
+            child: Text('Done'),
+            textColor: Colors.white,
+            onPressed: () {
+              Navigator.pushReplacementNamed(context, '/reviewpage');
+            },
+          )
+        ],
+      ),
+      body: ScopedModelDescendant<GroupsModel>(
+        builder: (BuildContext context, Widget child, GroupsModel model) {
+          return Container(
+            decoration: BackgroundImage.myBoxDecoration(),
+            child: ListView.builder(
+              itemCount: list.length,
+              itemBuilder: (context, index) {
+                return itemCard(context, list[index], price[index], index,
+                    model.selectedGroup);
+              },
+            ),
+          );
+        },
+      ),
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.undo),
+        onPressed: () {},
+      ),
+    );
   }
 }

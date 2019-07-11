@@ -31,6 +31,7 @@ class Groups extends StatelessWidget {
                 //       ':' +
                 //       groupContact[i].contact.phones.elementAt(0).value);
               }
+              model.selectGroup(index);
               ShowModal.myModal(context);
             },
             child: Card(
