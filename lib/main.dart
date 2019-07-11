@@ -39,7 +39,8 @@ class _MyAppState extends State<MyApp> {
         theme: ThemeData(
             brightness: Brightness.light,
             primarySwatch: Colors.pink,
-            accentColor: Colors.blue[800]),
+            accentColor: Colors.blue[800],
+            toggleableActiveColor: Colors.pink),
         debugShowCheckedModeBanner: false, //remove debug
         routes: {
           '/': (BuildContext context) => SplashScreen(),
