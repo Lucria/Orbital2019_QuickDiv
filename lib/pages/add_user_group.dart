@@ -127,9 +127,9 @@ class _AddUserGroupPage extends State<AddUserGroupPage> {
   void dialog(String title, String message) {
     showDialog(
         context: context,
-        builder: (_) => new AlertDialog(
-              title: new Text(title),
-              content: new Text(message),
+        builder: (_) => AlertDialog(
+              title: Text(title),
+              content: Text(message),
               actions: <Widget>[
                 FlatButton(
                   child: Text('Dimiss'),
@@ -238,7 +238,7 @@ class _AddUserGroupPage extends State<AddUserGroupPage> {
                           editingController.text.length > 0
                               ? IconButton(
                                   padding: EdgeInsets.only(bottom: 10.0),
-                                  icon: new Icon(Icons.clear),
+                                  icon: Icon(Icons.clear),
                                   onPressed: () {
                                     setState(() {
                                       editingController.clear();
