@@ -92,7 +92,9 @@ class _CreateGroupName extends State<CreateGroupName> {
       groupName: _groupName,
       contacts: widget.contacts,
     ));
-    Navigator.pushReplacementNamed(context, '/home');
+
+    Navigator.pushNamedAndRemoveUntil(
+        context, '/home', (Route<dynamic> route) => false);
   }
 
   void _editGroup(Function editGroup) {
@@ -113,7 +115,9 @@ class _CreateGroupName extends State<CreateGroupName> {
       groupName: _groupName,
       contacts: widget.contacts,
     ));
-    Navigator.pushReplacementNamed(context, '/home');
+    // Navigator.pushReplacementNamed(context, '/home');
+    Navigator.pushNamedAndRemoveUntil(
+        context, '/home', (Route<dynamic> route) => false);
   }
 
   @override

@@ -52,7 +52,7 @@ class Groups extends StatelessWidget {
                           print(groupName);
                           model.selectGroup(index);
 
-                          Navigator.pushReplacementNamed(context, '/create');
+                          Navigator.pushNamed(context, '/create');
                         } else if (value == 'delete') {
                           print('deleting at ' + index.toString());
                           model.selectGroup(index);

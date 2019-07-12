@@ -155,12 +155,6 @@ class _AddUserGroupPage extends State<AddUserGroupPage> {
       dialog('Alert!', 'Please select 2 or more contact.');
       return;
     }
-    // widget.editGroup == null
-    //     ? Navigator.push(
-    //         context,
-    //         MaterialPageRoute(
-    //             builder: (context) => CreateGroupName(_selectedContacts,
-    //                 addGroup: widget.addGroup))):
     Navigator.push(
         context,
         MaterialPageRoute(
@@ -200,6 +194,7 @@ class _AddUserGroupPage extends State<AddUserGroupPage> {
       // WillPopScope will listen to the back button being press - for Android only.
       onWillPop: () {
         print('[AddUserGroupPage] Back button pressed!');
+
         Navigator.pop(context, false);
         return Future.value(false);
       },
