@@ -169,7 +169,9 @@ class _AddUserGroupPage extends State<AddUserGroupPage> {
     if (query.isNotEmpty) {
       List<CustomContact> dummyListData = List<CustomContact>();
       dummySearchList.forEach((item) {
-        if (item.contact.displayName.toLowerCase().contains(query)) {
+        if (item.contact.displayName
+            .toLowerCase()
+            .contains(query.toLowerCase())) {
           print('searching for matching string in earch contact');
           dummyListData.add(item);
         }
@@ -217,19 +219,36 @@ class _AddUserGroupPage extends State<AddUserGroupPage> {
                 children: <Widget>[
                   Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: TextField(
-                      onChanged: (value) {
-                        filterSearchResults(value);
-                      },
-                      controller: editingController,
-                      decoration: InputDecoration(
-                          labelText: "Search",
-                          hintText: "Search",
-                          prefixIcon: Icon(Icons.search),
-                          border: OutlineInputBorder(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(25.0)))),
-                    ),
+                    child: Stack(
+                        alignment: Alignment(1.0, 1.0),
+                        children: <Widget>[
+                          TextField(
+                            onChanged: (value) {
+                              filterSearchResults(value);
+                            },
+                            controller: editingController,
+                            decoration: InputDecoration(
+                                labelText: "Search",
+                                hintText: "Search",
+                                prefixIcon: Icon(Icons.search),
+                                border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.all(
+                                        Radius.circular(25.0)))),
+                          ),
+                          editingController.text.length > 0
+                              ? IconButton(
+                                  padding: EdgeInsets.only(bottom: 10.0),
+                                  icon: new Icon(Icons.clear),
+                                  onPressed: () {
+                                    setState(() {
+                                      editingController.clear();
+                                      filterSearchResults('');
+                                    });
+                                  })
+                              : Container(
+                                  height: 0.0,
+                                )
+                        ]),
                   ),
                   Expanded(
                     child: ListView.builder(

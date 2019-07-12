@@ -91,7 +91,7 @@ class _SplitBill extends State<SplitBill> {
                                     backgroundImage: MemoryImage(
                                         group.contacts[i].contact.avatar),
                                   )
-                                : Icon(Icons.person),
+                                : CircleAvatar(child: Icon(Icons.person)),
                             title: Text(group.contacts[i].contact.displayName)),
                         value: index),
                   );
@@ -100,7 +100,12 @@ class _SplitBill extends State<SplitBill> {
                 list.add(
                   PopupMenuItem(
                       child: ListTile(
-                          leading: Icon(Icons.group), title: Text('Share')),
+                          leading: CircleAvatar(
+                            child: Icon(Icons.group),
+                            backgroundColor:
+                                Theme.of(context).toggleableActiveColor,
+                          ),
+                          title: Text('Share')),
                       value: 'Share'),
                 );
 
