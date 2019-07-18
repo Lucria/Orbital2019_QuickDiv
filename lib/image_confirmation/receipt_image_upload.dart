@@ -2,15 +2,12 @@ import 'package:flutter/material.dart';
 import 'dart:io';
 import 'dart:async';
 import 'package:image_picker/image_picker.dart';
-import 'package:quickdiv_orbital2019/models/ocr_results.dart';
 import 'package:quickdiv_orbital2019/widget/ui_elements/background.dart';
 import 'confirmation_message.dart';
 import 'package:permission_handler/permission_handler.dart';
+import '../ocr_related/ocr_test.dart';
 
 class UploadImage extends StatefulWidget {
-  UploadImage(this._imageOCR);
-  final ImageOCR _imageOCR;
-
   @override
   State<StatefulWidget> createState() {
     return _UploadImageState();
@@ -19,7 +16,8 @@ class UploadImage extends StatefulWidget {
 
 class _UploadImageState extends State<UploadImage> {
   Future<File> imageFile;
-  
+  File image;
+
   Future<File> pickImage(ImageSource source) {
     setState(() {
       imageFile = ImagePicker.pickImage(source: source);
@@ -33,6 +31,7 @@ class _UploadImageState extends State<UploadImage> {
       builder: (BuildContext context, AsyncSnapshot<File> snapshot) {
         if (snapshot.connectionState == ConnectionState.done &&
             snapshot.data != null) {
+          image = snapshot.data;
           return Image.file(
             snapshot.data,
             width: 500,
@@ -78,8 +77,12 @@ class _UploadImageState extends State<UploadImage> {
           FlatButton(
             textColor: Colors.white,
             child: Text('Next'),
-            onPressed: (){
-              Navigator.pushReplacementNamed(context, '/ocrtest'); // TODO Test OCR!
+            onPressed: () {
+              Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) =>
+                          DetectionWidget(image))); // TODO Test OCR!
             },
           )
         ],
@@ -100,14 +103,13 @@ class _UploadImageState extends State<UploadImage> {
   }
 
   Future<void> getGalleryPermission() async {
-    Map<PermissionGroup,
-      PermissionStatus> permissions = await PermissionHandler()
-      .requestPermissions([PermissionGroup.storage]);
+    Map<PermissionGroup, PermissionStatus> permissions =
+        await PermissionHandler().requestPermissions([PermissionGroup.storage]);
   }
 
   void waitGalleryPermission() async {
     await getGalleryPermission();
-    widget._imageOCR.image = await pickImage(ImageSource.gallery);
+    imageFile = pickImage(ImageSource.gallery);
     // ! Some problems here setting image!!! TODO
   }
 }

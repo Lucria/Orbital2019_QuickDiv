@@ -6,8 +6,9 @@ import '../models/ocr_results.dart';
 
 // TODO Complete this
 class DetectionWidget extends StatefulWidget {
-  DetectionWidget(this._imageOCR);
-  final ImageOCR _imageOCR;
+  final File image;
+  DetectionWidget(this.image);
+  // final ImageOCR _imageOCR;
 
   @override
   State<StatefulWidget> createState() {
@@ -22,9 +23,11 @@ class _DetectionWidgetState extends State<DetectionWidget> {
 
   @override
   void initState() {
+    print('error 1');
     super.initState();
-    imageFile = widget._imageOCR.image;
+    imageFile = widget.image;
     visionImage = FirebaseVisionImage.fromFile(imageFile);
+    print('error 2');
   }
 
   Future<String> ocrText() async {
@@ -46,6 +49,7 @@ class _DetectionWidgetState extends State<DetectionWidget> {
       appBar: AppBar(
         title: Text("QuickDiv v1.0"),
       ),
+      body: Container(child: Image.file(widget.image)),
     );
   }
 }
