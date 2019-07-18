@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:scoped_model/scoped_model.dart';
 import 'image_confirmation/receipt_image_upload.dart';
@@ -11,6 +10,7 @@ import 'pages/review_page.dart';
 import './ocr_related/ocr_test.dart';
 import './scoped-models/groups_model.dart';
 import './pages/review_page.dart';
+import './models/ocr_results.dart';
 
 import 'package:flutter/rendering.dart'; // to be delete - for debugging the widget lazyout.
 
@@ -30,6 +30,8 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+  ImageOCR _imageOCR;
+
   @override
   Widget build(BuildContext context) {
     print("[main Widget] build()");
@@ -45,13 +47,13 @@ class _MyAppState extends State<MyApp> {
         debugShowCheckedModeBanner: false, //remove debug
         routes: {
           '/': (BuildContext context) => SplashScreen(),
-          '/existingimage': (BuildContext context) => UploadImage(),
+          '/existingimage': (BuildContext context) => UploadImage(_imageOCR),
           '/cameraimage': (BuildContext context) => CameraImage(),
           '/home': (BuildContext context) => MyHomePage(),
           '/create': (BuildContext context) => AddUserGroupPage(),
           '/splitbill': (BuildContext context) => SplitBill(),
           '/reviewpage': (BuildContext context) => ReviewPage(),
-          '/ocrtest': (BuildContext context) => DetectionWidget(),
+          '/ocrtest': (BuildContext context) => DetectionWidget(_imageOCR),
         },
       ),
     );

@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
 import 'dart:io';
+import 'dart:async';
 import 'package:image_picker/image_picker.dart';
+import 'package:quickdiv_orbital2019/models/ocr_results.dart';
 import 'package:quickdiv_orbital2019/widget/ui_elements/background.dart';
 import 'confirmation_message.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 class UploadImage extends StatefulWidget {
+  UploadImage(this._imageOCR);
+  final ImageOCR _imageOCR;
+
   @override
   State<StatefulWidget> createState() {
     return _UploadImageState();
@@ -14,11 +19,12 @@ class UploadImage extends StatefulWidget {
 
 class _UploadImageState extends State<UploadImage> {
   Future<File> imageFile;
-
-  pickImage(ImageSource source) {
+  
+  Future<File> pickImage(ImageSource source) {
     setState(() {
       imageFile = ImagePicker.pickImage(source: source);
     });
+    return imageFile;
   }
 
   Widget showImage() {
@@ -73,7 +79,7 @@ class _UploadImageState extends State<UploadImage> {
             textColor: Colors.white,
             child: Text('Next'),
             onPressed: (){
-              Navigator.pushReplacementNamed(context, '/splitbill');
+              Navigator.pushReplacementNamed(context, '/ocrtest'); // TODO Test OCR!
             },
           )
         ],
@@ -101,6 +107,7 @@ class _UploadImageState extends State<UploadImage> {
 
   void waitGalleryPermission() async {
     await getGalleryPermission();
-    pickImage(ImageSource.gallery);
+    widget._imageOCR.image = await pickImage(ImageSource.gallery);
+    // ! Some problems here setting image!!! TODO
   }
 }
