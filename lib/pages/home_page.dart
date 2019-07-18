@@ -6,7 +6,6 @@ import '../widget/ui_elements/appbar.dart';
 import '../widget/show_model.dart';
 
 class MyHomePage extends StatelessWidget {
-
   Widget oneTimeButton(BuildContext context) {
     return Container(
       child: FloatingActionButton(
@@ -15,7 +14,8 @@ class MyHomePage extends StatelessWidget {
           // Bottom sheet will show two buttons
           // One button is for users to upload exisiting photos from gallery
           // The other button is for users to take a new photo using camera
-          ShowModal.myModal(context); // Calling myModal function from the ShowModal class
+          ShowModal.myModal(
+              context); // Calling myModal function from the ShowModal class
         },
         tooltip: "One-time usage button",
         child: Icon(Icons.add),
@@ -42,7 +42,10 @@ class MyHomePage extends StatelessWidget {
     // This method is rerun every time setState is called, for instance as done
     // by the _incrementCounter method above.
     return Scaffold(
-      appBar: TitleText.defaultTitle(),
+      appBar: AppBar(
+        title: Text("Home"),
+        automaticallyImplyLeading: false,
+      ),
       body: Container(
         decoration: BackgroundImage.myBoxDecoration(),
         child: Groups(),

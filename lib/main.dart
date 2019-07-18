@@ -15,7 +15,8 @@ import 'package:flutter/rendering.dart'; // to be delete - for debugging the wid
 void main() {
   // debugPaintSizeEnabled = true; // to view the rendering of the widget.
   // debugPaintBaselinesEnabled = true;
-  // debugPaintPointersEnabled = true; // show where the tab event is registered. for tab listener.
+  // debugPaintPointersEnabled =
+  //     true; // show where the tab event is registered. for tab listener.
   runApp(MyApp());
 }
 
@@ -39,9 +40,12 @@ class _MyAppState extends State<MyApp> {
       child: MaterialApp(
         // debugShowMaterialGrid: true, // to show the grid of the layout.
         theme: ThemeData(
-            brightness: Brightness.light,
-            primarySwatch: Colors.pink,
-            accentColor: Colors.blue[800]),
+          brightness: Brightness.light,
+          primarySwatch: Colors.pink,
+          accentColor: Colors.blue[800],
+          toggleableActiveColor:
+              Colors.pink, // Checkbox, CircularAvatar, Button
+        ),
         debugShowCheckedModeBanner: false, //remove debug
         routes: {
           '/': (BuildContext context) => SplashScreen(),

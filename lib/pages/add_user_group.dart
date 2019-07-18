@@ -102,7 +102,7 @@ class _AddUserGroupPage extends State<AddUserGroupPage> {
           ? Text(list[0].value)
           : Text(''),
       trailing: Checkbox(
-          activeColor: Colors.green,
+          activeColor: Theme.of(context).toggleableActiveColor,
           value: c.isChecked,
           onChanged: (bool value) {
             setState(() {
@@ -116,6 +116,7 @@ class _AddUserGroupPage extends State<AddUserGroupPage> {
     return contactAvatar
         ? CircleAvatar(backgroundImage: MemoryImage(c.contact.avatar))
         : CircleAvatar(
+            backgroundColor: Theme.of(context).toggleableActiveColor,
             child: Text(
                 (c.contact.displayName[0] +
                     c.contact.displayName[1].toUpperCase().toString()),
@@ -126,9 +127,9 @@ class _AddUserGroupPage extends State<AddUserGroupPage> {
   void dialog(String title, String message) {
     showDialog(
         context: context,
-        builder: (_) => new AlertDialog(
-              title: new Text(title),
-              content: new Text(message),
+        builder: (_) => AlertDialog(
+              title: Text(title),
+              content: Text(message),
               actions: <Widget>[
                 FlatButton(
                   child: Text('Dimiss'),
@@ -154,12 +155,6 @@ class _AddUserGroupPage extends State<AddUserGroupPage> {
       dialog('Alert!', 'Please select 2 or more contact.');
       return;
     }
-    // widget.editGroup == null
-    //     ? Navigator.push(
-    //         context,
-    //         MaterialPageRoute(
-    //             builder: (context) => CreateGroupName(_selectedContacts,
-    //                 addGroup: widget.addGroup))):
     Navigator.push(
         context,
         MaterialPageRoute(
@@ -174,7 +169,9 @@ class _AddUserGroupPage extends State<AddUserGroupPage> {
     if (query.isNotEmpty) {
       List<CustomContact> dummyListData = List<CustomContact>();
       dummySearchList.forEach((item) {
-        if (item.contact.displayName.toLowerCase().contains(query)) {
+        if (item.contact.displayName
+            .toLowerCase()
+            .contains(query.toLowerCase())) {
           print('searching for matching string in earch contact');
           dummyListData.add(item);
         }
@@ -199,6 +196,7 @@ class _AddUserGroupPage extends State<AddUserGroupPage> {
       // WillPopScope will listen to the back button being press - for Android only.
       onWillPop: () {
         print('[AddUserGroupPage] Back button pressed!');
+
         Navigator.pop(context, false);
         return Future.value(false);
       },
@@ -221,19 +219,36 @@ class _AddUserGroupPage extends State<AddUserGroupPage> {
                 children: <Widget>[
                   Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: TextField(
-                      onChanged: (value) {
-                        filterSearchResults(value);
-                      },
-                      controller: editingController,
-                      decoration: InputDecoration(
-                          labelText: "Search",
-                          hintText: "Search",
-                          prefixIcon: Icon(Icons.search),
-                          border: OutlineInputBorder(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(25.0)))),
-                    ),
+                    child: Stack(
+                        alignment: Alignment(1.0, 1.0),
+                        children: <Widget>[
+                          TextField(
+                            onChanged: (value) {
+                              filterSearchResults(value);
+                            },
+                            controller: editingController,
+                            decoration: InputDecoration(
+                                labelText: "Search",
+                                hintText: "Search",
+                                prefixIcon: Icon(Icons.search),
+                                border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.all(
+                                        Radius.circular(25.0)))),
+                          ),
+                          editingController.text.length > 0
+                              ? IconButton(
+                                  padding: EdgeInsets.only(bottom: 10.0),
+                                  icon: Icon(Icons.clear),
+                                  onPressed: () {
+                                    setState(() {
+                                      editingController.clear();
+                                      filterSearchResults('');
+                                    });
+                                  })
+                              : Container(
+                                  height: 0.0,
+                                )
+                        ]),
                   ),
                   Expanded(
                     child: ListView.builder(

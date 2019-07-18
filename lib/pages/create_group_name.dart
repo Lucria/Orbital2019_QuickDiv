@@ -26,6 +26,7 @@ class _CreateGroupName extends State<CreateGroupName> {
       leading: (c.contact.avatar != null)
           ? CircleAvatar(backgroundImage: MemoryImage(c.contact.avatar))
           : CircleAvatar(
+              backgroundColor: Theme.of(context).toggleableActiveColor,
               child: Text(
                   (c.contact.displayName[0] +
                       c.contact.displayName[1].toUpperCase()),
@@ -91,7 +92,9 @@ class _CreateGroupName extends State<CreateGroupName> {
       groupName: _groupName,
       contacts: widget.contacts,
     ));
-    Navigator.pushReplacementNamed(context, '/home');
+
+    Navigator.pushNamedAndRemoveUntil(
+        context, '/home', (Route<dynamic> route) => false);
   }
 
   void _editGroup(Function editGroup) {
@@ -112,7 +115,9 @@ class _CreateGroupName extends State<CreateGroupName> {
       groupName: _groupName,
       contacts: widget.contacts,
     ));
-    Navigator.pushReplacementNamed(context, '/home');
+    // Navigator.pushReplacementNamed(context, '/home');
+    Navigator.pushNamedAndRemoveUntil(
+        context, '/home', (Route<dynamic> route) => false);
   }
 
   @override
