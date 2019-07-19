@@ -21,7 +21,6 @@ void main() {
 }
 
 class MyApp extends StatefulWidget {
-  // Inherit class from material.dart package
   @override
   State<StatefulWidget> createState() {
     return _MyAppState();
@@ -29,8 +28,6 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  // ImageOCR _imageOCR;
-
   @override
   Widget build(BuildContext context) {
     print("[main Widget] build()");

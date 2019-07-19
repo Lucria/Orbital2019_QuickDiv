@@ -7,7 +7,6 @@ import 'dart:async';
 class DetectionWidget extends StatefulWidget {
   final File image;
   DetectionWidget(this.image);
-  // final ImageOCR _imageOCR;
 
   @override
   State<StatefulWidget> createState() {
@@ -22,11 +21,9 @@ class _DetectionWidgetState extends State<DetectionWidget> {
 
   @override
   void initState() {
-    print('error 1');
     super.initState();
     imageFile = widget.image;
     visionImage = FirebaseVisionImage.fromFile(imageFile);
-    print('error 2');
   }
 
   Future<String> ocrText() async {
@@ -42,8 +39,25 @@ class _DetectionWidgetState extends State<DetectionWidget> {
     print(results);
   }
 
+  Future readText() async {
+    final FirebaseVisionImage ourImage =
+        FirebaseVisionImage.fromFile(imageFile);
+    final TextRecognizer recognizeText =
+        FirebaseVision.instance.textRecognizer();
+    final VisionText readText = await recognizeText.processImage(ourImage);
+
+    for (TextBlock block in readText.blocks) {
+      for (TextLine line in block.lines) {
+        for (TextElement word in line.elements) {
+          print(word.text);
+        }
+      }
+    }
+  }
+
   Widget build(BuildContext context) {
-    saveText();
+    // saveText();
+    readText();
     return Scaffold(
       appBar: AppBar(
         title: Text("QuickDiv v1.0"),
