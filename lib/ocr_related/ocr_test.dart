@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:firebase_ml_vision/firebase_ml_vision.dart';
 import 'dart:io';
 import 'dart:async';
-import '../models/ocr_results.dart';
 
 // TODO Complete this
 class DetectionWidget extends StatefulWidget {
