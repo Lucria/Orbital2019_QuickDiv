@@ -1,0 +1,83 @@
+{
+  "project_info": {
+    "project_number": "396944182598",
+    "firebase_url": "https://orbital2019-53fc5.firebaseio.com",
+    "project_id": "orbital2019-53fc5",
+    "storage_bucket": "orbital2019-53fc5.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:396944182598:android:174fb76caf366462",
+        "android_client_info": {
+          "package_name": "com.example.orbital2019"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "396944182598-ct5ofq8gfqfus1d88ce450g764n3f0nm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAbOwIdetoDppWBYM31l0bTrmR3tfBR42I"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "396944182598-ct5ofq8gfqfus1d88ce450g764n3f0nm.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "396944182598-uiddl5daksrqcl9m1roc8gja81ppskfs.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.dillen.orbital2019quickdiv"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:396944182598:android:325d25a5e0ae60bf",
+        "android_client_info": {
+          "package_name": "com.example.quickdiv_orbital2019"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "396944182598-ct5ofq8gfqfus1d88ce450g764n3f0nm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAbOwIdetoDppWBYM31l0bTrmR3tfBR42I"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "396944182598-ct5ofq8gfqfus1d88ce450g764n3f0nm.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "396944182598-uiddl5daksrqcl9m1roc8gja81ppskfs.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.dillen.orbital2019quickdiv"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

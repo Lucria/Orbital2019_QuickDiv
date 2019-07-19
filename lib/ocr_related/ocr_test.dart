@@ -44,7 +44,7 @@ class _DetectionWidgetState extends State<DetectionWidget> {
   }
 
   Widget build(BuildContext context) {
-    // saveText();
+    saveText();
     return Scaffold(
       appBar: AppBar(
         title: Text("QuickDiv v1.0"),
