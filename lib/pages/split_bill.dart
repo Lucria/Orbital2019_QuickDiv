@@ -4,7 +4,6 @@ import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:scoped_model/scoped_model.dart';
 import '../widget/ui_elements/groupcheckbox/groupcheckbox.dart';
 import '../widget/ui_elements/background.dart';
-import '../widget/ui_elements/appbar.dart';
 import '../scoped-models/groups_model.dart';
 import '../models/group.dart';
 
