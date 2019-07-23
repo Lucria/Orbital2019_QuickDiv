@@ -9,6 +9,7 @@ import 'pages/split_bill.dart';
 import 'pages/review_page.dart';
 import './scoped-models/groups_model.dart';
 import './pages/review_page.dart';
+import './pages/manual_input.dart';
 
 import 'package:flutter/rendering.dart'; // to be delete - for debugging the widget lazyout.
 
@@ -50,8 +51,9 @@ class _MyAppState extends State<MyApp> {
           '/cameraimage': (BuildContext context) => CameraImage(),
           '/home': (BuildContext context) => MyHomePage(),
           '/create': (BuildContext context) => AddUserGroupPage(),
-          '/splitbill': (BuildContext context) => SplitBill(),
+          // '/splitbill': (BuildContext context) => SplitBill(),
           '/reviewpage': (BuildContext context) => ReviewPage(),
+          '/manualinput': (BuildContext context) => ManualInput(),
         },
       ),
     );

@@ -9,14 +9,21 @@ class ShowModal {
           mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: <Widget>[
-            new ListTile(
+            ListTile(
+              onTap: () =>
+                  Navigator.pushReplacementNamed(context, "/manualinput"),
+              leading: Icon(Icons.input),
+              title: Text("Manually input your recipet"),
+              contentPadding: EdgeInsets.all(16),
+            ),
+            ListTile(
               onTap: () =>
                   Navigator.pushReplacementNamed(context, "/existingimage"),
               leading: Icon(Icons.camera),
               title: Text("Upload from Gallery"),
               contentPadding: EdgeInsets.all(16),
             ),
-            new ListTile(
+            ListTile(
               onTap: () =>
                   Navigator.pushReplacementNamed(context, "/cameraimage"),
               leading: Icon(Icons.camera_enhance),
