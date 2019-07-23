@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import '../widget/ui_elements/appbar.dart';
+import '../models/item.dart';
+import '../widget/manual_input_row.dart';
 
 class ManualInput extends StatefulWidget {
   @override
@@ -8,39 +10,22 @@ class ManualInput extends StatefulWidget {
   }
 }
 
-Widget _inputRow() {
-  return Container(
-      child: Row(
-    children: <Widget>[
-      Expanded(
-        flex: 2,
-        child: Container(
-          margin:
-              EdgeInsets.only(top: 10.0, left: 10.0, right: 5.0, bottom: 10.0),
-          child: TextFormField(
-            decoration: InputDecoration(
-              labelText: 'Item name',
-            ),
-          ),
-        ),
-      ),
-      Expanded(
-        flex: 1,
-        child: Container(
-          margin:
-              EdgeInsets.only(top: 10.0, left: 5.0, right: 10.0, bottom: 10.0),
-          child: TextFormField(
-            decoration: InputDecoration(
-              labelText: 'Price',
-            ),
-          ),
-        ),
-      ),
-    ],
-  ));
-}
-
 class _ManualInputState extends State<ManualInput> {
+  final List<InputRow> _items = [];
+
+  void _onAddRow() {
+    setState(() {
+      var _item = Item();
+      _items.add(InputRow(key: UniqueKey(), item: _item));
+    });
+  }
+
+  void onDelete(Key _item) {
+    setState(() {
+      _items.removeWhere((item) => item.key == _item);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
@@ -53,14 +38,37 @@ class _ManualInputState extends State<ManualInput> {
         appBar: TitleText.defaultTitle(),
         body: Column(
           children: <Widget>[
-            ListView.builder(
-              shrinkWrap: true,
-              itemCount: 5,
-              itemBuilder: (BuildContext context, int index) {
-                return _inputRow();
-              },
+            Expanded(
+              child: ListView.builder(
+                addAutomaticKeepAlives: true,
+                itemCount: _items.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return Dismissible(
+                    key: _items[index].key,
+                    background: Container(
+                      alignment: AlignmentDirectional.centerEnd,
+                      color: Colors.red,
+                      child: Padding(
+                        padding: EdgeInsets.fromLTRB(0.0, 0.0, 10.0, 0.0),
+                        child: Icon(
+                          Icons.delete,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                    direction: DismissDirection.endToStart,
+                    onDismissed: (DismissDirection direction) =>
+                        onDelete(_items[index].key),
+                    child: _items[index],
+                  );
+                },
+              ),
             ),
           ],
+        ),
+        floatingActionButton: FloatingActionButton(
+          child: Icon(Icons.add),
+          onPressed: _onAddRow,
         ),
       ),
     );
