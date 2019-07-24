@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:firebase_ml_vision/firebase_ml_vision.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:validators/validators.dart';
 
 class SplitBill extends StatefulWidget {
   final File image;
@@ -16,6 +17,9 @@ class SplitBill extends StatefulWidget {
 
 class _SplitBill extends State<SplitBill> {
   File imageFile;
+  List<String> itemNames;
+  List<String> itemPrices;
+
   void initState() {
     super.initState();
     imageFile = widget.image;
@@ -36,7 +40,9 @@ class _SplitBill extends State<SplitBill> {
     for (TextBlock block in readText.blocks) {
       // print('1' + block.text);
       for (TextLine line in block.lines) {
-        print(line.text);
+        if (isFloat(line.text)) {
+          print(line.text);
+        }
         //   for (TextElement word in line.elements) {}
       }
     }
