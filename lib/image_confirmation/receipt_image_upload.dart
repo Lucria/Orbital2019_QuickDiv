@@ -7,6 +7,7 @@ import 'confirmation_message.dart';
 import 'package:permission_handler/permission_handler.dart';
 // import '../ocr_related/ocr_test.dart';
 import '../pages/split_bill_working.dart';
+import 'package:image_cropper/image_cropper.dart';
 
 class UploadImage extends StatefulWidget {
   @override
@@ -16,23 +17,36 @@ class UploadImage extends StatefulWidget {
 }
 
 class _UploadImageState extends State<UploadImage> {
-  Future<File> imageFile;
-  File image;
+  File imageFile;
+  File finalImage;
+  Future<File> croppedFile;
+  var state;
 
-  Future<File> pickImage(ImageSource source) {
-    setState(() {
-      imageFile = ImagePicker.pickImage(source: source);
-    });
-    return imageFile;
+  Future<Null> pickImage(ImageSource source) async {
+    imageFile = await ImagePicker.pickImage(source: source);
+    if (imageFile != null) {
+      setState(() {
+        state = "Picked";
+      });
+    }
+  }
+
+  Future<Null> cropImage() async {
+    croppedFile = ImageCropper.cropImage(
+      sourcePath: imageFile.path,
+      toolbarTitle: "Cropper",
+      toolbarColor: Colors.blue,
+      toolbarWidgetColor: Colors.white,
+    );
   }
 
   Widget showImage() {
-    return FutureBuilder<File>(
-      future: imageFile,
+    return FutureBuilder<File> (
+      future: croppedFile,
       builder: (BuildContext context, AsyncSnapshot<File> snapshot) {
         if (snapshot.connectionState == ConnectionState.done &&
             snapshot.data != null) {
-          image = snapshot.data;
+          finalImage = snapshot.data;
           return Image.file(
             snapshot.data,
             width: 500,
@@ -69,7 +83,6 @@ class _UploadImageState extends State<UploadImage> {
 
   @override
   Widget build(BuildContext context) {
-//    pickImage(ImageSource.gallery);
     return Scaffold(
       // TODO Add AppBar to a seperate widget file
       appBar: AppBar(
@@ -83,7 +96,7 @@ class _UploadImageState extends State<UploadImage> {
                   context,
                   MaterialPageRoute(
                       builder: (context) =>
-                          SplitBill(image))); // TODO Test OCR!
+                          SplitBill(finalImage))); // TODO Test OCR!
             },
           )
         ],
@@ -110,7 +123,7 @@ class _UploadImageState extends State<UploadImage> {
 
   void waitGalleryPermission() async {
     await getGalleryPermission();
-    imageFile = pickImage(ImageSource.gallery);
-    // ! Some problems here setting image!!! TODO
+    await pickImage(ImageSource.gallery);
+    cropImage();
   }
 }
