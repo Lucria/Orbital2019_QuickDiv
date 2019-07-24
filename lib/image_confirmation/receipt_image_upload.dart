@@ -110,6 +110,5 @@ class _UploadImageState extends State<UploadImage> {
   void waitGalleryPermission() async {
     await getGalleryPermission();
     imageFile = pickImage(ImageSource.gallery);
-    // ! Some problems here setting image!!! TODO
   }
 }
