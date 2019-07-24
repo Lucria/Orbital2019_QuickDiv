@@ -5,7 +5,8 @@ import 'package:image_picker/image_picker.dart';
 import 'package:quickdiv_orbital2019/widget/ui_elements/background.dart';
 import 'confirmation_message.dart';
 import 'package:permission_handler/permission_handler.dart';
-import '../ocr_related/ocr_test.dart';
+// import '../ocr_related/ocr_test.dart';
+import '../pages/split_bill_working.dart';
 
 class UploadImage extends StatefulWidget {
   @override
@@ -82,7 +83,7 @@ class _UploadImageState extends State<UploadImage> {
                   context,
                   MaterialPageRoute(
                       builder: (context) =>
-                          DetectionWidget(image))); // TODO Test OCR!
+                          SplitBill(image))); // TODO Test OCR!
             },
           )
         ],
