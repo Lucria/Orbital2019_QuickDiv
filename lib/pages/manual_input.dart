@@ -46,36 +46,38 @@ class _ManualInputState extends State<ManualInput> {
   }
 
   void onSave() {
-    // if (_items.length > 0) {
-    //   var allValid = true;
-    //   _items.forEach((form) => allValid = allValid && form.isvalid());
-    //   print(allValid);
-    //   if (allValid) {
-    //     var data = _items.map((it) => it.item).toList();
-    //     Navigator.push(
-    //       context,
-    //       MaterialPageRoute(
-    //         fullscreenDialog: true,
-    //         builder: (_) => Scaffold(
-    //           appBar: AppBar(
-    //             title: Text('List of Users'),
-    //           ),
-    //           body: ListView.builder(
-    //             addAutomaticKeepAlives: true,
-    //             itemCount: data.length,
-    //             itemBuilder: (_, i) => ListTile(
-    //               leading: CircleAvatar(
-    //                 child: Text(data[i].itemName.substring(0, 1)),
-    //               ),
-    //               title: Text(data[i].itemName),
-    //               subtitle: Text(data[i].price.toString()),
-    //             ),
-    //           ),
-    //         ),
-    //       ),
-    //     );
-    //   }
-    // }
+    if (_items.length > 0) {
+      var allValid = true;
+      _items.forEach((form) => allValid = allValid && form.isvalid());
+
+      if (allValid) {
+        var data = _items.map((it) => it.item).toList();
+
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            fullscreenDialog: true,
+            builder: (_) => Scaffold(
+              appBar: AppBar(
+                title: Text('Test'),
+              ),
+              body: ListView.builder(
+                addAutomaticKeepAlives: true,
+                itemCount: data.length,
+                itemBuilder: (_, i) => ListTile(
+                  title: Text(data[i].itemName +
+                      "," +
+                      data[i].price.toString() +
+                      "," +
+                      data[i].qty.toString()),
+                  subtitle: Text(_items[i].item.itemName),
+                ),
+              ),
+            ),
+          ),
+        );
+      }
+    }
   }
 
   @override

@@ -92,6 +92,9 @@ PODS:
   - GTMSessionFetcher/Core (1.2.2)
   - GTMSessionFetcher/Full (1.2.2):
     - GTMSessionFetcher/Core (= 1.2.2)
+  - image_cropper (0.0.1):
+    - Flutter
+    - TOCropViewController (~> 2.5.0)
   - image_picker (0.0.1):
     - Flutter
   - nanopb (0.3.901):
@@ -102,12 +105,14 @@ PODS:
   - "permission_handler (3.2.1+1)":
     - Flutter
   - Protobuf (3.9.0)
+  - TOCropViewController (2.5.1)
 
 DEPENDENCIES:
   - contacts_service (from `.symlinks/plugins/contacts_service/ios`)
   - Firebase/MLVisionTextModel
   - firebase_ml_vision (from `.symlinks/plugins/firebase_ml_vision/ios`)
   - Flutter (from `.symlinks/flutter/ios`)
+  - image_cropper (from `.symlinks/plugins/image_cropper/ios`)
   - image_picker (from `.symlinks/plugins/image_picker/ios`)
   - permission_handler (from `.symlinks/plugins/permission_handler/ios`)
 
@@ -128,6 +133,7 @@ SPEC REPOS:
     - GTMSessionFetcher
     - nanopb
     - Protobuf
+    - TOCropViewController
 
 EXTERNAL SOURCES:
   contacts_service:
@@ -136,6 +142,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/firebase_ml_vision/ios"
   Flutter:
     :path: ".symlinks/flutter/ios"
+  image_cropper:
+    :path: ".symlinks/plugins/image_cropper/ios"
   image_picker:
     :path: ".symlinks/plugins/image_picker/ios"
   permission_handler:
@@ -158,10 +166,12 @@ SPEC CHECKSUMS:
   GoogleToolboxForMac: b3553629623a3b1bff17f555e736cd5a6d95ad55
   GoogleUtilities: d2b0e277a95962e09bb27f5cd42f5f0b6a506c7d
   GTMSessionFetcher: 61bb0f61a4cb560030f1222021178008a5727a23
+  image_cropper: f25bdfbf1ef970c9a0a0f78306fb6a0aaac7229e
   image_picker: 16e5fec1fbc87fd3b297c53e4048521eaf17cd06
   nanopb: 2901f78ea1b7b4015c860c2fdd1ea2fee1a18d48
   permission_handler: 6a1b2f94f866da8bd19fa67f3c8f4b9f38580efb
   Protobuf: 1097ca58584c8d9be81bfbf2c5ff5975648dd87a
+  TOCropViewController: 00dc36c4e4a0f4a45efa91adbf22df8a4fae01d3
 
 PODFILE CHECKSUM: cfe2a50192e7cf41d7802712a1c3247210458362
 

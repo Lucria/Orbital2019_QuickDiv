@@ -62,6 +62,7 @@ class _InputRowState extends State<InputRow> {
                 child: TextFormField(
                   validator: (val) =>
                       val.length > 1 ? null : 'Please enter the item name',
+                  onSaved: (val) => widget.item.itemName = val,
                   decoration: InputDecoration(
                     labelText: 'Item name',
                   ),
@@ -76,6 +77,7 @@ class _InputRowState extends State<InputRow> {
                 child: TextFormField(
                   validator: (val) =>
                       val.length > 1 ? null : 'Please enter the item price',
+                  onSaved: (val) => widget.item.price = double.parse(val),
                   decoration: InputDecoration(
                     labelText: 'Price',
                   ),
@@ -89,8 +91,10 @@ class _InputRowState extends State<InputRow> {
                 margin: EdgeInsets.only(
                     top: 10.0, left: 5.0, right: 10.0, bottom: 10.0),
                 child: TextFormField(
+                  initialValue: widget.item.qty.toString(),
                   validator: (val) =>
-                      val.length > 1 ? null : 'Please enter the item qty',
+                      val.length >= 1 ? null : 'Please enter the item qty',
+                  onSaved: (val) => widget.item.qty = int.parse(val),
                   decoration: InputDecoration(
                     labelText: 'Qty',
                   ),
