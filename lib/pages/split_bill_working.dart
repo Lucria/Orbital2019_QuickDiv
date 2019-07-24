@@ -22,12 +22,12 @@ class _SplitBill extends State<SplitBill> {
   }
 
   Future readText() async {
-    final FirebaseVisionImage ourImage =
+    final FirebaseVisionImage visionImage =
         FirebaseVisionImage.fromFile(imageFile);
-    final TextRecognizer recognizeText =
+    final TextRecognizer textRecognizer =
         FirebaseVision.instance.textRecognizer();
-    final VisionText readText = await recognizeText.processImage(ourImage);
-    recognizeText.close();
+    final VisionText readText = await textRecognizer.processImage(visionImage);
+    textRecognizer.close();
     // print(readText.text);
 
     // for (int i = 1; i < readText.blocks.length; i++) {
@@ -45,6 +45,10 @@ class _SplitBill extends State<SplitBill> {
   @override
   Widget build(BuildContext context) {
     readText();
-    return Scaffold(appBar: AppBar(title: Text('Divide your bill')));
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Divide your bill'),
+      ),
+    );
   }
 }
