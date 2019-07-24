@@ -99,7 +99,7 @@ PODS:
     - nanopb/encode (= 0.3.901)
   - nanopb/decode (0.3.901)
   - nanopb/encode (0.3.901)
-  - permission_handler (3.1.0):
+  - "permission_handler (3.2.1+1)":
     - Flutter
   - Protobuf (3.9.0)
 
@@ -144,7 +144,7 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   contacts_service: 64ebf2a313b34bff0acf668efac52ae402ba9be0
   Firebase: dedc9e48ea3f3649ad5f6b982f8a0c73508a14b5
-  firebase_ml_vision: 6f896dc3988d333fc7c3572713b8819c827d5cea
+  firebase_ml_vision: 7b466f5fc5ba712639c8e0af1dff7d340f1147ab
   FirebaseAnalytics: 3fb375bc9d13779add4039716f868d233a473fad
   FirebaseCore: aecf02fb2274ec361b9bebeac112f5daa18273bd
   FirebaseInstanceID: 662b8108a09fe9ed01aafdedba100fde8536b0f6
@@ -160,7 +160,7 @@ SPEC CHECKSUMS:
   GTMSessionFetcher: 61bb0f61a4cb560030f1222021178008a5727a23
   image_picker: 16e5fec1fbc87fd3b297c53e4048521eaf17cd06
   nanopb: 2901f78ea1b7b4015c860c2fdd1ea2fee1a18d48
-  permission_handler: fa6b0d784b1a43cb96b468a5b8365cb130b1956a
+  permission_handler: 6a1b2f94f866da8bd19fa67f3c8f4b9f38580efb
   Protobuf: 1097ca58584c8d9be81bfbf2c5ff5975648dd87a
 
 PODFILE CHECKSUM: cfe2a50192e7cf41d7802712a1c3247210458362

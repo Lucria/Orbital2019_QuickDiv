@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import '../widget/ui_elements/appbar.dart';
 import '../models/item.dart';
 import '../widget/manual_input_row.dart';
 
@@ -13,17 +12,70 @@ class ManualInput extends StatefulWidget {
 class _ManualInputState extends State<ManualInput> {
   final List<InputRow> _items = [];
 
+  @override
+  void initState() {
+    _onAddRow();
+    super.initState();
+  }
+
   void _onAddRow() {
     setState(() {
       var _item = Item();
-      _items.add(InputRow(key: UniqueKey(), item: _item));
+      Key key = UniqueKey();
+      _items.add(InputRow(
+        key: key,
+        item: _item,
+        onDelete: () => onDelete(_item),
+      ));
     });
   }
 
-  void onDelete(Key _item) {
+  void onDelete(Item _item) {
+    print(_items);
+
     setState(() {
-      _items.removeWhere((item) => item.key == _item);
+      var find = _items.firstWhere(
+        (it) => it.item == _item,
+        orElse: () => null,
+      );
+      print('Removing: ' + find.toString());
+      if (find != null) _items.removeAt(_items.indexOf(find));
     });
+    print(_items);
+    print(_items.length);
+  }
+
+  void onSave() {
+    // if (_items.length > 0) {
+    //   var allValid = true;
+    //   _items.forEach((form) => allValid = allValid && form.isvalid());
+    //   print(allValid);
+    //   if (allValid) {
+    //     var data = _items.map((it) => it.item).toList();
+    //     Navigator.push(
+    //       context,
+    //       MaterialPageRoute(
+    //         fullscreenDialog: true,
+    //         builder: (_) => Scaffold(
+    //           appBar: AppBar(
+    //             title: Text('List of Users'),
+    //           ),
+    //           body: ListView.builder(
+    //             addAutomaticKeepAlives: true,
+    //             itemCount: data.length,
+    //             itemBuilder: (_, i) => ListTile(
+    //               leading: CircleAvatar(
+    //                 child: Text(data[i].itemName.substring(0, 1)),
+    //               ),
+    //               title: Text(data[i].itemName),
+    //               subtitle: Text(data[i].price.toString()),
+    //             ),
+    //           ),
+    //         ),
+    //       ),
+    //     );
+    //   }
+    // }
   }
 
   @override
@@ -35,7 +87,16 @@ class _ManualInputState extends State<ManualInput> {
         return Future.value(false);
       },
       child: Scaffold(
-        appBar: TitleText.defaultTitle(),
+        appBar: AppBar(
+          title: Text('Manual Entry'),
+          actions: <Widget>[
+            FlatButton(
+              textColor: Colors.white,
+              child: Text('Next'),
+              onPressed: onSave,
+            )
+          ],
+        ),
         body: Column(
           children: <Widget>[
             Expanded(
@@ -43,24 +104,7 @@ class _ManualInputState extends State<ManualInput> {
                 addAutomaticKeepAlives: true,
                 itemCount: _items.length,
                 itemBuilder: (BuildContext context, int index) {
-                  return Dismissible(
-                    key: _items[index].key,
-                    background: Container(
-                      alignment: AlignmentDirectional.centerEnd,
-                      color: Colors.red,
-                      child: Padding(
-                        padding: EdgeInsets.fromLTRB(0.0, 0.0, 10.0, 0.0),
-                        child: Icon(
-                          Icons.delete,
-                          color: Colors.white,
-                        ),
-                      ),
-                    ),
-                    direction: DismissDirection.endToStart,
-                    onDismissed: (DismissDirection direction) =>
-                        onDelete(_items[index].key),
-                    child: _items[index],
-                  );
+                  return _items[index];
                 },
               ),
             ),
