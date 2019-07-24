@@ -27,16 +27,23 @@ class _DetectionWidgetState extends State<DetectionWidget> {
   }
 
   Future<String> ocrText() async {
-    TextRecognizer textRecognizer = FirebaseVision.instance.textRecognizer();
-    VisionText visionText = await textRecognizer.processImage(visionImage);
+    final TextRecognizer textRecognizer = FirebaseVision.instance.textRecognizer();
+    final VisionText visionText = await textRecognizer.processImage(visionImage);
     String newText = visionText.text;
+    for (TextBlock block in visionText.blocks) {
+      for (TextLine line in block.lines) {
+        for (TextElement word in line.elements) {
+          print(word.text);
+        }
+      }
+    }
     textRecognizer.close();
     return newText;
   }
 
   void saveText() async {
     results = await ocrText();
-    print(results);
+    // print(results);
   }
 
   Future readText() async {
@@ -56,8 +63,8 @@ class _DetectionWidgetState extends State<DetectionWidget> {
   }
 
   Widget build(BuildContext context) {
-    // saveText();
-    readText();
+    saveText();
+    // readText();
     return Scaffold(
       appBar: AppBar(
         title: Text("QuickDiv v1.0"),

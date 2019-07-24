@@ -16,19 +16,22 @@ class UploadImage extends StatefulWidget {
 }
 
 class _UploadImageState extends State<UploadImage> {
-  Future<File> imageFile;
-  File image;
-  File croppedFile;
+  File imageFile;
+  File finalImage;
+  Future<File> croppedFile;
+  var state;
 
-  Future<File> pickImage(ImageSource source) {
-    setState(() {
-      imageFile = ImagePicker.pickImage(source: source);
-    });
-    return imageFile;
+  Future<Null> pickImage(ImageSource source) async {
+    imageFile = await ImagePicker.pickImage(source: source);
+    if (imageFile != null) {
+      setState(() {
+        state = "Picked";
+      });
+    }
   }
 
-  Future<Null> cropImage(File imageFile) async {
-    croppedFile = await ImageCropper.cropImage(
+  Future<Null> cropImage() async {
+    croppedFile = ImageCropper.cropImage(
       sourcePath: imageFile.path,
       toolbarTitle: "Cropper",
       toolbarColor: Colors.blue,
@@ -36,21 +39,15 @@ class _UploadImageState extends State<UploadImage> {
     );
   }
 
-  void awaitCropt(File imageFile) async {
-    await cropImage(imageFile);
-    print("Cropped!");
-  }
-
   Widget showImage() {
     return FutureBuilder<File> (
-      future: imageFile,
+      future: croppedFile,
       builder: (BuildContext context, AsyncSnapshot<File> snapshot) {
         if (snapshot.connectionState == ConnectionState.done &&
             snapshot.data != null) {
-          image = snapshot.data;
-          awaitCropt(image);
+          finalImage = snapshot.data;
           return Image.file(
-            croppedFile, // ! Buggy! Need resolution
+            snapshot.data,
             width: 500,
             height: 500,
           );
@@ -85,7 +82,6 @@ class _UploadImageState extends State<UploadImage> {
 
   @override
   Widget build(BuildContext context) {
-//    pickImage(ImageSource.gallery);
     return Scaffold(
       // TODO Add AppBar to a seperate widget file
       appBar: AppBar(
@@ -99,7 +95,7 @@ class _UploadImageState extends State<UploadImage> {
                   context,
                   MaterialPageRoute(
                       builder: (context) =>
-                          DetectionWidget(croppedFile))); // TODO Test OCR!
+                          DetectionWidget(finalImage))); // TODO Test OCR!
             },
           )
         ],
@@ -126,6 +122,7 @@ class _UploadImageState extends State<UploadImage> {
 
   void waitGalleryPermission() async {
     await getGalleryPermission();
-    imageFile = pickImage(ImageSource.gallery);
+    await pickImage(ImageSource.gallery);
+    cropImage();
   }
 }
