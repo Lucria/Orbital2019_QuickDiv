@@ -6,6 +6,7 @@ import 'package:quickdiv_orbital2019/widget/ui_elements/background.dart';
 import 'confirmation_message.dart';
 import 'package:permission_handler/permission_handler.dart';
 import '../ocr_related/ocr_test.dart';
+import 'package:image_cropper/image_cropper.dart';
 
 class UploadImage extends StatefulWidget {
   @override
@@ -17,6 +18,7 @@ class UploadImage extends StatefulWidget {
 class _UploadImageState extends State<UploadImage> {
   Future<File> imageFile;
   File image;
+  File croppedFile;
 
   Future<File> pickImage(ImageSource source) {
     setState(() {
@@ -25,15 +27,30 @@ class _UploadImageState extends State<UploadImage> {
     return imageFile;
   }
 
+  Future<Null> cropImage(File imageFile) async {
+    croppedFile = await ImageCropper.cropImage(
+      sourcePath: imageFile.path,
+      toolbarTitle: "Cropper",
+      toolbarColor: Colors.blue,
+      toolbarWidgetColor: Colors.white,
+    );
+  }
+
+  void awaitCropt(File imageFile) async {
+    await cropImage(imageFile);
+    print("Cropped!");
+  }
+
   Widget showImage() {
-    return FutureBuilder<File>(
+    return FutureBuilder<File> (
       future: imageFile,
       builder: (BuildContext context, AsyncSnapshot<File> snapshot) {
         if (snapshot.connectionState == ConnectionState.done &&
             snapshot.data != null) {
           image = snapshot.data;
+          awaitCropt(image);
           return Image.file(
-            snapshot.data,
+            croppedFile, // ! Buggy! Need resolution
             width: 500,
             height: 500,
           );
@@ -82,7 +99,7 @@ class _UploadImageState extends State<UploadImage> {
                   context,
                   MaterialPageRoute(
                       builder: (context) =>
-                          DetectionWidget(image))); // TODO Test OCR!
+                          DetectionWidget(croppedFile))); // TODO Test OCR!
             },
           )
         ],

@@ -30,6 +30,7 @@ dependencies:
   contacts_service: ^0.2.7
   rflutter_alert: ^1.0.2
   scoped_model: ^1.0.1
+  image_cropper: ^1.0.2
 
 dev_dependencies:
   flutter_test:
