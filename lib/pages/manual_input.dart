@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import '../models/item.dart';
-import '../widget/manual_input_row.dart';
 
 class ManualInput extends StatefulWidget {
   @override
@@ -10,7 +9,14 @@ class ManualInput extends StatefulWidget {
 }
 
 class _ManualInputState extends State<ManualInput> {
-  final List<InputRow> _items = [];
+  final _formKey = GlobalKey<FormState>();
+  final List<Item> _items = [];
+
+  bool validate() {
+    var valid = _formKey.currentState.validate();
+    if (valid) _formKey.currentState.save();
+    return valid;
+  }
 
   @override
   void initState() {
@@ -20,64 +26,101 @@ class _ManualInputState extends State<ManualInput> {
 
   void _onAddRow() {
     setState(() {
-      var _item = Item();
-      Key key = UniqueKey();
-      _items.add(InputRow(
-        key: key,
-        item: _item,
-        onDelete: () => onDelete(_item),
-      ));
+      _items.add(Item());
     });
   }
 
-  void onDelete(Item _item) {
-    print(_items);
-
+  void onDelete(Item item) {
     setState(() {
-      var find = _items.firstWhere(
-        (it) => it.item == _item,
-        orElse: () => null,
-      );
-      print('Removing: ' + find.toString());
-      if (find != null) _items.removeAt(_items.indexOf(find));
+      _items.remove(item);
     });
-    print(_items);
-    print(_items.length);
   }
 
   void onSave() {
-    if (_items.length > 0) {
-      var allValid = true;
-      _items.forEach((form) => allValid = allValid && form.isvalid());
+    if (!_formKey.currentState.validate()) {
+      return;
+    }
+    print('form saved');
+    _formKey.currentState.save();
 
-      if (allValid) {
-        var data = _items.map((it) => it.item).toList();
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        fullscreenDialog: true,
+        builder: (_) => Scaffold(
+          appBar: AppBar(
+            title: Text('Output'),
+          ),
+          body: ListView.builder(
+            addAutomaticKeepAlives: true,
+            itemCount: _items.length,
+            itemBuilder: (_, i) => ListTile(
+              title: Text(_items[i].itemName +
+                  "," +
+                  _items[i].price.toString() +
+                  "," +
+                  _items[i].qty.toString()),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
 
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            fullscreenDialog: true,
-            builder: (_) => Scaffold(
-              appBar: AppBar(
-                title: Text('Test'),
-              ),
-              body: ListView.builder(
-                addAutomaticKeepAlives: true,
-                itemCount: data.length,
-                itemBuilder: (_, i) => ListTile(
-                  title: Text(data[i].itemName +
-                      "," +
-                      data[i].price.toString() +
-                      "," +
-                      data[i].qty.toString()),
-                  subtitle: Text(_items[i].item.itemName),
-                ),
+  Row _inputRow(Item item) {
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: <Widget>[
+        Expanded(
+          flex: 6,
+          child: Container(
+            margin: EdgeInsets.only(
+                top: 10.0, left: 10.0, right: 5.0, bottom: 10.0),
+            child: TextFormField(
+              validator: (val) =>
+                  val.length > 1 ? null : 'Please enter the item name',
+              onSaved: (val) => item.itemName = val,
+              decoration: InputDecoration(
+                labelText: 'Item name',
               ),
             ),
           ),
-        );
-      }
-    }
+        ),
+        Expanded(
+          flex: 2,
+          child: Container(
+            margin:
+                EdgeInsets.only(top: 10.0, left: 5.0, right: 5.0, bottom: 10.0),
+            child: TextFormField(
+              validator: (val) =>
+                  val.length > 1 ? null : 'Please enter the item price',
+              onSaved: (val) => item.price = double.parse(val),
+              decoration: InputDecoration(
+                labelText: 'Price',
+              ),
+              keyboardType: TextInputType.numberWithOptions(decimal: true),
+            ),
+          ),
+        ),
+        Expanded(
+          flex: 2,
+          child: Container(
+            margin: EdgeInsets.only(
+                top: 10.0, left: 5.0, right: 10.0, bottom: 10.0),
+            child: TextFormField(
+              initialValue: item.qty.toString(),
+              validator: (val) =>
+                  val.length >= 1 ? null : 'Please enter the item qty',
+              onSaved: (val) => item.qty = int.parse(val),
+              decoration: InputDecoration(
+                labelText: 'Qty',
+              ),
+              keyboardType: TextInputType.numberWithOptions(decimal: false),
+            ),
+          ),
+        ),
+      ],
+    );
   }
 
   @override
@@ -101,13 +144,33 @@ class _ManualInputState extends State<ManualInput> {
         ),
         body: Column(
           children: <Widget>[
-            Expanded(
-              child: ListView.builder(
-                addAutomaticKeepAlives: true,
-                itemCount: _items.length,
-                itemBuilder: (BuildContext context, int index) {
-                  return _items[index];
-                },
+            Form(
+              key: _formKey,
+              child: Expanded(
+                child: ListView.builder(
+                  addAutomaticKeepAlives: true,
+                  itemCount: _items.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return Dismissible(
+                      key: Key(_items[index].hashCode.toString()),
+                      background: Container(
+                        alignment: AlignmentDirectional.centerEnd,
+                        color: Colors.red,
+                        child: Padding(
+                          padding: EdgeInsets.fromLTRB(0.0, 0.0, 10.0, 0.0),
+                          child: Icon(
+                            Icons.delete,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                      direction: DismissDirection.endToStart,
+                      onDismissed: (DismissDirection direction) =>
+                          onDelete(_items[index]),
+                      child: _inputRow(_items[index]),
+                    );
+                  },
+                ),
               ),
             ),
           ],

@@ -51,7 +51,7 @@ class _MyAppState extends State<MyApp> {
           '/cameraimage': (BuildContext context) => CameraImage(),
           '/home': (BuildContext context) => MyHomePage(),
           '/create': (BuildContext context) => AddUserGroupPage(),
-          // '/splitbill': (BuildContext context) => SplitBill(),
+          '/splitbill': (BuildContext context) => SplitBill(),
           '/reviewpage': (BuildContext context) => ReviewPage(),
           '/manualinput': (BuildContext context) => ManualInput(),
         },
