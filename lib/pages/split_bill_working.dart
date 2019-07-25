@@ -32,18 +32,11 @@ class _SplitBill extends State<SplitBill> {
         FirebaseVision.instance.textRecognizer();
     final VisionText readText = await textRecognizer.processImage(visionImage);
     textRecognizer.close();
-    // print(readText.text);
-
-    // for (int i = 1; i < readText.blocks.length; i++) {
-    //   print(i.toString() + ' ' + readText.blocks));
-    // }
     for (TextBlock block in readText.blocks) {
-      // print('1' + block.text);
       for (TextLine line in block.lines) {
         if (isFloat(line.text)) {
           print(line.text);
         }
-        //   for (TextElement word in line.elements) {}
       }
     }
   }
@@ -54,6 +47,20 @@ class _SplitBill extends State<SplitBill> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Divide your bill'),
+        actions: <Widget>[
+          FlatButton(
+            textColor: Colors.white,
+            child: Text('Next'),
+            onPressed: () {
+              Navigator.pushReplacementNamed(context, '/home');
+            },
+          ),
+        ],
+      ),
+      body: Column(
+        children: <Widget>[
+          Image.file(imageFile),
+        ],
       ),
     );
   }
