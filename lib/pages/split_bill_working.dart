@@ -18,17 +18,27 @@ class SplitBill extends StatefulWidget {
 
 class _SplitBill extends State<SplitBill> {
   File imageFile;
-  List<String> itemNames = new List(); // To ensure that the list is growable
-  List<String> itemPrices = new List();
-  List<String> itemQuantity = new List();
-  List<Item> allItems = new List();
+  List<String> itemNames; // To ensure that the list is growable
+  List<String> itemPrices;
+  List<String> itemQuantity;
+  List<Item> allItems;
 
   void initState() {
     super.initState();
     imageFile = widget.image;
+    itemNames = new List();
+    itemPrices = new List();
+    itemQuantity = new List();
+    allItems = new List();
   }
 
   Future readText() async {
+    setState(() {
+      itemNames = new List();
+      itemPrices = new List();
+      itemQuantity = new List();
+      allItems = new List();
+    });
     final FirebaseVisionImage visionImage =
         FirebaseVisionImage.fromFile(imageFile);
     final TextRecognizer textRecognizer =
@@ -52,6 +62,18 @@ class _SplitBill extends State<SplitBill> {
           }
         } 
       }
+    }
+    print(itemPrices.length);
+    for (var i in itemPrices) {
+      print(i);
+    }
+    print(itemNames.length);
+    for (var j in itemNames) {
+      print(j);
+    }
+    print(itemQuantity.length);
+    for (var k in itemQuantity) {
+      print(k);
     }
   }
 
