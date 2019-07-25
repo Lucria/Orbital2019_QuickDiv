@@ -20,6 +20,7 @@ class _SplitBill extends State<SplitBill> {
   File imageFile;
   List<String> itemNames = new List(); // To ensure that the list is growable
   List<String> itemPrices = new List();
+  List<String> itemQuantity = new List();
   List<Item> allItems = new List();
 
   void initState() {
@@ -39,8 +40,16 @@ class _SplitBill extends State<SplitBill> {
         if (!isInt(line.text)) { // Check that it is NOT an integer
           if (isFloat(line.text)) { // Check that it is a float
             itemPrices.add(line.text); // Adds all price data to a list itemPrices
+          } else {  // Not an integer, split string into multiple substrings, check if first string is a number
+            List<String> subStrings = line.text.split(" ");
+            if (isInt(subStrings[0])) {
+              subStrings.removeAt(0);
+              String itemName = subStrings.join(" ");
+              print(itemName);
+              itemNames.add(itemName); // Just want the item name
+            }
           }
-        }
+        } 
       }
     }
   }
