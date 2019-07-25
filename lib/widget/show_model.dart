@@ -11,9 +11,9 @@ class ShowModal {
           children: <Widget>[
             ListTile(
               onTap: () =>
-                  Navigator.pushReplacementNamed(context, "/manualinput"),
-              leading: Icon(Icons.input),
-              title: Text("Manually input your recipet"),
+                  Navigator.pushReplacementNamed(context, "/cameraimage"),
+              leading: Icon(Icons.camera_enhance),
+              title: Text("Take a new photo"),
               contentPadding: EdgeInsets.all(16),
             ),
             ListTile(
@@ -25,9 +25,9 @@ class ShowModal {
             ),
             ListTile(
               onTap: () =>
-                  Navigator.pushReplacementNamed(context, "/cameraimage"),
-              leading: Icon(Icons.camera_enhance),
-              title: Text("Take a new photo"),
+                  Navigator.pushReplacementNamed(context, "/manualinput"),
+              leading: Icon(Icons.input),
+              title: Text("Manually input your recipet"),
               contentPadding: EdgeInsets.all(16),
             ),
           ],
