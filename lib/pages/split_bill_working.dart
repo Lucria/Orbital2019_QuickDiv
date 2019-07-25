@@ -41,11 +41,12 @@ class _SplitBill extends State<SplitBill> {
           if (isFloat(line.text)) { // Check that it is a float
             itemPrices.add(line.text); // Adds all price data to a list itemPrices
           } else {  // Not an integer, split string into multiple substrings, check if first string is a number
-            List<String> subStrings = line.text.split(" ");
+            List<String> subStrings = line.text.split(" "); // Split line.text into multiple substrings
             if (isInt(subStrings[0])) {
-              subStrings.removeAt(0);
-              String itemName = subStrings.join(" ");
-              print(itemName);
+              itemQuantity.add(subStrings[0]); // Add quantity to lists
+              subStrings.removeAt(0); // Remove quantity value from list of substrings
+              String itemName = subStrings.join(" "); // Concatenate everything together
+              // print(itemName);
               itemNames.add(itemName); // Just want the item name
             }
           }
