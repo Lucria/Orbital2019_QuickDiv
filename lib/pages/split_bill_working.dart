@@ -36,10 +36,9 @@ class _SplitBill extends State<SplitBill> {
     textRecognizer.close();
     for (TextBlock block in readText.blocks) {
       for (TextLine line in block.lines) {
-        if (!isInt(line.text)) {
-          if (isFloat(line.text)) {
-            itemPrices.add(line.text);
-            print(line.text);
+        if (!isInt(line.text)) { // Check that it is NOT an integer
+          if (isFloat(line.text)) { // Check that it is a float
+            itemPrices.add(line.text); // Adds all price data to a list itemPrices
           }
         }
       }
