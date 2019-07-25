@@ -1,8 +1,10 @@
 import 'dart:io';
 import 'dart:async';
+import 'dart:math';
 import 'package:firebase_ml_vision/firebase_ml_vision.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:validators/sanitizers.dart';
 import 'package:validators/validators.dart';
 import '../models/item.dart';
 
@@ -63,18 +65,25 @@ class _SplitBill extends State<SplitBill> {
         } 
       }
     }
-    print(itemPrices.length);
-    for (var i in itemPrices) {
-      print(i);
+    var minLength = min(itemPrices.length, itemNames.length);
+    for (var i = 0; i < minLength; i++) {
+      allItems.add(new Item(itemName: itemNames[i], price: toDouble(itemPrices[i]), qty: toInt(itemQuantity[i])));
     }
-    print(itemNames.length);
-    for (var j in itemNames) {
-      print(j);
+    for (var i in allItems) {
+      print(i.qty.toString() + " " + i.itemName + " " + i.price.toString());
     }
-    print(itemQuantity.length);
-    for (var k in itemQuantity) {
-      print(k);
-    }
+    // print(itemPrices.length);
+    // for (var i in itemPrices) {
+    //   print(i);
+    // }
+    // print(itemNames.length);
+    // for (var j in itemNames) {
+    //   print(j);
+    // }
+    // print(itemQuantity.length);
+    // for (var k in itemQuantity) {
+    //   print(k);
+    // }
   }
 
   @override
