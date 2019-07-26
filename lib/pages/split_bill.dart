@@ -26,9 +26,9 @@ class SplitBill extends StatefulWidget {
 }
 
 class _SplitBill extends State<SplitBill> {
-  List<String> itemNames = []; // To ensure that the list is growable
-  List<String> itemPrices = [];
-  List<String> itemQuantity = [];
+  List<String> _itemNames = []; // To ensure that the list is growable
+  List<String> _itemPrices = [];
+  List<String> _itemQuantity = [];
   List<Item> _allItems = [];
 
   @override
@@ -72,20 +72,20 @@ class _SplitBill extends State<SplitBill> {
           // Check that it is NOT an integer
           if (isFloat(line.text)) {
             // Check that it is a float
-            itemPrices
-                .add(line.text); // Adds all price data to a list itemPrices
+            _itemPrices
+                .add(line.text); // Adds all price data to a list _itemPrices
           } else {
             // Not an integer, split string into multiple substrings, check if first string is a number
             List<String> subStrings = line.text
                 .split(" "); // Split line.text into multiple substrings
             if (isInt(subStrings[0])) {
-              itemQuantity.add(subStrings[0]); // Add quantity to lists
+              _itemQuantity.add(subStrings[0]); // Add quantity to lists
               subStrings
                   .removeAt(0); // Remove quantity value from list of substrings
               String itemName =
                   subStrings.join(" "); // Concatenate everything together
               // print(itemName);
-              itemNames.add(itemName); // Just want the item name
+              _itemNames.add(itemName); // Just want the item name
             }
           }
         }
@@ -93,27 +93,27 @@ class _SplitBill extends State<SplitBill> {
     }
 
     setState(() {
-      var minLength = min(itemPrices.length, itemNames.length);
+      var minLength = min(_itemPrices.length, _itemNames.length);
       for (var i = 0; i < minLength; i++) {
         _allItems.add(new Item(
-            itemName: itemNames[i],
-            price: toDouble(itemPrices[i]),
-            qty: toInt(itemQuantity[i])));
+            itemName: _itemNames[i],
+            price: toDouble(_itemPrices[i]),
+            qty: toInt(_itemQuantity[i])));
       }
       for (var i in _allItems) {
         print(i.qty.toString() + " " + i.itemName + " " + i.price.toString());
       }
     });
-    // print(itemPrices.length);
-    // for (var i in itemPrices) {
+    // print(_itemPrices.length);
+    // for (var i in _itemPrices) {
     //   print(i);
     // }
-    // print(itemNames.length);
-    // for (var j in itemNames) {
+    // print(_itemNames.length);
+    // for (var j in _itemNames) {
     //   print(j);
     // }
-    // print(itemQuantity.length);
-    // for (var k in itemQuantity) {
+    // print(_itemQuantity.length);
+    // for (var k in _itemQuantity) {
     //   print(k);
     // }
   }
