@@ -1,13 +1,12 @@
-import 'package:flutter/material.dart';
 import 'dart:io';
 import 'dart:async';
+import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:quickdiv_orbital2019/widget/ui_elements/background.dart';
-import 'confirmation_message.dart';
-import 'package:permission_handler/permission_handler.dart';
-// import '../ocr_related/ocr_test.dart';
-import '../pages/split_bill_working.dart';
 import 'package:image_cropper/image_cropper.dart';
+import 'package:permission_handler/permission_handler.dart';
+import './confirmation_message.dart';
+import '../pages/split_bill.dart';
+import '../widget/ui_elements/background.dart';
 
 class UploadImage extends StatefulWidget {
   @override
@@ -41,7 +40,7 @@ class _UploadImageState extends State<UploadImage> {
   }
 
   Widget showImage() {
-    return FutureBuilder<File> (
+    return FutureBuilder<File>(
       future: croppedFile,
       builder: (BuildContext context, AsyncSnapshot<File> snapshot) {
         if (snapshot.connectionState == ConnectionState.done &&
@@ -95,8 +94,7 @@ class _UploadImageState extends State<UploadImage> {
               Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(
-                      builder: (context) =>
-                          SplitBill(finalImage))); // TODO Test OCR!
+                      builder: (context) => SplitBill(finalImage)));
             },
           )
         ],

@@ -5,7 +5,6 @@ import 'image_confirmation/receipt_image_camera.dart';
 import 'pages/splash_page.dart';
 import 'pages/home_page.dart';
 import 'pages/add_user_group.dart';
-import 'pages/split_bill.dart';
 import 'pages/review_page.dart';
 import './scoped-models/groups_model.dart';
 import './pages/review_page.dart';
@@ -51,7 +50,6 @@ class _MyAppState extends State<MyApp> {
           '/cameraimage': (BuildContext context) => CameraImage(),
           '/home': (BuildContext context) => MyHomePage(),
           '/create': (BuildContext context) => AddUserGroupPage(),
-          '/splitbill': (BuildContext context) => SplitBill(),
           '/reviewpage': (BuildContext context) => ReviewPage(),
           '/manualinput': (BuildContext context) => ManualInput(),
         },

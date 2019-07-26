@@ -1,13 +1,24 @@
-import 'package:flutter/material.dart';
+import 'dart:io';
+import 'dart:math';
+import 'dart:async';
 import 'package:flutter/widgets.dart';
-import 'package:rflutter_alert/rflutter_alert.dart';
+import 'package:flutter/material.dart';
+import 'package:validators/sanitizers.dart';
+import 'package:validators/validators.dart';
 import 'package:scoped_model/scoped_model.dart';
-import '../widget/ui_elements/groupcheckbox/groupcheckbox.dart';
-import '../widget/ui_elements/background.dart';
-import '../scoped-models/groups_model.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
+import 'package:firebase_ml_vision/firebase_ml_vision.dart';
+import '../models/item.dart';
 import '../models/group.dart';
+import '../pages/manual_input.dart';
+import '../scoped-models/groups_model.dart';
+import '../widget/ui_elements/background.dart';
+import '../widget/ui_elements/groupcheckbox/groupcheckbox.dart';
 
 class SplitBill extends StatefulWidget {
+  final File image;
+  SplitBill(this.image);
+
   @override
   State<StatefulWidget> createState() {
     return _SplitBill();
@@ -15,31 +26,24 @@ class SplitBill extends StatefulWidget {
 }
 
 class _SplitBill extends State<SplitBill> {
-  List<String> list = [
-    'Prawn Masala',
-    'Aloo Gopi Masala',
-    'Butter Chicken Masala',
-    'Mushrrom 65',
-    'Onion Pakoda',
-    'Steamed Basmathi Rice',
-    'Garlic Naan',
-    'Fresh Lime Sweet'
-  ];
-  List<String> price = [
-    '\$10.00',
-    '\$6.50',
-    '\$9.00',
-    '\$7.00',
-    '\$5.50',
-    '\$3.50',
-    '\$3.80',
-    '\$3.00'
-  ];
+  List<String> itemNames = []; // To ensure that the list is growable
+  List<String> itemPrices = [];
+  List<String> itemQuantity = [];
+  List<Item> _allItems = [];
+
+  @override
+  void initState() {
+    waitReadText();
+    super.initState();
+  }
+
+  void waitReadText() async {
+    await readText();
+  }
 
   removeItem(int index) {
     setState(() {
-      list.removeAt(index);
-      price.removeAt(index);
+      _allItems.removeAt(index);
     });
   }
 
@@ -53,6 +57,65 @@ class _SplitBill extends State<SplitBill> {
         )
       ],
     );
+  }
+
+  Future readText() async {
+    final FirebaseVisionImage visionImage =
+        FirebaseVisionImage.fromFile(widget.image);
+    final TextRecognizer textRecognizer =
+        FirebaseVision.instance.textRecognizer();
+    final VisionText readText = await textRecognizer.processImage(visionImage);
+    textRecognizer.close();
+    for (TextBlock block in readText.blocks) {
+      for (TextLine line in block.lines) {
+        if (!isInt(line.text)) {
+          // Check that it is NOT an integer
+          if (isFloat(line.text)) {
+            // Check that it is a float
+            itemPrices
+                .add(line.text); // Adds all price data to a list itemPrices
+          } else {
+            // Not an integer, split string into multiple substrings, check if first string is a number
+            List<String> subStrings = line.text
+                .split(" "); // Split line.text into multiple substrings
+            if (isInt(subStrings[0])) {
+              itemQuantity.add(subStrings[0]); // Add quantity to lists
+              subStrings
+                  .removeAt(0); // Remove quantity value from list of substrings
+              String itemName =
+                  subStrings.join(" "); // Concatenate everything together
+              // print(itemName);
+              itemNames.add(itemName); // Just want the item name
+            }
+          }
+        }
+      }
+    }
+
+    setState(() {
+      var minLength = min(itemPrices.length, itemNames.length);
+      for (var i = 0; i < minLength; i++) {
+        _allItems.add(new Item(
+            itemName: itemNames[i],
+            price: toDouble(itemPrices[i]),
+            qty: toInt(itemQuantity[i])));
+      }
+      for (var i in _allItems) {
+        print(i.qty.toString() + " " + i.itemName + " " + i.price.toString());
+      }
+    });
+    // print(itemPrices.length);
+    // for (var i in itemPrices) {
+    //   print(i);
+    // }
+    // print(itemNames.length);
+    // for (var j in itemNames) {
+    //   print(j);
+    // }
+    // print(itemQuantity.length);
+    // for (var k in itemQuantity) {
+    //   print(k);
+    // }
   }
 
   Widget itemCard(
@@ -182,9 +245,13 @@ class _SplitBill extends State<SplitBill> {
           return Container(
             decoration: BackgroundImage.myBoxDecoration(),
             child: ListView.builder(
-              itemCount: list.length,
+              itemCount: _allItems.length,
               itemBuilder: (context, index) {
-                return itemCard(context, list[index], price[index], index,
+                return itemCard(
+                    context,
+                    _allItems[index].itemName,
+                    _allItems[index].price.toString(),
+                    index,
                     model.selectedGroup);
               },
             ),
@@ -192,8 +259,11 @@ class _SplitBill extends State<SplitBill> {
         },
       ),
       floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.undo),
-        onPressed: () {},
+        child: Icon(Icons.edit),
+        onPressed: () {
+          Navigator.pushReplacement(
+              context, MaterialPageRoute(builder: (context) => ManualInput()));
+        },
       ),
     );
   }
