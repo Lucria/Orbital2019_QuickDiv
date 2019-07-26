@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:permission_handler/permission_handler.dart';
-import './confirmation_message.dart';
+import '../widget/confirmation_message.dart';
 import '../pages/split_bill.dart';
 import '../widget/ui_elements/background.dart';
 

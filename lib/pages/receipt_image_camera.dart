@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'dart:io';
 import 'package:image_picker/image_picker.dart';
 import 'package:quickdiv_orbital2019/widget/ui_elements/background.dart';
-import 'confirmation_message.dart';
+import '../widget/confirmation_message.dart';
 
 class CameraImage extends StatefulWidget {
   @override
@@ -33,26 +33,24 @@ class _CameraImageState extends State<CameraImage> {
           );
         } else if (snapshot.error != null) {
           return Container(
-            child: Text(
-              "Error Picking Image",
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-              ),
-            ) 
-          );
+              child: Text(
+            "Error Picking Image",
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+            ),
+          ));
         } else {
           return Container(
-            child: Text(
-              "No Image Selected",
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-              ),
-            )
-          );
+              child: Text(
+            "No Image Selected",
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+            ),
+          ));
         }
       },
     );
@@ -60,7 +58,8 @@ class _CameraImageState extends State<CameraImage> {
 
   @override
   Widget build(BuildContext context) {
-    pickImage(ImageSource.camera); // Doesn't require asking for permissions as permissions are handled by image_picker package already
+    pickImage(ImageSource
+        .camera); // Doesn't require asking for permissions as permissions are handled by image_picker package already
     return Scaffold(
       // TODO Add AppBar to a seperate widget file
       appBar: AppBar(
@@ -69,7 +68,7 @@ class _CameraImageState extends State<CameraImage> {
           FlatButton(
             textColor: Colors.white,
             child: Text('Next'),
-            onPressed: (){
+            onPressed: () {
               Navigator.pushReplacementNamed(context, '/splitbill');
             },
           )
