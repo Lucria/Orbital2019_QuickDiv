@@ -262,7 +262,11 @@ class _SplitBill extends State<SplitBill> {
         child: Icon(Icons.edit),
         onPressed: () {
           Navigator.pushReplacement(
-              context, MaterialPageRoute(builder: (context) => ManualInput()));
+              context,
+              MaterialPageRoute(
+                  builder: (context) => ManualInput(
+                        allItems: _allItems,
+                      )));
         },
       ),
     );

@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import '../models/item.dart';
 
 class ManualInput extends StatefulWidget {
+  final List<Item> allItems;
+
+  ManualInput({this.allItems});
   @override
   State<StatefulWidget> createState() {
     return _ManualInputState();
@@ -20,7 +23,13 @@ class _ManualInputState extends State<ManualInput> {
 
   @override
   void initState() {
-    _onAddRow();
+    if (widget.allItems != null) {
+      for (var i in widget.allItems) {
+        _items.add(Item(itemName: i.itemName, price: i.price, qty: i.qty));
+      }
+    } else {
+      _onAddRow();
+    }
     super.initState();
   }
 
@@ -77,6 +86,7 @@ class _ManualInputState extends State<ManualInput> {
             margin: EdgeInsets.only(
                 top: 10.0, left: 10.0, right: 5.0, bottom: 10.0),
             child: TextFormField(
+              initialValue: item.itemName,
               validator: (val) =>
                   val.length > 1 ? null : 'Please enter the item name',
               onSaved: (val) => item.itemName = val,
@@ -92,6 +102,7 @@ class _ManualInputState extends State<ManualInput> {
             margin:
                 EdgeInsets.only(top: 10.0, left: 5.0, right: 5.0, bottom: 10.0),
             child: TextFormField(
+              initialValue: item.price.toString(),
               validator: (val) =>
                   val.length > 1 ? null : 'Please enter the item price',
               onSaved: (val) => item.price = double.parse(val),
