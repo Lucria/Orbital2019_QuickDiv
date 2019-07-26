@@ -20,18 +20,18 @@ class SplitBill extends StatefulWidget {
 
 class _SplitBill extends State<SplitBill> {
   File imageFile;
-  List<String> itemNames; // To ensure that the list is growable
-  List<String> itemPrices;
-  List<String> itemQuantity;
-  List<Item> allItems;
+  List<String> itemNames = []; // To ensure that the list is growable
+  List<String> itemPrices = [];
+  List<String> itemQuantity = [];
+  List<Item> allItems = [];
 
   void initState() {
     super.initState();
     imageFile = widget.image;
-    itemNames = new List();
-    itemPrices = new List();
-    itemQuantity = new List();
-    allItems = new List();
+    // itemNames = new List();
+    // itemPrices = new List();
+    // itemQuantity = new List();
+    // allItems = new List();
   }
 
   Future readText() async {
@@ -49,25 +49,35 @@ class _SplitBill extends State<SplitBill> {
     textRecognizer.close();
     for (TextBlock block in readText.blocks) {
       for (TextLine line in block.lines) {
-        if (!isInt(line.text)) { // Check that it is NOT an integer
-          if (isFloat(line.text)) { // Check that it is a float
-            itemPrices.add(line.text); // Adds all price data to a list itemPrices
-          } else {  // Not an integer, split string into multiple substrings, check if first string is a number
-            List<String> subStrings = line.text.split(" "); // Split line.text into multiple substrings
+        if (!isInt(line.text)) {
+          // Check that it is NOT an integer
+          if (isFloat(line.text)) {
+            // Check that it is a float
+            itemPrices
+                .add(line.text); // Adds all price data to a list itemPrices
+          } else {
+            // Not an integer, split string into multiple substrings, check if first string is a number
+            List<String> subStrings = line.text
+                .split(" "); // Split line.text into multiple substrings
             if (isInt(subStrings[0])) {
               itemQuantity.add(subStrings[0]); // Add quantity to lists
-              subStrings.removeAt(0); // Remove quantity value from list of substrings
-              String itemName = subStrings.join(" "); // Concatenate everything together
+              subStrings
+                  .removeAt(0); // Remove quantity value from list of substrings
+              String itemName =
+                  subStrings.join(" "); // Concatenate everything together
               // print(itemName);
               itemNames.add(itemName); // Just want the item name
             }
           }
-        } 
+        }
       }
     }
     var minLength = min(itemPrices.length, itemNames.length);
     for (var i = 0; i < minLength; i++) {
-      allItems.add(new Item(itemName: itemNames[i], price: toDouble(itemPrices[i]), qty: toInt(itemQuantity[i])));
+      allItems.add(new Item(
+          itemName: itemNames[i],
+          price: toDouble(itemPrices[i]),
+          qty: toInt(itemQuantity[i])));
     }
     for (var i in allItems) {
       print(i.qty.toString() + " " + i.itemName + " " + i.price.toString());
