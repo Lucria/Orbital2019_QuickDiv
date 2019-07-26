@@ -11,6 +11,7 @@ import 'package:firebase_ml_vision/firebase_ml_vision.dart';
 import '../models/item.dart';
 import '../models/group.dart';
 import '../pages/manual_input.dart';
+import '../models/custom_contacts.dart';
 import '../scoped-models/groups_model.dart';
 import '../widget/ui_elements/background.dart';
 import '../widget/ui_elements/groupcheckbox/groupcheckbox.dart';
@@ -30,6 +31,7 @@ class _SplitBill extends State<SplitBill> {
   List<String> _itemPrices = [];
   List<String> _itemQuantity = [];
   List<Item> _allItems = [];
+  Map<Item, List<CustomContact>> splitBill = {};
 
   @override
   void initState() {
@@ -41,9 +43,22 @@ class _SplitBill extends State<SplitBill> {
     await readText();
   }
 
-  removeItem(int index) {
+  removeItem(String itemName, CustomContact contact) {
     setState(() {
-      _allItems.removeAt(index);
+      _allItems.removeWhere((it) {
+        if (it.itemName == itemName) {
+          splitBill[it].add(contact);
+          print('xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx');
+          splitBill.forEach((k, v) {
+            print('------------------------------');
+            print(k.itemName + ": ");
+            v.forEach((f) => print(f.contact.displayName));
+          });
+          print('xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx');
+          return true;
+        }
+        return false;
+      });
     });
   }
 
@@ -95,10 +110,13 @@ class _SplitBill extends State<SplitBill> {
     setState(() {
       var minLength = min(_itemPrices.length, _itemNames.length);
       for (var i = 0; i < minLength; i++) {
-        _allItems.add(new Item(
+        var item = Item(
             itemName: _itemNames[i],
             price: toDouble(_itemPrices[i]),
-            qty: toInt(_itemQuantity[i])));
+            qty: toInt(_itemQuantity[i]));
+        _allItems.add(item);
+
+        splitBill[item] = [];
       }
       for (var i in _allItems) {
         print(i.qty.toString() + " " + i.itemName + " " + i.price.toString());
@@ -133,12 +151,15 @@ class _SplitBill extends State<SplitBill> {
             title: Text(name.toString()),
             subtitle: Text(price.toString()),
             trailing: PopupMenuButton(
-              onSelected: (value) {
-                if (value == 'Share') {
+              onSelected: (selectedPerson) {
+                if (selectedPerson == 'Share') {
                   _onAlertShareSheet(context, index, group);
                 } else {
-                  print(value);
-                  removeItem(value);
+                  print(selectedPerson);
+                  print('removing: ' + name);
+                  print('puting it under: ' +
+                      group.contacts[selectedPerson].contact.displayName);
+                  removeItem(name, group.contacts[selectedPerson]);
                 }
               },
               itemBuilder: (context) {
@@ -155,7 +176,7 @@ class _SplitBill extends State<SplitBill> {
                                   )
                                 : CircleAvatar(child: Icon(Icons.person)),
                             title: Text(group.contacts[i].contact.displayName)),
-                        value: index),
+                        value: i),
                   );
                 }
 
@@ -215,7 +236,7 @@ class _SplitBill extends State<SplitBill> {
             if (names.length == selected.length) selected.removeLast();
             print('Share with ' + selected.toString());
 
-            removeItem(index);
+            // removeItem(index);
             Navigator.pop(context);
           },
           color: Theme.of(context).toggleableActiveColor,
