@@ -1,5 +1,6 @@
 import 'package:contacts_service/contacts_service.dart';
 import 'package:flutter/material.dart';
+import 'package:quickdiv_orbital2019/widget/ui_elements/background.dart';
 import 'package:scoped_model/scoped_model.dart';
 import '../models/custom_contacts.dart';
 import '../models/group.dart';
@@ -126,7 +127,8 @@ class _CreateGroupName extends State<CreateGroupName> {
       print('[CreateGroupName Widget] Back button pressed!');
       Navigator.pop(context, false);
       return Future.value(false);
-    }, child: ScopedModelDescendant<GroupsModel>(
+    }, 
+    child: ScopedModelDescendant<GroupsModel>(
       builder: (BuildContext context, Widget child, GroupsModel model) {
         if (model.selectedGroup != null) {
           _editing = true;
@@ -147,15 +149,18 @@ class _CreateGroupName extends State<CreateGroupName> {
               ),
             ],
           ),
-          body: Form(
-            key: _formKey,
-            child: Column(
-              children: <Widget>[
-                _buildCreateGroupName(model.selectedGroup),
-                _buildViewSelectedContact(),
-              ],
+          body: Container(
+            decoration: BackgroundImage.myBoxDecoration(),
+            child: Form(
+              key: _formKey,
+              child: Column(
+                children: <Widget>[
+                  _buildCreateGroupName(model.selectedGroup),
+                  _buildViewSelectedContact(),
+                ],
+              ),
             ),
-          ),
+          )
         );
       },
     ));
