@@ -134,6 +134,18 @@ class _SplitBill extends State<SplitBill> {
 
         _splitBill[item] = [];
       }
+      if (minLength < _itemNames.length) {
+        for (var i = minLength; i < _itemNames.length; i++) {
+          var item = ItemObject(
+            itemName: _itemNames[i],
+            price: toDouble("99.99"),
+            qty: toInt(_itemQuantity[i]),
+          );
+          _allItems.add(item);
+
+          _splitBill[item] = [];
+        }
+      }
       for (var i in _allItems) {
         print(i.qty.toString() + " " + i.itemName + " " + i.price.toString());
       }
