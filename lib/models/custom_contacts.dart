@@ -4,12 +4,12 @@ import './item_object.dart';
 class CustomContact {
   final Contact contact;
   bool isChecked;
-  double totalOwe;
+  double totalOwed;
   List<ItemObject> purchasedItem;
 
   CustomContact(
       {this.contact,
       this.isChecked = false,
-      this.totalOwe = 0,
+      this.totalOwed = 0,
       this.purchasedItem});
 }

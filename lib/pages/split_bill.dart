@@ -31,8 +31,7 @@ class _SplitBill extends State<SplitBill> {
   List<String> _itemPrices = [];
   List<String> _itemQuantity = [];
   List<ItemObject> _allItems = [];
-  Map<ItemObject, List<CustomContact>> splitBill =
-      {}; // This is to be send to the review page.
+  Map<ItemObject, List<CustomContact>> _splitBill = {};
 
   @override
   void initState() {
@@ -46,7 +45,7 @@ class _SplitBill extends State<SplitBill> {
 
   void printShareItemList() {
     print('xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx');
-    splitBill.forEach((k, v) {
+    _splitBill.forEach((k, v) {
       print('------------------------------');
       print(k.itemName + ": ");
       v.forEach((f) => print(f.contact.displayName));
@@ -60,11 +59,11 @@ class _SplitBill extends State<SplitBill> {
         if (it.itemName == itemName) {
           //Need to find an elgant of way print these stuff
           if (contact.length == 1) {
-            splitBill[it].add(contact[0]);
+            _splitBill[it].add(contact[0]);
             printShareItemList();
           } else {
             for (var c in contact) {
-              splitBill[it].add(c);
+              _splitBill[it].add(c);
             }
             printShareItemList();
           }
@@ -129,7 +128,7 @@ class _SplitBill extends State<SplitBill> {
             qty: toInt(_itemQuantity[i]));
         _allItems.add(item);
 
-        splitBill[item] = [];
+        _splitBill[item] = [];
       }
       for (var i in _allItems) {
         print(i.qty.toString() + " " + i.itemName + " " + i.price.toString());
@@ -179,6 +178,9 @@ class _SplitBill extends State<SplitBill> {
                 var list = List<PopupMenuEntry<Object>>();
 
                 for (int i = 0; i < group.contacts.length; i++) {
+                  group.contacts[i].purchasedItem = [];
+
+                  /// Initailzie the list here. Which a no go.
                   list.add(
                     PopupMenuItem(
                         child: ListTile(
@@ -275,6 +277,20 @@ class _SplitBill extends State<SplitBill> {
             child: Text('Done'),
             textColor: Colors.white,
             onPressed: () {
+              _splitBill.forEach((keyItem, valueAllContact) {
+                print(keyItem.itemName);
+                double itemObject = keyItem.price / valueAllContact.length;
+                valueAllContact.forEach((customContact) {
+                  print(customContact.contact.displayName);
+                  customContact.totalOwed += itemObject;
+                  print(customContact.totalOwed.toString());
+
+                  // print(keyItem.itemName);
+                  customContact.purchasedItem.add(keyItem);
+                });
+                print('-----------------------------------');
+              });
+
               Navigator.pushReplacementNamed(context, '/reviewpage');
             },
           )

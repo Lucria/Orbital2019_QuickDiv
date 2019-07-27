@@ -1,184 +1,72 @@
 import 'package:flutter/material.dart';
-import '../widget/ui_elements/background.dart';
+import 'package:scoped_model/scoped_model.dart';
+import '../models/item_object.dart';
+import '../models/custom_contacts.dart';
 import '../widget/ui_elements/appbar.dart';
+import '../scoped-models/groups_model.dart';
+import '../widget/ui_elements/background.dart';
 
-class ReviewPage extends StatelessWidget {
+class ReviewPage extends StatefulWidget {
+  // final Map<ItemObject, List<CustomContact>> splitBill;
 
-  
-  Widget _inCard1() {
-    return Card(
-      child: Column(
-        children: <Widget>[
-          ListTile(
-            leading: Icon(
-              Icons.group,
-              size: 35.0,
-            ),
-            title: Text('Arya'),
-            subtitle: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                SizedBox(height: 10.0),
-                Text('Prawn Masala'),
-                SizedBox(height: 10.0),
-              ],
-            ),
-            trailing: Container(
-              decoration: BoxDecoration(
-                border: Border.all(color: Colors.red),
-                borderRadius: new BorderRadius.circular(8.0),
-              ),
-              child: Text(
-                '\$10.00',
-                style: TextStyle(
-                  fontSize: 30.0,
-                ),
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
+  // ReviewPage(this.splitBill);
+
+  @override
+  State<StatefulWidget> createState() {
+    return _ReviewPageState();
+  }
+}
+
+class _ReviewPageState extends State<ReviewPage> {
+  // Map<ItemObject, List<CustomContact>> _splitBill;
+
+  // void initState() {
+  //   _splitBill = widget.splitBill;
+  //   _splitBill.forEach((keyItem, valueAllContact) {
+  //     double itemObject = keyItem.price / valueAllContact.length;
+  //     valueAllContact.forEach((customContact) {
+  //       customContact.totalOwed += itemObject;
+  //       customContact.purchasedItem.add(keyItem);
+  //     });
+  //   });
+  //   super.initState();
+  // }
+  List<Widget> itemText(CustomContact contact) {
+    List<Widget> v = [SizedBox(height: 10.0)];
+    for (var a in contact.purchasedItem) {
+      v.add(Text(a.itemName));
+    }
+    v.add(SizedBox(height: 10.0));
+    return v;
   }
 
-    Widget _inCard2() {
+  Widget _inCard(CustomContact contact) {
     return Card(
       child: Column(
         children: <Widget>[
           ListTile(
-            leading: Icon(
-              Icons.group,
-              size: 35.0,
-            ),
-            title: Text('Daenerys'),
+            leading: contact.contact.avatar != null
+                ? CircleAvatar(
+                    backgroundImage: MemoryImage(contact.contact.avatar),
+                  )
+                : CircleAvatar(child: Icon(Icons.person)),
+            title: Text(contact.contact.displayName),
             subtitle: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                SizedBox(height: 10.0),
-                Text('Aloo Gopi Masala'),
-                Text('Garlic Naan (Share with Jon)'),
-                SizedBox(height: 10.0),
-              ],
-            ),
-            trailing: Container(
-              decoration: BoxDecoration(
-                border: Border.all(color: Colors.red),
-                borderRadius: new BorderRadius.circular(8.0),
-              ),
-              child: Text(
-                '\$8.40',
-                style: TextStyle(
-                  fontSize: 30.0,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: itemText(contact)
+                // children: <Widget>[
+                //   SizedBox(height: 10.0),
+                //   Text('Prawn Masala'),
+                //   SizedBox(height: 10.0),
+                // ],
                 ),
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-    Widget _inCard3() {
-    return Card(
-      child: Column(
-        children: <Widget>[
-          ListTile(
-            leading: Icon(
-              Icons.group,
-              size: 35.0,
-            ),
-            title: Text('Jamie'),
-            subtitle: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                SizedBox(height: 10.0),
-                Text('Butter Chicken Masala'),
-                Text('Fresh Lime Sweet (Share with Tyrion)'),
-                SizedBox(height: 10.0),
-              ],
-            ),
             trailing: Container(
               decoration: BoxDecoration(
                 border: Border.all(color: Colors.red),
                 borderRadius: new BorderRadius.circular(8.0),
               ),
               child: Text(
-                '\$10.50',
-                style: TextStyle(
-                  fontSize: 30.0,
-                ),
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-    Widget _inCard4() {
-    return Card(
-      child: Column(
-        children: <Widget>[
-          ListTile(
-            leading: Icon(
-              Icons.group,
-              size: 35.0,
-            ),
-            title: Text('Jon'),
-            subtitle: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                SizedBox(height: 10.0),
-                Text('Mushrrom 65'),
-                Text('Garlic Naan (Share with Daenerys)'),
-                SizedBox(height: 10.0),
-              ],
-            ),
-            trailing: Container(
-              decoration: BoxDecoration(
-                border: Border.all(color: Colors.red),
-                borderRadius: new BorderRadius.circular(8.0),
-              ),
-              child: Text(
-                '\$8.90',
-                style: TextStyle(
-                  fontSize: 30.0,
-                ),
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-    Widget _inCard5() {
-    return Card(
-      child: Column(
-        children: <Widget>[
-          ListTile(
-            leading: Icon(
-              Icons.group,
-              size: 35.0,
-            ),
-            title: Text('Tyrion'),
-            subtitle: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                SizedBox(height: 10.0),
-                Text('Onion Pakoda'),
-                Text('Steamed Basmathi Rice'),
-                Text('Fresh Lime Sweet (Share with Jamie)'),
-                SizedBox(height: 10.0),
-              ],
-            ),
-            trailing: Container(
-              decoration: BoxDecoration(
-                border: Border.all(color: Colors.red),
-                borderRadius: new BorderRadius.circular(8.0),
-              ),
-              child: Text(
-                '\$10.50',
+                contact.totalOwed.toString(),
                 style: TextStyle(
                   fontSize: 30.0,
                 ),
@@ -194,22 +82,26 @@ class ReviewPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: TitleText.defaultTitle(),
-      body: Container(
-        decoration: BackgroundImage.myBoxDecoration(),
-        padding: EdgeInsets.all(10.0),
-        child: Column(
-          children: <Widget>[
-            _inCard1(),
-            _inCard2(),
-            _inCard3(),
-            _inCard4(),
-            _inCard5(),
-          ],
-        ),
+      body: ScopedModelDescendant<GroupsModel>(
+        builder: (BuildContext context, Widget child, GroupsModel model) {
+          return Container(
+            decoration: BackgroundImage.myBoxDecoration(),
+            padding: EdgeInsets.all(10.0),
+            child: Container(
+              child: ListView.builder(
+                itemCount: model.selectedGroup.contacts.length,
+                itemBuilder: (context, index) {
+                  return _inCard(model.selectedGroup.contacts[index]);
+                },
+              ),
+            ),
+          );
+        },
       ),
       floatingActionButton: FloatingActionButton.extended(
         icon: Icon(Icons.send),
-        label: Text('Send to all'),
+        label: Text(
+            'Send to all'), // need reset the object to default state. for totalOwed and ListObject
         onPressed: () {
           Navigator.pushNamed(context, '/home');
         },
