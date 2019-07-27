@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:quickdiv_orbital2019/widget/ui_elements/background.dart';
 import '../models/item_object.dart';
 
 class ManualInput extends StatefulWidget {
@@ -154,39 +155,42 @@ class _ManualInputState extends State<ManualInput> {
             )
           ],
         ),
-        body: Column(
-          children: <Widget>[
-            Form(
-              key: _formKey,
-              child: Expanded(
-                child: ListView.builder(
-                  addAutomaticKeepAlives: true,
-                  itemCount: _items.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    return Dismissible(
-                      key: Key(_items[index].hashCode.toString()),
-                      background: Container(
-                        alignment: AlignmentDirectional.centerEnd,
-                        color: Colors.red,
-                        child: Padding(
-                          padding: EdgeInsets.fromLTRB(0.0, 0.0, 10.0, 0.0),
-                          child: Icon(
-                            Icons.delete,
-                            color: Colors.white,
+        body: Container(
+          decoration: BackgroundImage.myBoxDecoration(),
+          child: Column(
+            children: <Widget>[
+              Form(
+                key: _formKey,
+                child: Expanded(
+                  child: ListView.builder(
+                    addAutomaticKeepAlives: true,
+                    itemCount: _items.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      return Dismissible(
+                        key: Key(_items[index].hashCode.toString()),
+                        background: Container(
+                          alignment: AlignmentDirectional.centerEnd,
+                          color: Colors.red,
+                          child: Padding(
+                            padding: EdgeInsets.fromLTRB(0.0, 0.0, 10.0, 0.0),
+                            child: Icon(
+                              Icons.delete,
+                              color: Colors.white,
+                            ),
                           ),
                         ),
-                      ),
-                      direction: DismissDirection.endToStart,
-                      onDismissed: (DismissDirection direction) =>
-                          onDelete(_items[index]),
-                      child: _inputRow(_items[index]),
-                    );
-                  },
+                        direction: DismissDirection.endToStart,
+                        onDismissed: (DismissDirection direction) =>
+                            onDelete(_items[index]),
+                        child: _inputRow(_items[index]),
+                      );
+                    },
+                  ),
                 ),
               ),
-            ),
-          ],
-        ),
+            ],
+          ),
+        ),        
         floatingActionButton: FloatingActionButton(
           child: Icon(Icons.add),
           onPressed: _onAddRow,
