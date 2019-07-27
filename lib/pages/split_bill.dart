@@ -43,18 +43,30 @@ class _SplitBill extends State<SplitBill> {
     await readText();
   }
 
-  removeItem(String itemName, CustomContact contact) {
+  void printShareItemList() {
+    print('xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx');
+    splitBill.forEach((k, v) {
+      print('------------------------------');
+      print(k.itemName + ": ");
+      v.forEach((f) => print(f.contact.displayName));
+    });
+    print('xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx');
+  }
+
+  removeItem(String itemName, List<CustomContact> contact) {
     setState(() {
       _allItems.removeWhere((it) {
         if (it.itemName == itemName) {
-          splitBill[it].add(contact);
-          print('xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx');
-          splitBill.forEach((k, v) {
-            print('------------------------------');
-            print(k.itemName + ": ");
-            v.forEach((f) => print(f.contact.displayName));
-          });
-          print('xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx');
+          //Need to find an elgant of way print these stuff
+          if (contact.length == 1) {
+            splitBill[it].add(contact[0]);
+            printShareItemList();
+          } else {
+            for (var c in contact) {
+              splitBill[it].add(c);
+            }
+            printShareItemList();
+          }
           return true;
         }
         return false;
@@ -62,17 +74,17 @@ class _SplitBill extends State<SplitBill> {
     });
   }
 
-  Widget _shareDialog() {
-    return AlertDialog(
-      title: Text('Share'),
-      actions: <Widget>[
-        FlatButton(
-          child: Text('Submit'),
-          onPressed: () {},
-        )
-      ],
-    );
-  }
+  // Widget _shareDialog() {
+  //   return AlertDialog(
+  //     title: Text('Share'),
+  //     actions: <Widget>[
+  //       FlatButton(
+  //         child: Text('Submit'),
+  //         onPressed: () {},
+  //       )
+  //     ],
+  //   );
+  // }
 
   Future readText() async {
     final FirebaseVisionImage visionImage =
@@ -136,10 +148,8 @@ class _SplitBill extends State<SplitBill> {
     // }
   }
 
-  Widget itemCard(
-      BuildContext context, String name, String price, int index, Group group) {
-    // print(group.groupName);
-    // print(group.contacts.length);
+  Widget itemCard(BuildContext context, String itemName, String price,
+      int index, Group group) {
     return Card(
       child: Column(
         children: <Widget>[
@@ -148,18 +158,20 @@ class _SplitBill extends State<SplitBill> {
               Icons.fastfood,
               size: 45,
             ),
-            title: Text(name.toString()),
+            title: Text(itemName.toString()),
             subtitle: Text(price.toString()),
             trailing: PopupMenuButton(
               onSelected: (selectedPerson) {
                 if (selectedPerson == 'Share') {
-                  _onAlertShareSheet(context, index, group);
+                  _onAlertShareSheet(context, index, group, itemName);
                 } else {
                   print(selectedPerson);
-                  print('removing: ' + name);
+                  print('removing: ' + itemName);
                   print('puting it under: ' +
                       group.contacts[selectedPerson].contact.displayName);
-                  removeItem(name, group.contacts[selectedPerson]);
+                  List<CustomContact> _listContact = [];
+                  _listContact.add(group.contacts[selectedPerson]);
+                  removeItem(itemName, _listContact);
                 }
               },
               itemBuilder: (context) {
@@ -192,9 +204,6 @@ class _SplitBill extends State<SplitBill> {
                       value: 'Share'),
                 );
 
-                // list.add(
-                //   PopupMenuItem(child: Text('Share'), value: 'Share'),
-                // );
                 return list;
               },
             ),
@@ -204,7 +213,7 @@ class _SplitBill extends State<SplitBill> {
     );
   }
 
-  _onAlertShareSheet(context, index, Group group) {
+  _onAlertShareSheet(context, index, Group group, String itemName) {
     List<String> names = new List();
     List<String> selected = new List();
 
@@ -236,7 +245,16 @@ class _SplitBill extends State<SplitBill> {
             if (names.length == selected.length) selected.removeLast();
             print('Share with ' + selected.toString());
 
-            // removeItem(index);
+            List<CustomContact> _listOfSelectedContact = [];
+            group.contacts.forEach((f) {
+              for (int i = 0; i < selected.length; i++) {
+                if (f.contact.displayName == selected[i]) {
+                  _listOfSelectedContact.add(f);
+                }
+              }
+            });
+
+            removeItem(itemName, _listOfSelectedContact);
             Navigator.pop(context);
           },
           color: Theme.of(context).toggleableActiveColor,
@@ -283,11 +301,13 @@ class _SplitBill extends State<SplitBill> {
         child: Icon(Icons.edit),
         onPressed: () {
           Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => ManualInput(
-                        allItems: _allItems,
-                      )));
+            context,
+            MaterialPageRoute(
+              builder: (context) => ManualInput(
+                allItems: _allItems,
+              ),
+            ),
+          );
         },
       ),
     );
