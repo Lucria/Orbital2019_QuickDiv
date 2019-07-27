@@ -94,7 +94,6 @@ class _SplitBill extends State<SplitBill> {
         FirebaseVision.instance.textRecognizer();
     final VisionText readText = await textRecognizer.processImage(visionImage);
     textRecognizer.close();
-    var firstBoundingBoxLeft;
     for (TextBlock block in readText.blocks) {
       for (TextLine line in block.lines) {
         if (!isInt(line.text)) {
