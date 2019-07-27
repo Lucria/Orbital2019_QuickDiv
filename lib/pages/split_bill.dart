@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:core';
 import 'dart:math';
 import 'dart:async';
 import 'package:flutter/widgets.dart';
@@ -93,6 +94,7 @@ class _SplitBill extends State<SplitBill> {
         FirebaseVision.instance.textRecognizer();
     final VisionText readText = await textRecognizer.processImage(visionImage);
     textRecognizer.close();
+    var firstBoundingBoxLeft;
     for (TextBlock block in readText.blocks) {
       for (TextLine line in block.lines) {
         if (!isInt(line.text)) {
@@ -106,13 +108,15 @@ class _SplitBill extends State<SplitBill> {
             List<String> subStrings = line.text
                 .split(" "); // Split line.text into multiple substrings
             if (isInt(subStrings[0])) {
-              _itemQuantity.add(subStrings[0]); // Add quantity to lists
-              subStrings
-                  .removeAt(0); // Remove quantity value from list of substrings
-              String itemName =
-                  subStrings.join(" "); // Concatenate everything together
-              // print(itemName);
-              _itemNames.add(itemName); // Just want the item name
+              if (block.boundingBox.left < 200) {
+                _itemQuantity.add(subStrings[0]); // Add quantity to lists
+                subStrings
+                    .removeAt(0); // Remove quantity value from list of substrings
+                String itemName =
+                    subStrings.join(" "); // Concatenate everything together
+                // print(itemName);
+                _itemNames.add(itemName); // Just want the item name
+              }
             }
           }
         }
