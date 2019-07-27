@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import '../models/item.dart';
+import '../models/item_object.dart';
 
 class ManualInput extends StatefulWidget {
-  final List<Item> allItems;
+  final List<ItemObject> allItems;
 
   ManualInput({this.allItems});
   @override
@@ -13,7 +13,7 @@ class ManualInput extends StatefulWidget {
 
 class _ManualInputState extends State<ManualInput> {
   final _formKey = GlobalKey<FormState>();
-  final List<Item> _items = [];
+  final List<ItemObject> _items = [];
 
   bool validate() {
     var valid = _formKey.currentState.validate();
@@ -25,7 +25,8 @@ class _ManualInputState extends State<ManualInput> {
   void initState() {
     if (widget.allItems != null) {
       for (var i in widget.allItems) {
-        _items.add(Item(itemName: i.itemName, price: i.price, qty: i.qty));
+        _items
+            .add(ItemObject(itemName: i.itemName, price: i.price, qty: i.qty));
       }
     } else {
       _onAddRow();
@@ -35,11 +36,11 @@ class _ManualInputState extends State<ManualInput> {
 
   void _onAddRow() {
     setState(() {
-      _items.add(Item());
+      _items.add(ItemObject());
     });
   }
 
-  void onDelete(Item item) {
+  void onDelete(ItemObject item) {
     setState(() {
       _items.remove(item);
     });
@@ -76,7 +77,7 @@ class _ManualInputState extends State<ManualInput> {
     );
   }
 
-  Row _inputRow(Item item) {
+  Row _inputRow(ItemObject item) {
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[

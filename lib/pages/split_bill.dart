@@ -8,7 +8,7 @@ import 'package:validators/validators.dart';
 import 'package:scoped_model/scoped_model.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:firebase_ml_vision/firebase_ml_vision.dart';
-import '../models/item.dart';
+import '../models/item_object.dart';
 import '../models/group.dart';
 import '../pages/manual_input.dart';
 import '../models/custom_contacts.dart';
@@ -30,8 +30,9 @@ class _SplitBill extends State<SplitBill> {
   List<String> _itemNames = []; // To ensure that the list is growable
   List<String> _itemPrices = [];
   List<String> _itemQuantity = [];
-  List<Item> _allItems = [];
-  Map<Item, List<CustomContact>> splitBill = {};
+  List<ItemObject> _allItems = [];
+  Map<ItemObject, List<CustomContact>> splitBill =
+      {}; // This is to be send to the review page.
 
   @override
   void initState() {
@@ -122,7 +123,7 @@ class _SplitBill extends State<SplitBill> {
     setState(() {
       var minLength = min(_itemPrices.length, _itemNames.length);
       for (var i = 0; i < minLength; i++) {
-        var item = Item(
+        var item = ItemObject(
             itemName: _itemNames[i],
             price: toDouble(_itemPrices[i]),
             qty: toInt(_itemQuantity[i]));
