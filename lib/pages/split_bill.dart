@@ -164,7 +164,7 @@ class _SplitBill extends State<SplitBill> {
     // }
   }
 
-  Widget itemCard(BuildContext context, String itemName, String price,
+  Widget itemCard(BuildContext context, String itemName, double price,
       int index, Group group) {
     return Card(
       child: Column(
@@ -175,7 +175,7 @@ class _SplitBill extends State<SplitBill> {
               size: 45,
             ),
             title: Text(itemName.toString()),
-            subtitle: Text(price.toString()),
+            subtitle: Text(price.toStringAsFixed(2)),
             trailing: PopupMenuButton(
               onSelected: (selectedPerson) {
                 if (selectedPerson == 'Share') {
@@ -319,12 +319,8 @@ class _SplitBill extends State<SplitBill> {
             child: ListView.builder(
               itemCount: _allItems.length,
               itemBuilder: (context, index) {
-                return itemCard(
-                    context,
-                    _allItems[index].itemName,
-                    _allItems[index].price.toString(),
-                    index,
-                    model.selectedGroup);
+                return itemCard(context, _allItems[index].itemName,
+                    _allItems[index].price, index, model.selectedGroup);
               },
             ),
           );
