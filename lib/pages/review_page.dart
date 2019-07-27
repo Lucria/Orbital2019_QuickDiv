@@ -1,16 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:scoped_model/scoped_model.dart';
-import '../models/item_object.dart';
 import '../models/custom_contacts.dart';
 import '../widget/ui_elements/appbar.dart';
 import '../scoped-models/groups_model.dart';
 import '../widget/ui_elements/background.dart';
 
 class ReviewPage extends StatefulWidget {
-  // final Map<ItemObject, List<CustomContact>> splitBill;
-
-  // ReviewPage(this.splitBill);
-
   @override
   State<StatefulWidget> createState() {
     return _ReviewPageState();
@@ -18,19 +13,6 @@ class ReviewPage extends StatefulWidget {
 }
 
 class _ReviewPageState extends State<ReviewPage> {
-  // Map<ItemObject, List<CustomContact>> _splitBill;
-
-  // void initState() {
-  //   _splitBill = widget.splitBill;
-  //   _splitBill.forEach((keyItem, valueAllContact) {
-  //     double itemObject = keyItem.price / valueAllContact.length;
-  //     valueAllContact.forEach((customContact) {
-  //       customContact.totalOwed += itemObject;
-  //       customContact.purchasedItem.add(keyItem);
-  //     });
-  //   });
-  //   super.initState();
-  // }
   List<Widget> itemText(CustomContact contact) {
     List<Widget> v = [SizedBox(height: 10.0)];
     for (var a in contact.purchasedItem) {
@@ -53,20 +35,14 @@ class _ReviewPageState extends State<ReviewPage> {
             title: Text(contact.contact.displayName),
             subtitle: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children: itemText(contact)
-                // children: <Widget>[
-                //   SizedBox(height: 10.0),
-                //   Text('Prawn Masala'),
-                //   SizedBox(height: 10.0),
-                // ],
-                ),
+                children: itemText(contact)),
             trailing: Container(
               decoration: BoxDecoration(
                 border: Border.all(color: Colors.red),
                 borderRadius: new BorderRadius.circular(8.0),
               ),
               child: Text(
-                contact.totalOwed.toString(),
+                contact.totalOwed.toStringAsFixed(2),
                 style: TextStyle(
                   fontSize: 30.0,
                 ),
