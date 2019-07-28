@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:quickdiv_orbital2019/widget/ui_elements/background.dart';
 import '../models/item_object.dart';
+import '../widget/ui_elements/background.dart';
 
 class ManualInput extends StatefulWidget {
   final List<ItemObject> allItems;
@@ -190,7 +190,7 @@ class _ManualInputState extends State<ManualInput> {
               ),
             ],
           ),
-        ),        
+        ),
         floatingActionButton: FloatingActionButton(
           child: Icon(Icons.add),
           onPressed: _onAddRow,

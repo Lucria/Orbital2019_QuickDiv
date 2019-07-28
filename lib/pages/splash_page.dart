@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
@@ -34,7 +33,8 @@ class _SplashScreenState extends State<SplashScreen> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
-                      CircleAvatar( // Icon
+                      CircleAvatar(
+                          // Icon
                           backgroundColor: Colors.white,
                           radius: 50.0,
                           child: Icon(

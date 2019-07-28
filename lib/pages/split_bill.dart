@@ -28,7 +28,7 @@ class SplitBill extends StatefulWidget {
 }
 
 class _SplitBill extends State<SplitBill> {
-  List<String> _itemNames = []; // To ensure that the list is growable
+  List<String> _itemNames = [];
   List<String> _itemPrices = [];
   List<String> _itemQuantity = [];
   List<ItemObject> _allItems = [];
