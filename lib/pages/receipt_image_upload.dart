@@ -100,7 +100,7 @@ class _UploadImageState extends State<UploadImage> {
         ],
       ),
       body: Container(
-        decoration: BackgroundImage.myBoxDecoration(),
+        // decoration: BackgroundImage.myBoxDecoration(),
         child: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceAround,

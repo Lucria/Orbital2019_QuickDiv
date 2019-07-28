@@ -216,7 +216,7 @@ class _AddUserGroupPage extends State<AddUserGroupPage> {
         ),
         body: !_isLoading
             ? Container(
-                decoration: BackgroundImage.myBoxDecoration(),
+                // decoration: BackgroundImage.myBoxDecoration(),
                 child: Column(
                 children: <Widget>[
                   Padding(

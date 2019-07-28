@@ -156,7 +156,7 @@ class _ManualInputState extends State<ManualInput> {
           ],
         ),
         body: Container(
-          decoration: BackgroundImage.myBoxDecoration(),
+          // decoration: BackgroundImage.myBoxDecoration(),
           child: Column(
             children: <Widget>[
               Form(

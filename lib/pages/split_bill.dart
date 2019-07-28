@@ -359,7 +359,7 @@ class _SplitBill extends State<SplitBill> {
       body: ScopedModelDescendant<GroupsModel>(
         builder: (BuildContext context, Widget child, GroupsModel model) {
           return Container(
-            decoration: BackgroundImage.myBoxDecoration(),
+            // decoration: BackgroundImage.myBoxDecoration(),
             child: _allItems.length == 0
                 ? emptyContactSection()
                 : ListView.builder(

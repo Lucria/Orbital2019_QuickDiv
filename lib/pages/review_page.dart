@@ -61,7 +61,7 @@ class _ReviewPageState extends State<ReviewPage> {
       body: ScopedModelDescendant<GroupsModel>(
         builder: (BuildContext context, Widget child, GroupsModel model) {
           return Container(
-            decoration: BackgroundImage.myBoxDecoration(),
+            // decoration: BackgroundImage.myBoxDecoration(),
             padding: EdgeInsets.all(10.0),
             child: Container(
               child: ListView.builder(

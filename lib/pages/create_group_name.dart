@@ -127,41 +127,39 @@ class _CreateGroupName extends State<CreateGroupName> {
       print('[CreateGroupName Widget] Back button pressed!');
       Navigator.pop(context, false);
       return Future.value(false);
-    }, 
-    child: ScopedModelDescendant<GroupsModel>(
+    }, child: ScopedModelDescendant<GroupsModel>(
       builder: (BuildContext context, Widget child, GroupsModel model) {
         if (model.selectedGroup != null) {
           _editing = true;
         }
 
         return Scaffold(
-          appBar: AppBar(
-            title: _editing == false ? Text('New Group') : Text('Edit Group'),
-            actions: <Widget>[
-              FlatButton(
-                textColor: Colors.white,
-                child: _editing == false ? Text('Create') : Text('Update'),
-                onPressed: () {
-                  _editing == false
-                      ? _createGroup(model.addGroups)
-                      : _editGroup(model.editGroup);
-                },
-              ),
-            ],
-          ),
-          body: Container(
-            decoration: BackgroundImage.myBoxDecoration(),
-            child: Form(
-              key: _formKey,
-              child: Column(
-                children: <Widget>[
-                  _buildCreateGroupName(model.selectedGroup),
-                  _buildViewSelectedContact(),
-                ],
-              ),
+            appBar: AppBar(
+              title: _editing == false ? Text('New Group') : Text('Edit Group'),
+              actions: <Widget>[
+                FlatButton(
+                  textColor: Colors.white,
+                  child: _editing == false ? Text('Create') : Text('Update'),
+                  onPressed: () {
+                    _editing == false
+                        ? _createGroup(model.addGroups)
+                        : _editGroup(model.editGroup);
+                  },
+                ),
+              ],
             ),
-          )
-        );
+            body: Container(
+              // decoration: BackgroundImage.myBoxDecoration(),
+              child: Form(
+                key: _formKey,
+                child: Column(
+                  children: <Widget>[
+                    _buildCreateGroupName(model.selectedGroup),
+                    _buildViewSelectedContact(),
+                  ],
+                ),
+              ),
+            ));
       },
     ));
   }

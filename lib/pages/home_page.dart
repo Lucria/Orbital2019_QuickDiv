@@ -46,7 +46,7 @@ class MyHomePage extends StatelessWidget {
         automaticallyImplyLeading: false,
       ),
       body: Container(
-        decoration: BackgroundImage.myBoxDecoration(),
+        // decoration: BackgroundImage.myBoxDecoration(),
         child: Groups(),
       ),
       floatingActionButton: AnimatedFloatingActionButton(

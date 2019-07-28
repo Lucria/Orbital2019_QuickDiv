@@ -79,7 +79,7 @@ class _CameraImageState extends State<CameraImage> {
         ],
       ),
       body: Container(
-        decoration: BackgroundImage.myBoxDecoration(),
+        // decoration: BackgroundImage.myBoxDecoration(),
         child: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
