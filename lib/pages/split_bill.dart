@@ -75,18 +75,6 @@ class _SplitBill extends State<SplitBill> {
     });
   }
 
-  // Widget _shareDialog() {
-  //   return AlertDialog(
-  //     title: Text('Share'),
-  //     actions: <Widget>[
-  //       FlatButton(
-  //         child: Text('Submit'),
-  //         onPressed: () {},
-  //       )
-  //     ],
-  //   );
-  // }
-
   Future readText() async {
     final FirebaseVisionImage visionImage =
         FirebaseVisionImage.fromFile(widget.image);
@@ -109,8 +97,8 @@ class _SplitBill extends State<SplitBill> {
             if (isInt(subStrings[0])) {
               if (block.boundingBox.left < 200) {
                 _itemQuantity.add(subStrings[0]); // Add quantity to lists
-                subStrings
-                    .removeAt(0); // Remove quantity value from list of substrings
+                subStrings.removeAt(
+                    0); // Remove quantity value from list of substrings
                 String itemName =
                     subStrings.join(" "); // Concatenate everything together
                 // print(itemName);
@@ -231,6 +219,25 @@ class _SplitBill extends State<SplitBill> {
     );
   }
 
+  void _shareDialog() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Please select 2 or more contact.'),
+          actions: <Widget>[
+            FlatButton(
+              child: Text('Done'),
+              onPressed: () {
+                Navigator.pop(context);
+              },
+            )
+          ],
+        );
+      },
+    );
+  }
+
   _onAlertShareSheet(context, index, Group group, String itemName) {
     List<String> names = new List();
     List<String> selected = new List();
@@ -260,20 +267,24 @@ class _SplitBill extends State<SplitBill> {
             style: TextStyle(color: Colors.white, fontSize: 20),
           ),
           onPressed: () {
-            if (names.length == selected.length) selected.removeLast();
-            print('Share with ' + selected.toString());
+            if (selected.length > 1) {
+              if (names.length == selected.length) selected.removeLast();
+              print('Share with ' + selected.toString());
 
-            List<CustomContact> _listOfSelectedContact = [];
-            group.contacts.forEach((f) {
-              for (int i = 0; i < selected.length; i++) {
-                if (f.contact.displayName == selected[i]) {
-                  _listOfSelectedContact.add(f);
+              List<CustomContact> _listOfSelectedContact = [];
+              group.contacts.forEach((f) {
+                for (int i = 0; i < selected.length; i++) {
+                  if (f.contact.displayName == selected[i]) {
+                    _listOfSelectedContact.add(f);
+                  }
                 }
-              }
-            });
+              });
 
-            removeItem(itemName, _listOfSelectedContact);
-            Navigator.pop(context);
+              removeItem(itemName, _listOfSelectedContact);
+              Navigator.pop(context);
+            } else {
+              _shareDialog();
+            }
           },
           color: Theme.of(context).toggleableActiveColor,
           width: 120,
