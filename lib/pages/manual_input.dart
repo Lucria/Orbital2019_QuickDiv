@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:quickdiv_orbital2019/pages/split_bill.dart';
-import '../models/item_object.dart';
 import './split_bill.dart';
+import '../models/item_object.dart';
 import '../widget/ui_elements/background.dart';
 
 class ManualInput extends StatefulWidget {
@@ -49,6 +48,13 @@ class _ManualInputState extends State<ManualInput> {
     });
   }
 
+  bool _isNumeric(String str) {
+    if (str == null) {
+      return false;
+    }
+    return double.tryParse(str) != null;
+  }
+
   void onSave() {
     if (!_formKey.currentState.validate()) {
       return;
@@ -56,35 +62,35 @@ class _ManualInputState extends State<ManualInput> {
     print('form saved');
     _formKey.currentState.save();
 
-    if (widget.allItems != null) {
-      // Navigator.pushNamed(context, '/splitbill');
+    // if (widget.allItems != null || group != null) {
+    // Navigator.pushNamed(context, '/splitbill');
 
-      Navigator.push(context,
-          MaterialPageRoute(builder: (context) => SplitBill(item: _items)));
-    } else {
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          fullscreenDialog: true,
-          builder: (_) => Scaffold(
-            appBar: AppBar(
-              title: Text('Output'),
-            ),
-            body: ListView.builder(
-              addAutomaticKeepAlives: true,
-              itemCount: _items.length,
-              itemBuilder: (_, i) => ListTile(
-                title: Text(_items[i].itemName +
-                    "," +
-                    _items[i].price.toString() +
-                    "," +
-                    _items[i].qty.toString()),
-              ),
-            ),
-          ),
-        ),
-      );
-    }
+    Navigator.push(context,
+        MaterialPageRoute(builder: (context) => SplitBill(item: _items)));
+    // } else {
+    // Navigator.push(
+    //   context,
+    //   MaterialPageRoute(
+    //     fullscreenDialog: true,
+    //     builder: (_) => Scaffold(
+    //       appBar: AppBar(
+    //         title: Text('Output'),
+    //       ),
+    //       body: ListView.builder(
+    //         addAutomaticKeepAlives: true,
+    //         itemCount: _items.length,
+    //         itemBuilder: (_, i) => ListTile(
+    //           title: Text(_items[i].itemName +
+    //               "," +
+    //               _items[i].price.toString() +
+    //               "," +
+    //               _items[i].qty.toString()),
+    //         ),
+    //       ),
+    //     ),
+    //   ),
+    // );
+    // }
   }
 
   Row _inputRow(ItemObject item) {
@@ -113,9 +119,9 @@ class _ManualInputState extends State<ManualInput> {
             margin:
                 EdgeInsets.only(top: 10.0, left: 5.0, right: 5.0, bottom: 10.0),
             child: TextFormField(
-              initialValue: item.price.toString(),
+              initialValue: item.price == null ? '' : item.price.toString(),
               validator: (val) =>
-                  val.length > 1 ? null : 'Please enter the item price',
+                  _isNumeric(val) ? null : 'Please enter the item price',
               onSaved: (val) => item.price = double.parse(val),
               decoration: InputDecoration(
                 labelText: 'Price',
