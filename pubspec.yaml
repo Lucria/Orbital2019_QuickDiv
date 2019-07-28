@@ -32,6 +32,7 @@ dependencies:
   scoped_model: ^1.0.1
   image_cropper: ^1.0.2
   validators: ^2.0.0+1
+  flutter_sms: ^1.0.1
 
 dev_dependencies:
   flutter_test:
