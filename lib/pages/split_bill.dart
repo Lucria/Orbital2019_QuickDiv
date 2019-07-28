@@ -293,46 +293,82 @@ class _SplitBill extends State<SplitBill> {
     ).show();
   }
 
+  Widget _nextFlatButton() {
+    if (_allItems.length == 0) {
+      return FlatButton(
+        child: Text('Next'),
+        textColor: Colors.white,
+        onPressed: () {
+          _splitBill.forEach((keyItem, valueAllContact) {
+            print(keyItem.itemName);
+            double itemObject = keyItem.price / valueAllContact.length;
+            valueAllContact.forEach((customContact) {
+              print(customContact.contact.displayName);
+              customContact.totalOwed += itemObject;
+              print(customContact.totalOwed.toString());
+              customContact.purchasedItem.add(keyItem);
+            });
+            print('-----------------------------------');
+          });
+
+          Navigator.pushReplacementNamed(context, '/reviewpage');
+        },
+      );
+    }
+    return FlatButton(
+      child: Text(''),
+      onPressed: () {},
+    );
+  }
+
+  Widget emptyContactSection() {
+    return Center(
+      child: Container(
+        padding: const EdgeInsets.all(12),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            Container(
+              padding: const EdgeInsets.only(bottom: 8),
+              child: Text(
+                "Please select next on the top right hand corner to proceede to the next page",
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black87,
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text('Divide your bill'),
         actions: <Widget>[
-          FlatButton(
-            child: Text('Done'),
-            textColor: Colors.white,
-            onPressed: () {
-              _splitBill.forEach((keyItem, valueAllContact) {
-                print(keyItem.itemName);
-                double itemObject = keyItem.price / valueAllContact.length;
-                valueAllContact.forEach((customContact) {
-                  print(customContact.contact.displayName);
-                  customContact.totalOwed += itemObject;
-                  print(customContact.totalOwed.toString());
-
-                  // print(keyItem.itemName);
-                  customContact.purchasedItem.add(keyItem);
-                });
-                print('-----------------------------------');
-              });
-
-              Navigator.pushReplacementNamed(context, '/reviewpage');
-            },
-          )
+          _nextFlatButton(),
         ],
       ),
       body: ScopedModelDescendant<GroupsModel>(
         builder: (BuildContext context, Widget child, GroupsModel model) {
           return Container(
             decoration: BackgroundImage.myBoxDecoration(),
-            child: ListView.builder(
-              itemCount: _allItems.length,
-              itemBuilder: (context, index) {
-                return itemCard(context, _allItems[index].itemName,
-                    _allItems[index].price, index, model.selectedGroup);
-              },
-            ),
+            child: _allItems.length == 0
+                ? emptyContactSection()
+                : ListView.builder(
+                    itemCount: _allItems.length,
+                    itemBuilder: (context, index) {
+                      return itemCard(context, _allItems[index].itemName,
+                          _allItems[index].price, index, model.selectedGroup);
+                    },
+                  ),
           );
         },
       ),
