@@ -1,13 +1,8 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-<<<<<<< HEAD
-import 'package:quickdiv_orbital2019/widget/ui_elements/background.dart';
-import '../widget/confirmation_message.dart';
-=======
 import '../widget/confirmation_message.dart';
 import '../widget/ui_elements/background.dart';
->>>>>>> 6a0ed185d7b6d1f8dc78cc9f415be1478ae230ff
 
 class CameraImage extends StatefulWidget {
   @override
