@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:quickdiv_orbital2019/pages/split_bill.dart';
 import '../models/item_object.dart';
+import './split_bill.dart';
 import '../widget/ui_elements/background.dart';
 
 class ManualInput extends StatefulWidget {
@@ -54,28 +56,35 @@ class _ManualInputState extends State<ManualInput> {
     print('form saved');
     _formKey.currentState.save();
 
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        fullscreenDialog: true,
-        builder: (_) => Scaffold(
-          appBar: AppBar(
-            title: Text('Output'),
-          ),
-          body: ListView.builder(
-            addAutomaticKeepAlives: true,
-            itemCount: _items.length,
-            itemBuilder: (_, i) => ListTile(
-              title: Text(_items[i].itemName +
-                  "," +
-                  _items[i].price.toString() +
-                  "," +
-                  _items[i].qty.toString()),
+    if (widget.allItems != null) {
+      // Navigator.pushNamed(context, '/splitbill');
+
+      Navigator.push(context,
+          MaterialPageRoute(builder: (context) => SplitBill(item: _items)));
+    } else {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          fullscreenDialog: true,
+          builder: (_) => Scaffold(
+            appBar: AppBar(
+              title: Text('Output'),
+            ),
+            body: ListView.builder(
+              addAutomaticKeepAlives: true,
+              itemCount: _items.length,
+              itemBuilder: (_, i) => ListTile(
+                title: Text(_items[i].itemName +
+                    "," +
+                    _items[i].price.toString() +
+                    "," +
+                    _items[i].qty.toString()),
+              ),
             ),
           ),
         ),
-      ),
-    );
+      );
+    }
   }
 
   Row _inputRow(ItemObject item) {

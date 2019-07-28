@@ -45,12 +45,12 @@ class _MyAppState extends State<MyApp> {
         debugShowCheckedModeBanner: false, //remove debug
         routes: {
           '/': (BuildContext context) => SplashScreen(),
-          '/existingimage': (BuildContext context) => UploadImage(),
-          '/cameraimage': (BuildContext context) => CameraImage(),
           '/home': (BuildContext context) => MyHomePage(),
           '/create': (BuildContext context) => AddUserGroupPage(),
           '/reviewpage': (BuildContext context) => ReviewPage(),
           '/manualinput': (BuildContext context) => ManualInput(),
+          '/existingimage': (BuildContext context) => UploadImage(),
+          '/cameraimage': (BuildContext context) => CameraImage(),
         },
       ),
     );

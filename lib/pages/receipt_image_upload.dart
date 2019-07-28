@@ -94,7 +94,7 @@ class _UploadImageState extends State<UploadImage> {
               Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => SplitBill(finalImage)));
+                      builder: (context) => SplitBill(image: finalImage)));
             },
           )
         ],

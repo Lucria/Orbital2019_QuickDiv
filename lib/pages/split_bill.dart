@@ -19,7 +19,8 @@ import '../widget/ui_elements/groupcheckbox/groupcheckbox.dart';
 
 class SplitBill extends StatefulWidget {
   final File image;
-  SplitBill(this.image);
+  final List<ItemObject> item;
+  SplitBill({this.image, this.item});
 
   @override
   State<StatefulWidget> createState() {
@@ -36,7 +37,13 @@ class _SplitBill extends State<SplitBill> {
 
   @override
   void initState() {
-    waitReadText();
+    if (widget.image != null)
+      waitReadText();
+    else {
+      //Temporary fix for manual input. there is also a setstate in OCR function part
+      _allItems = widget.item;
+      _allItems.forEach((it) => _splitBill[it] = []);
+    }
     super.initState();
   }
 
@@ -182,11 +189,10 @@ class _SplitBill extends State<SplitBill> {
 
                 for (int i = 0; i < group.contacts.length; i++) {
                   //reset the state of user for totalowed and purchasedItem
-
+                  /// Initailzie/clearing the list here. Which is a no go.
                   group.contacts[i].totalOwed = 0;
                   group.contacts[i].purchasedItem = [];
 
-                  /// Initailzie the list here. Which a no go.
                   list.add(
                     PopupMenuItem(
                         child: ListTile(
@@ -378,7 +384,7 @@ class _SplitBill extends State<SplitBill> {
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.edit),
         onPressed: () {
-          Navigator.pushReplacement(
+          Navigator.push(
             context,
             MaterialPageRoute(
               builder: (context) => ManualInput(
