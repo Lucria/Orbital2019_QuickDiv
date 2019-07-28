@@ -181,6 +181,9 @@ class _SplitBill extends State<SplitBill> {
                 var list = List<PopupMenuEntry<Object>>();
 
                 for (int i = 0; i < group.contacts.length; i++) {
+                  //reset the state of user for totalowed and purchasedItem
+
+                  group.contacts[i].totalOwed = 0;
                   group.contacts[i].purchasedItem = [];
 
                   /// Initailzie the list here. Which a no go.
