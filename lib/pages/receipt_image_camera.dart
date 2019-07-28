@@ -65,7 +65,6 @@ class _CameraImageState extends State<CameraImage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // TODO Add AppBar to a seperate widget file
       appBar: AppBar(
         title: Text("QuickDiv v2.0"),
         actions: <Widget>[
