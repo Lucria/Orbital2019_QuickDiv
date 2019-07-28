@@ -46,4 +46,8 @@ class GroupsModel extends Model {
   void selectGroup(int index) {
     _selectedGroupIndex = index;
   }
+
+  void deselectGroup() {
+    _selectedGroupIndex = null;
+  }
 }

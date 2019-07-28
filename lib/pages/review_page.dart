@@ -79,7 +79,10 @@ class _ReviewPageState extends State<ReviewPage> {
         label: Text(
             'Send to all'), // need reset the object to default state. for totalOwed and ListObject
         onPressed: () {
-          Navigator.pushNamed(context, '/home');
+          GroupsModel model = ScopedModel.of(context);
+          model.deselectGroup();
+
+          Navigator.popAndPushNamed(context, '/home');
         },
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
