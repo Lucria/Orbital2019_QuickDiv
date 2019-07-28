@@ -19,7 +19,8 @@ import '../widget/ui_elements/groupcheckbox/groupcheckbox.dart';
 
 class SplitBill extends StatefulWidget {
   final File image;
-  SplitBill(this.image);
+  final List<ItemObject> item;
+  SplitBill({this.image, this.item});
 
   @override
   State<StatefulWidget> createState() {
@@ -28,7 +29,7 @@ class SplitBill extends StatefulWidget {
 }
 
 class _SplitBill extends State<SplitBill> {
-  List<String> _itemNames = []; // To ensure that the list is growable
+  List<String> _itemNames = [];
   List<String> _itemPrices = [];
   List<String> _itemQuantity = [];
   List<ItemObject> _allItems = [];
@@ -36,7 +37,13 @@ class _SplitBill extends State<SplitBill> {
 
   @override
   void initState() {
-    waitReadText();
+    if (widget.image != null)
+      waitReadText();
+    else {
+      //Temporary fix for manual input. there is also a setstate in OCR function part
+      _allItems = widget.item;
+      _allItems.forEach((it) => _splitBill[it] = []);
+    }
     super.initState();
   }
 
@@ -75,18 +82,6 @@ class _SplitBill extends State<SplitBill> {
     });
   }
 
-  // Widget _shareDialog() {
-  //   return AlertDialog(
-  //     title: Text('Share'),
-  //     actions: <Widget>[
-  //       FlatButton(
-  //         child: Text('Submit'),
-  //         onPressed: () {},
-  //       )
-  //     ],
-  //   );
-  // }
-
   Future readText() async {
     final FirebaseVisionImage visionImage =
         FirebaseVisionImage.fromFile(widget.image);
@@ -109,8 +104,8 @@ class _SplitBill extends State<SplitBill> {
             if (isInt(subStrings[0])) {
               if (block.boundingBox.left < 200) {
                 _itemQuantity.add(subStrings[0]); // Add quantity to lists
-                subStrings
-                    .removeAt(0); // Remove quantity value from list of substrings
+                subStrings.removeAt(
+                    0); // Remove quantity value from list of substrings
                 String itemName =
                     subStrings.join(" "); // Concatenate everything together
                 // print(itemName);
@@ -193,9 +188,11 @@ class _SplitBill extends State<SplitBill> {
                 var list = List<PopupMenuEntry<Object>>();
 
                 for (int i = 0; i < group.contacts.length; i++) {
+                  //reset the state of user for totalowed and purchasedItem
+                  /// Initailzie/clearing the list here. Which is a no go.
+                  group.contacts[i].totalOwed = 0;
                   group.contacts[i].purchasedItem = [];
 
-                  /// Initailzie the list here. Which a no go.
                   list.add(
                     PopupMenuItem(
                         child: ListTile(
@@ -231,6 +228,25 @@ class _SplitBill extends State<SplitBill> {
     );
   }
 
+  void _shareDialog() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Please select 2 or more contact.'),
+          actions: <Widget>[
+            FlatButton(
+              child: Text('Done'),
+              onPressed: () {
+                Navigator.pop(context);
+              },
+            )
+          ],
+        );
+      },
+    );
+  }
+
   _onAlertShareSheet(context, index, Group group, String itemName) {
     List<String> names = new List();
     List<String> selected = new List();
@@ -260,20 +276,24 @@ class _SplitBill extends State<SplitBill> {
             style: TextStyle(color: Colors.white, fontSize: 20),
           ),
           onPressed: () {
-            if (names.length == selected.length) selected.removeLast();
-            print('Share with ' + selected.toString());
+            if (selected.length > 1) {
+              if (names.length == selected.length) selected.removeLast();
+              print('Share with ' + selected.toString());
 
-            List<CustomContact> _listOfSelectedContact = [];
-            group.contacts.forEach((f) {
-              for (int i = 0; i < selected.length; i++) {
-                if (f.contact.displayName == selected[i]) {
-                  _listOfSelectedContact.add(f);
+              List<CustomContact> _listOfSelectedContact = [];
+              group.contacts.forEach((f) {
+                for (int i = 0; i < selected.length; i++) {
+                  if (f.contact.displayName == selected[i]) {
+                    _listOfSelectedContact.add(f);
+                  }
                 }
-              }
-            });
+              });
 
-            removeItem(itemName, _listOfSelectedContact);
-            Navigator.pop(context);
+              removeItem(itemName, _listOfSelectedContact);
+              Navigator.pop(context);
+            } else {
+              _shareDialog();
+            }
           },
           color: Theme.of(context).toggleableActiveColor,
           width: 120,
@@ -282,53 +302,89 @@ class _SplitBill extends State<SplitBill> {
     ).show();
   }
 
+  Widget _nextFlatButton() {
+    if (_allItems.length == 0) {
+      return FlatButton(
+        child: Text('Next'),
+        textColor: Colors.white,
+        onPressed: () {
+          _splitBill.forEach((keyItem, valueAllContact) {
+            print(keyItem.itemName);
+            double itemObject = keyItem.price / valueAllContact.length;
+            valueAllContact.forEach((customContact) {
+              print(customContact.contact.displayName);
+              customContact.totalOwed += itemObject;
+              print(customContact.totalOwed.toString());
+              customContact.purchasedItem.add(keyItem);
+            });
+            print('-----------------------------------');
+          });
+
+          Navigator.pushReplacementNamed(context, '/reviewpage');
+        },
+      );
+    }
+    return FlatButton(
+      child: Text(''),
+      onPressed: () {},
+    );
+  }
+
+  Widget emptyContactSection() {
+    return Center(
+      child: Container(
+        padding: const EdgeInsets.all(12),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            Container(
+              padding: const EdgeInsets.only(bottom: 8),
+              child: Text(
+                "Please select next on the top right hand corner to proceede to the next page",
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black87,
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text('Divide your bill'),
         actions: <Widget>[
-          FlatButton(
-            child: Text('Done'),
-            textColor: Colors.white,
-            onPressed: () {
-              _splitBill.forEach((keyItem, valueAllContact) {
-                print(keyItem.itemName);
-                double itemObject = keyItem.price / valueAllContact.length;
-                valueAllContact.forEach((customContact) {
-                  print(customContact.contact.displayName);
-                  customContact.totalOwed += itemObject;
-                  print(customContact.totalOwed.toString());
-
-                  // print(keyItem.itemName);
-                  customContact.purchasedItem.add(keyItem);
-                });
-                print('-----------------------------------');
-              });
-
-              Navigator.pushReplacementNamed(context, '/reviewpage');
-            },
-          )
+          _nextFlatButton(),
         ],
       ),
       body: ScopedModelDescendant<GroupsModel>(
         builder: (BuildContext context, Widget child, GroupsModel model) {
           return Container(
-            decoration: BackgroundImage.myBoxDecoration(),
-            child: ListView.builder(
-              itemCount: _allItems.length,
-              itemBuilder: (context, index) {
-                return itemCard(context, _allItems[index].itemName,
-                    _allItems[index].price, index, model.selectedGroup);
-              },
-            ),
+            // decoration: BackgroundImage.myBoxDecoration(),
+            child: _allItems.length == 0
+                ? emptyContactSection()
+                : ListView.builder(
+                    itemCount: _allItems.length,
+                    itemBuilder: (context, index) {
+                      return itemCard(context, _allItems[index].itemName,
+                          _allItems[index].price, index, model.selectedGroup);
+                    },
+                  ),
           );
         },
       ),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.edit),
         onPressed: () {
-          Navigator.pushReplacement(
+          Navigator.push(
             context,
             MaterialPageRoute(
               builder: (context) => ManualInput(

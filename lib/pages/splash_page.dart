@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
@@ -34,22 +33,17 @@ class _SplashScreenState extends State<SplashScreen> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
-                      CircleAvatar( // Icon
-                          backgroundColor: Colors.white,
-                          radius: 50.0,
-                          child: Icon(
-                            Icons.free_breakfast,
-                            color: Colors.green[300],
-                            size: 50.0,
-                          )),
-                      Padding(
-                        padding: EdgeInsets.only(top: 10.0),
+                      Container(
+                        width: 200.0,
+                        height: 200.0,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          image: DecorationImage(
+                            fit: BoxFit.fill,
+                            image: AssetImage('assets/launcher/icon.png'),
+                          ),
+                        ),
                       ),
-                      // Image(
-                      //   image: AssetImage('assets/splash.png'),
-                      //   width: 200.0,
-                      //   height: 200.0,
-                      // ),
                       Text(
                         "QuickDiv",
                         style: TextStyle(

@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:scoped_model/scoped_model.dart';
+import './emptycontactswidget.dart';
+import '../show_model.dart';
 import '../../models/custom_contacts.dart';
 import '../../scoped-models/groups_model.dart';
-import '../show_model.dart';
-import './emptycontactswidget.dart';
 
 class Groups extends StatelessWidget {
-  // Widget _buildGroupContact(BuildContext context, int index) {}
-
   Widget _buildGroupList(GroupsModel model) {
     Widget groupCards;
     if (model.groups.length > 0) {

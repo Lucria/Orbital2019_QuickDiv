@@ -1,8 +1,13 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+<<<<<<< HEAD
 import 'package:quickdiv_orbital2019/widget/ui_elements/background.dart';
 import '../widget/confirmation_message.dart';
+=======
+import '../widget/confirmation_message.dart';
+import '../widget/ui_elements/background.dart';
+>>>>>>> 6a0ed185d7b6d1f8dc78cc9f415be1478ae230ff
 
 class CameraImage extends StatefulWidget {
   @override
@@ -13,6 +18,12 @@ class CameraImage extends StatefulWidget {
 
 class _CameraImageState extends State<CameraImage> {
   Future<File> imageFile;
+
+  void initState() {
+    pickImage(ImageSource
+        .camera); // Doesn't require asking for permissions as permissions are handled by image_picker package already
+    super.initState();
+  }
 
   pickImage(ImageSource source) {
     setState(() {
@@ -58,10 +69,7 @@ class _CameraImageState extends State<CameraImage> {
 
   @override
   Widget build(BuildContext context) {
-    pickImage(ImageSource
-        .camera); // Doesn't require asking for permissions as permissions are handled by image_picker package already
     return Scaffold(
-      // TODO Add AppBar to a seperate widget file
       appBar: AppBar(
         title: Text("QuickDiv v2.0"),
         actions: <Widget>[
@@ -69,13 +77,14 @@ class _CameraImageState extends State<CameraImage> {
             textColor: Colors.white,
             child: Text('Next'),
             onPressed: () {
-              Navigator.pushReplacementNamed(context, '/splitbill');
+              Navigator.pushReplacementNamed(
+                  context, '/splitbill'); // need to update this
             },
           )
         ],
       ),
       body: Container(
-        decoration: BackgroundImage.myBoxDecoration(),
+        // decoration: BackgroundImage.myBoxDecoration(),
         child: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceAround,

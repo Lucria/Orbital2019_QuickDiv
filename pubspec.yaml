@@ -32,10 +32,20 @@ dependencies:
   scoped_model: ^1.0.1
   image_cropper: ^1.0.2
   validators: ^2.0.0+1
+  flutter_sms: ^1.0.1
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  flutter_launcher_icons: "^0.7.0"
+# instruction for the icon https://medium.com/@psyanite/how-to-add-app-launcher-icons-in-flutter-bd92b0e0873a
+flutter_icons:
+  ios: true
+  android: true
+  image_path_ios: "assets/launcher/icon.png"
+  image_path_android: "assets/launcher/icon.png"
+  adaptive_icon_background: "assets/launcher/background.png"
+  adaptive_icon_foreground: "assets/launcher/foreground.png"
 
 # For information on the generic Dart part of this file, see the
 # following page: https://www.dartlang.org/tools/pub/pubspec
@@ -50,6 +60,7 @@ flutter:
   assets:
     - assets/splash.png
     - assets/background.jpg
+    - assets/launcher/icon.png
   # To add assets to your application, add an assets section, like this:
   # assets:
   #  - images/a_dot_burr.jpeg
