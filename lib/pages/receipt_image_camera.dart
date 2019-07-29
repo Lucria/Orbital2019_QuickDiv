@@ -1,6 +1,8 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:quickdiv_orbital2019/pages/split_bill.dart';
 import '../widget/confirmation_message.dart';
 import '../widget/ui_elements/background.dart';
 
@@ -12,26 +14,41 @@ class CameraImage extends StatefulWidget {
 }
 
 class _CameraImageState extends State<CameraImage> {
-  Future<File> imageFile;
+  File imageFile;
+  File finalImage;
+  Future<File> croppedFile;
+  var state;
 
-  void initState() {
-    pickImage(ImageSource
-        .camera); // Doesn't require asking for permissions as permissions are handled by image_picker package already
-    super.initState();
+  Future<Null> pickImage(ImageSource source) async {
+    imageFile = await ImagePicker.pickImage(source: source);
+    if (imageFile != null) {
+      setState(() {
+        state = "Captured" ;
+      });
+    }
   }
 
-  pickImage(ImageSource source) {
-    setState(() {
-      imageFile = ImagePicker.pickImage(source: source);
-    });
+  Future<Null> cropImage() async {
+    croppedFile = ImageCropper.cropImage(
+      sourcePath: imageFile.path,
+      toolbarTitle: "Cropper",
+      toolbarColor: Colors.blue,
+      toolbarWidgetColor: Colors.white,
+    );
+  }
+
+  void initState() {
+    super.initState();
+    waitTakePhoto();
   }
 
   Widget showImage() {
     return FutureBuilder<File>(
-      future: imageFile,
+      future: croppedFile,
       builder: (BuildContext context, AsyncSnapshot<File> snapshot) {
         if (snapshot.connectionState == ConnectionState.done &&
             snapshot.data != null) {
+          finalImage = snapshot.data;
           return Image.file(
             snapshot.data,
             width: 500,
@@ -72,8 +89,9 @@ class _CameraImageState extends State<CameraImage> {
             textColor: Colors.white,
             child: Text('Next'),
             onPressed: () {
-              Navigator.pushReplacementNamed(
-                  context, '/splitbill'); // need to update this
+              Navigator.pushReplacement(context, MaterialPageRoute(
+                builder: (context) => SplitBill(image: finalImage,)
+              ));
             },
           )
         ],
@@ -91,5 +109,10 @@ class _CameraImageState extends State<CameraImage> {
         ),
       ),
     );
+  }
+
+  void waitTakePhoto() async {
+    await pickImage(ImageSource.camera);
+    cropImage();
   }
 }
