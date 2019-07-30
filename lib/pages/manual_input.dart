@@ -120,8 +120,7 @@ class _ManualInputState extends State<ManualInput> {
                 EdgeInsets.only(top: 10.0, left: 5.0, right: 5.0, bottom: 10.0),
             child: TextFormField(
               initialValue: item.price == null ? '' : item.price.toString(),
-              validator: (val) =>
-                  _isNumeric(val) ? null : 'Please enter the item price',
+              validator: (val) => _isNumeric(val) ? null : 'Error',
               onSaved: (val) => item.price = double.parse(val),
               decoration: InputDecoration(
                 labelText: 'Price',
@@ -137,8 +136,7 @@ class _ManualInputState extends State<ManualInput> {
                 top: 10.0, left: 5.0, right: 10.0, bottom: 10.0),
             child: TextFormField(
               initialValue: item.qty.toString(),
-              validator: (val) =>
-                  val.length >= 1 ? null : 'Please enter the item qty',
+              validator: (val) => val.length >= 1 ? null : 'Error',
               onSaved: (val) => item.qty = int.parse(val),
               decoration: InputDecoration(
                 labelText: 'Qty',
